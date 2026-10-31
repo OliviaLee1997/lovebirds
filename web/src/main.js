@@ -32,6 +32,7 @@ let catalog;
 let renderId = 0;
 let readerSize = getReadingSize();
 let menuOpen = false;
+let menuOpener;
 let filtersOpen = false;
 const cache = new Map();
 const config = {
@@ -77,15 +78,19 @@ function activePage(route) {
 }
 function sidebar(active) {
   return `<aside class="sidebar" id="sidebar" aria-label="Library navigation">
-    <a class="brand" href="#/courses"><span class="brand-mark">${icon('book')}</span><span>Olivia’s<br>English Notes<small>PERSONAL LEARNING WIKI</small></span></a>
-    <p class="nav-caption">COLLECTIONS <span>LIBRARY</span></p>
+    <div class="sidebar-header"><a class="brand" href="#/courses"><span class="brand-mark">${icon('book')}</span><span>Olivia’s<br>English Notes<small>PERSONAL LEARNING WIKI</small></span></a><button class="icon-button sidebar-close" data-action="menu-close" aria-label="Close collections">${icon('close')}</button></div>
+    <p class="nav-caption">COLLECTIONS <span>${Object.keys(config).length}</span></p>
     <nav>${Object.entries(config).map(([key, value]) => `<a class="nav-link ${active === key ? 'active' : ''}" ${active === key ? 'aria-current="page"' : ''} href="#/${key}">${icon(value.icon)}<span>${value.label}</span><span class="nav-count">${countFor(key)}</span></a>`).join('')}</nav>
     <div class="sidebar-note"><span class="note-line"></span><p>A place for everything<br>you are learning.</p><small>Read. Connect. Make it yours.</small></div>
     <div class="sidebar-bottom"><span class="status-dot"></span>Personal learning wiki<span>EN</span></div>
   </aside>`;
 }
+function mobileNavigation(active) {
+  const shortcuts = [['courses', 'Courses'], ['cue-cards', 'Cue cards']];
+  return `<nav class="mobile-collections" aria-label="Mobile collections">${shortcuts.map(([page, label]) => `<a href="#/${page}" ${active === page ? 'aria-current="page"' : ''}>${icon(config[page].icon)}<span>${label}</span></a>`).join('')}<button data-action="menu" aria-label="All collections" aria-expanded="false" aria-controls="sidebar" class="${shortcuts.some(([page]) => page === active) ? '' : 'active'}"><span class="collections-symbol">${icon('grid')}<span class="collections-badge">${Object.keys(config).length}</span></span><span>All collections</span></button></nav>`;
+}
 function shell(active) {
-  app.innerHTML = `${sidebar(active)}<button class="menu-overlay" aria-label="Close navigation" data-action="menu-close"></button><div class="workspace"><header class="topbar"><div class="topbar-left"><button class="icon-button mobile-menu" data-action="menu" aria-label="Open navigation" aria-expanded="false" aria-controls="sidebar">${icon('menu')}</button><span class="breadcrumb">Library <span>/</span> <strong>${config[active].label}</strong></span></div><button class="global-search-trigger" data-wiki="search" aria-label="Search all notes">${icon('search')}<span>Search all notes</span><kbd>⌘ K</kbd></button></header><main id="main" tabindex="-1"></main><footer class="site-footer"><span>OLIVIA’S ENGLISH NOTES</span><span>Read. Connect. Revisit.</span></footer></div>`;
+  app.innerHTML = `${sidebar(active)}<button class="menu-overlay" aria-label="Close navigation" data-action="menu-close" tabindex="-1"></button><div class="workspace"><header class="topbar"><div class="topbar-left"><button class="icon-button mobile-menu" data-action="menu" aria-label="Open collections" aria-expanded="false" aria-controls="sidebar">${icon('menu')}<span>Collections</span></button><span class="breadcrumb"><span class="breadcrumb-root">Library <span>/</span></span><strong>${config[active].label}</strong></span></div><button class="global-search-trigger" data-wiki="search" aria-label="Search all notes">${icon('search')}<span>Search all notes</span><kbd>⌘ K</kbd></button></header><main id="main" tabindex="-1"></main><footer class="site-footer"><span>OLIVIA’S ENGLISH NOTES</span><span>Read. Connect. Revisit.</span></footer>${mobileNavigation(active)}</div>`;
   setMenu(false);
   mountWikiChrome();
 }
@@ -231,15 +236,16 @@ function changeParams(changes, full = false) {
   if (full) { clearTimeout(queryTimer); history.pushState(null, '', next); render(); }
   else { history.replaceState(null, '', next); updateResults(); }
 }
-function setMenu(open) {
-  menuOpen = open;
-  document.body.classList.toggle('menu-open', open);
-  document.querySelector('.mobile-menu')?.setAttribute('aria-expanded', String(open));
-  const sidebar = document.querySelector('.sidebar');
+function setMenu(open, restoreFocus = false) {
   const mobile = matchMedia('(max-width: 800px)').matches;
-  if (sidebar) sidebar.inert = mobile && !open;
+  menuOpen = mobile && open;
+  document.body.classList.toggle('menu-open', menuOpen);
+  document.querySelectorAll('[data-action="menu"]').forEach(button => button.setAttribute('aria-expanded', String(menuOpen)));
+  const sidebar = document.querySelector('.sidebar');
+  if (sidebar) sidebar.inert = mobile && !menuOpen;
   const workspace = document.querySelector('.workspace');
-  if (workspace) workspace.inert = mobile && open;
+  if (workspace) workspace.inert = menuOpen;
+  if (restoreFocus && menuOpener?.isConnected) menuOpener.focus({ preventScroll: true });
 }
 async function render() {
   if (!catalog) return;
@@ -276,8 +282,8 @@ app.addEventListener('click', event => {
   const control = event.target.closest('[data-action]');
   if (!control) return;
   const action = control.dataset.action;
-  if (action === 'menu') { setMenu(!menuOpen); if (menuOpen) document.querySelector('.sidebar .brand')?.focus(); }
-  if (action === 'menu-close') setMenu(false);
+  if (action === 'menu') { menuOpener = control; setMenu(!menuOpen); if (menuOpen) document.querySelector('.sidebar-close')?.focus({ preventScroll: true }); }
+  if (action === 'menu-close') setMenu(false, true);
   if (action === 'retry') render();
   if (action === 'tag') { const tags = selectedTags(currentRoute().params); const id = control.dataset.tag; changeParams({ tags: tags.includes(id) ? tags.filter(t => t !== id).join(',') : [...tags, id].join(',') }, true); }
   if (action === 'all-tags') changeParams({ tags: '' }, true);
@@ -298,9 +304,9 @@ app.addEventListener('change', event => {
   if (event.target.id === 'match-mode') changeParams({ mode: event.target.value });
 });
 document.addEventListener('keydown', event => {
-  if (event.key === 'Escape' && menuOpen) { setMenu(false); document.querySelector('.mobile-menu')?.focus(); }
+  if (event.key === 'Escape' && menuOpen) { event.preventDefault(); setMenu(false, true); }
   if (event.key === 'Tab' && menuOpen && matchMedia('(max-width: 800px)').matches) {
-    const links = [...document.querySelectorAll('.sidebar a')];
+    const links = [...document.querySelectorAll('.sidebar a, .sidebar button')];
     const first = links[0], last = links.at(-1);
     if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }

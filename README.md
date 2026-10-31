@@ -51,6 +51,7 @@ The collection currently contains **19 lessons, 9 topic collections, 13 grammar 
 
 ## Read and Explore
 
+- **On a phone:** The labelled Collections button and fixed bottom bar keep navigation within reach. Tap All collections to see all seven sections and their counts, or use the Courses and Cue cards shortcuts. The current collection stays highlighted, including while reading.
 - **Courses:** Compact list, newest lessons first. Switch to cards, filter by multiple topics, search full text, or select Oldest first.
 - **Topic collections:** Click anywhere on a card to read its summary. The related-lessons link opens the filtered course list separately.
 - **Language Bites:** Browse 80 short notes across Grammar, Vocabulary, Pronunciation, and Speaking, with newly added notes first. Read Notice → Understand → Examples → Practise on one continuous page. Answers are visible by default and can be folded for self-testing. Copy the complete note when needed.

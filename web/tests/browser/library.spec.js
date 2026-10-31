@@ -70,7 +70,7 @@ test('mobile navigation, reading tables, and search work without page-wide horiz
   await page.goto('/');
   await expect(page.locator('.course-card')).toHaveCount(19);
   await page.screenshot({ path: testInfo.outputPath('courses-mobile.png'), fullPage: false });
-  await page.getByRole('button', { name: 'Open navigation' }).click();
+  await page.getByRole('button', { name: 'Open collections' }).click();
   await page.locator('.nav-link').filter({ hasText: 'My topic collections' }).click();
   await expect(page.locator('.topic-card')).toHaveCount(9);
   await expect(page.locator('body')).not.toHaveClass(/menu-open/);
@@ -217,7 +217,82 @@ test('the production build works beneath a GitHub Pages project directory', asyn
   await expect(page.locator('.bite-answer p')).toBeVisible();
   await page.locator('.reading-pagination.compact a[rel="next"]').click();
   await expect(page).toHaveURL(/english-library\/#\/bite\/S15/);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.getByRole('button', { name: 'All collections', exact: true }).click();
+  await page.locator('.nav-link[href="#/linking-words"]').click();
+  await expect(page).toHaveURL(/english-library\/#\/linking-words/);
+  await expect(page.locator('.group-card')).toHaveCount(12);
   expect(failedRequests).toEqual([]);
+});
+
+test('phone collections stay discoverable and all seven destinations open from the drawer', async ({ page }, testInfo) => {
+  const collections = [
+    ['courses', 'Course library'], ['cue-cards', 'Cue card collection'], ['topics', 'My topic collections'],
+    ['grammar', 'Personal grammar review'], ['linking-words', 'Linking words'], ['bites', 'Language Bites'], ['resources', 'Reference shelf'],
+  ];
+  for (const width of [320, 390]) {
+    await page.setViewportSize({ width, height: width === 320 ? 568 : 844 });
+    await page.goto('/#/courses');
+    const nav = page.getByRole('navigation', { name: 'Mobile collections' });
+    await expect(page.getByRole('button', { name: 'Open collections' })).toBeInViewport();
+    await expect(nav).toBeInViewport();
+    await page.screenshot({ path: testInfo.outputPath(`collections-phone-${width}.png`) });
+    for (const [id, title] of collections) {
+      await nav.getByRole('button', { name: 'All collections', exact: true }).click();
+      await expect(page.locator('.workspace')).toHaveJSProperty('inert', true);
+      await expect(page.locator('.sidebar .nav-link')).toHaveCount(7);
+      for (const link of await page.locator('.sidebar .nav-link').all()) await expect(link).toBeInViewport();
+      if (id === 'courses') await page.screenshot({ path: testInfo.outputPath(`collections-drawer-${width}.png`) });
+      await page.locator(`.sidebar .nav-link[href="#/${id}"]`).click();
+      await expect(page.locator('.collection-header h1')).toHaveText(title);
+      await expect(page.locator('body')).not.toHaveClass(/menu-open/);
+      await expect(page.locator('.workspace')).toHaveJSProperty('inert', false);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
+    }
+    await expect(nav.getByRole('button', { name: 'All collections', exact: true })).toHaveClass(/active/);
+    await nav.getByRole('link', { name: 'Cue cards', exact: true }).click();
+    await expect(nav.getByRole('link', { name: 'Cue cards', exact: true })).toHaveAttribute('aria-current', 'page');
+    await page.locator('.group-card').first().click();
+    await page.locator('.reader-end').scrollIntoViewIfNeeded();
+    await expect(nav).toBeInViewport();
+    const next = page.locator('.reading-pagination:not(.compact) a[rel="next"]');
+    await next.scrollIntoViewIfNeeded();
+    expect(await next.evaluate(el => el.getBoundingClientRect().bottom)).toBeLessThanOrEqual(await nav.evaluate(el => el.getBoundingClientRect().top));
+    await nav.getByRole('button', { name: 'All collections', exact: true }).click();
+    await page.getByRole('button', { name: 'Close collections', exact: true }).click();
+    await expect(nav.getByRole('button', { name: 'All collections', exact: true })).toBeFocused();
+  }
+});
+
+test('mobile collections support keyboard dismissal, focus mode and short or resized screens', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/#/read/lesson-19');
+  await page.getByRole('button', { name: 'Focus mode', exact: true }).click();
+  const opener = page.getByRole('button', { name: 'Open collections' });
+  await opener.click();
+  await expect(page.getByRole('button', { name: 'Close collections', exact: true })).toBeFocused();
+  await page.locator('.sidebar .nav-link').last().focus();
+  await page.keyboard.press('Tab');
+  await expect(page.locator('.sidebar .brand')).toBeFocused();
+  await page.keyboard.press('Shift+Tab');
+  await expect(page.locator('.sidebar .nav-link').last()).toBeFocused();
+  await page.keyboard.press('Escape');
+  await expect(opener).toBeFocused();
+  await expect(opener).toHaveAttribute('aria-expanded', 'false');
+  await expect(page.locator('body')).toHaveClass(/focus-reading/);
+  await page.getByRole('button', { name: 'All collections', exact: true }).click();
+  await page.locator('.menu-overlay').click({ position: { x: 380, y: 200 } });
+  await expect(page.getByRole('button', { name: 'All collections', exact: true })).toBeFocused();
+  await page.setViewportSize({ width: 740, height: 360 });
+  await page.getByRole('button', { name: 'All collections', exact: true }).click();
+  await page.locator('.sidebar .nav-link[href="#/resources"]').click();
+  await expect(page.locator('.resource-card')).toHaveCount(3);
+  await page.getByRole('button', { name: 'All collections', exact: true }).click();
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await expect(page.locator('body')).not.toHaveClass(/menu-open/);
+  await expect(page.locator('.workspace')).toHaveJSProperty('inert', false);
+  await expect(page.getByRole('navigation', { name: 'Mobile collections' })).not.toBeVisible();
+  await expect(page.locator('.sidebar .nav-link[href="#/resources"]')).toBeInViewport();
 });
 
 test('cue-card order follows courses, including older topics added with later card numbers', async ({ page }) => {
