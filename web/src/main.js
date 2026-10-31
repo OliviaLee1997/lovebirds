@@ -145,7 +145,7 @@ function updateResults() {
     target.innerHTML = items.map(topicCard).join('');
   } else if (page === 'cue-cards') {
     target.className = 'group-grid';
-    target.innerHTML = items.map(d => groupCard({ label: d.title }, d, d.number - 1)).join('');
+    target.innerHTML = items.map((d, index) => groupCard({ label: d.title }, d, index)).join('');
   } else if (page === 'grammar' || page === 'linking-words') {
     const d = catalog.documents.find(d => d.id === page);
     target.className = 'group-grid';

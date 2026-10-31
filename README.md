@@ -64,7 +64,7 @@ The collection currently contains **19 lessons, 9 topic collections, 13 grammar 
 - **Search:** Use the search button or **⌘K / Ctrl+K** to search across the wiki. Use **/** for the current list search, or global search while reading. Arrow keys and Enter navigate search results.
 - **Links and preferences:** Copy page or section links. Text size, list/card layout, and focus preference are saved in the current browser. No account or cloud sync is required.
 
-Courses default to descending lesson number. Cue cards follow their mapped course order, newest course first; topics within a course keep their teaching order. Stable cue-card numbers are identifiers, not chronology. Language Bites default to reverse source order; append new notes to the JSON list. Each offers a Newest first / Oldest first control that is retained in the URL. Topic, grammar and linking-word categories retain their teaching order rather than implying a date.
+Courses default to descending lesson number. Cue cards follow their mapped course order, newest course first; topics within a course keep their teaching order. The cue-card list displays consecutive positions starting at 01, recalculated after sorting or searching. Source filenames and document IDs stay stable for existing links. Language Bites default to reverse source order; append new notes to the JSON list. Each offers a Newest first / Oldest first control that is retained in the URL. Topic, grammar and linking-word categories retain their teaching order rather than implying a date.
 
 ## Maintain the Content
 
