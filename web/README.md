@@ -1,0 +1,54 @@
+# Frontend Maintenance
+
+Run all npm commands from the [repository root](../README.md). The site uses Vite, plain JavaScript, CSS, `marked`, and `sanitize-html`. No remote font service, analytics, backend, or runtime API is needed.
+
+## Files
+
+| File | Responsibility |
+| --- | --- |
+| `src/main.js` | Catalogue views, English labels, filtering, hash routes, and reader loading. |
+| `src/wiki.js` | Section folding, contents highlighting, reading progress, focus mode, global search, table expansion, copied links, and local preferences. |
+| `src/bites.js` | Language Bites category filters, full-text search, four-step notes, answer reveal, keyboard tabs, and copying complete notes. |
+| `src/style.css` | Warm green theme, compact list and card views, reading columns, dialogs, and mobile layout. |
+| `scripts/build-content.mjs` | Read Markdown from this repository's `content/`, generate safe HTML and catalogue JSON, and copy allowlisted images. |
+| `vite.config.js` | Development server, relative build URLs, and output directory. |
+| `tests/` | Content integrity and browser interaction checks. |
+
+## Content Contract
+
+The build root is this repository; the source root is `content/` inside it. The course-to-topic map in `content/Topic-Review/README.md` supplies lesson tags. Course files and numbered topic reviews are discovered automatically. Other practice documents are listed explicitly in the build script.
+
+Course titles come from Markdown headings. The short English topic labels and descriptions are presentation metadata. New lessons do not need hardcoded titles. A missing map entry produces a warning and an **Uncategorised** label without hiding the lesson.
+
+The grammar list uses its document's numbered level-two headings. Cue cards are discovered from `content/Practice/IELTS-Speaking/Cue-Cards/Cue-Card-NN-*.md` and open separate pages such as `#/read/cue-card-01`. Each page uses the same reader as a lesson and opens its learning sections by default. The shared guide and grammar review are separate documents. A combined reader is generated in memory from these sources so existing `#/read/cue-cards?section=…` links still work; there is no second editable combined Markdown. Introductory notes, exercises, and qualifications are retained.
+
+Language Bites come from `content/Language-Bites/notes.json`; see [their maintenance guide](../content/Language-Bites/README.md). The builder validates IDs, categories, required learning fields, and example pairs. Routes use `#/bites?category=Grammar&q=worth` for collections and `#/bite/G01?step=4` for individual steps. Keep IDs stable. All English educational fields are retained; bilingual image exports are not a runtime dependency.
+
+`web/public/content/` and `web/public/lesson-assets/` are generated. The production build is `web/dist/`. All three are ignored by Git. Changing Markdown requires rebuilding the content and refreshing the development page; `npm run dev` and `npm run build` generate it automatically on startup.
+
+Document JSON is replaced atomically, with the catalogue written after documents and assets. A rebuild does not empty the content directory while the preview is serving it. Readers resolve URLs against the site base, revalidate requests, and show a recoverable error if a document response is missing or invalid.
+
+## UI Behaviour
+
+- Collection navigation order is All courses, Cue cards, My topic collections, Personal grammar, Language Bites, then Reference shelf.
+- Reader typography preserves distinct Markdown heading levels: larger section titles on a pale green background, smaller underlined subheadings, and bold fourth-level headings. Paragraph and section spacing stays more generous than the compact collection lists. Heading sizes scale with the reader's text-size preference, including on mobile.
+- The default course view is a compact list. List/card view, reading size, and focus preference use best-effort local storage; the site still works when storage is unavailable.
+- Course and collection filters live in the URL, so returning from a document restores them.
+- Ordinary internal links are handled within the page using History API navigation; they do not rely on a native fragment event to render. Browser history, direct links, and modified clicks remain supported.
+- Global search covers document titles, full text, named grammar/cue-card sections, and Language Bites. Course-list search uses full lesson text; category lists search their displayed category names.
+- Native details elements fold sections. A deep link opens every enclosing section before scrolling to it.
+- Native dialogs provide focus containment and Escape handling for search and large tables. Expanded tables are presentation copies; source Markdown remains unchanged.
+- Keyboard shortcuts: **⌘K / Ctrl+K** opens global search. **/** focuses list search or opens global search while reading. Arrow keys and Enter navigate global results.
+- Reading progress and the active contents entry follow the current visible document layout. Focus mode hides the side navigation and contents panel while retaining an exit control.
+
+## Validation
+
+```sh
+npm test
+npm run build
+npm run test:browser
+```
+
+Run these sequentially because content generation writes the same output folder. Browser checks use Google Chrome on macOS if available, otherwise Playwright Chromium. Install it with `npx playwright install chromium` when needed. The test server uses port 5173.
+
+Test desktop and mobile layouts, filters, document and section links, image loading, global search, keyboard navigation, collapsed content, table dialogs, and focus mode when changing those features. Validate the production build beneath a project subdirectory before changing deployment or asset paths. Keep screenshots and test artifacts out of Git.

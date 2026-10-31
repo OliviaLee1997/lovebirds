@@ -1,0 +1,18 @@
+node_modules/
+web/dist/
+web/public/content/
+web/public/lesson-assets/
+test-results/
+playwright-report/
+.DS_Store
+.env
+.env.*
+!.env.example
+
+# Only reviewed source images are included in the repository.
+content/Course-Notes/assets/*
+!content/Course-Notes/assets/image1.png
+!content/Course-Notes/assets/image2.png
+!content/Course-Notes/assets/image3.png
+!content/Course-Notes/assets/image4.png
+!content/Course-Notes/assets/image5.png

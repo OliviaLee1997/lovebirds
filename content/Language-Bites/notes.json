@@ -1,0 +1,1766 @@
+{
+  "version": 1,
+  "notice": "Newly authored study material. Examples are fictional or generic, not classroom quotations or personal stories.",
+  "notes": [
+    {
+      "id": "G01",
+      "category": "Grammar",
+      "title": "Worth doing",
+      "prompt": "worth to visit\nor worth visiting?",
+      "explanation": "Use be worth + -ing to say that an activity deserves your time or effort.",
+      "qualification": "Time well spent and well worth visiting are also valid expressions.",
+      "examples": [
+        [
+          "The museum is worth visiting.",
+          "worth + activity"
+        ],
+        [
+          "It was time well spent.",
+          "A different, equally valid pattern."
+        ]
+      ],
+      "practice": "Complete: It is worth ___ a little every day. (practise)",
+      "answer": "practising: It is worth practising a little every day.",
+      "accent": "#285c50",
+      "tint": "#e5ede5"
+    },
+    {
+      "id": "G02",
+      "category": "Grammar",
+      "title": "Spend time doing",
+      "prompt": "spend time + ?",
+      "explanation": "Use spend + time + -ing for an activity. Use spend + time or money + on + a noun phrase.",
+      "qualification": "Spent is the past form of spend.",
+      "examples": [
+        [
+          "I spent an hour reading.",
+          "Time + -ing"
+        ],
+        [
+          "I spent some money on books.",
+          "Money + on + noun"
+        ]
+      ],
+      "practice": "Complete: I spend ten minutes ___ my notes. (review)",
+      "answer": "reviewing: I spend ten minutes reviewing my notes.",
+      "accent": "#285c50",
+      "tint": "#e5ede5"
+    },
+    {
+      "id": "G03",
+      "category": "Grammar",
+      "title": "One of my favourites",
+      "prompt": "one of my favourite\nsport or sports?",
+      "explanation": "One of selects one member from a group, so the noun naming that group is plural.",
+      "qualification": "When the whole subject is One of my friends, the main verb is normally singular.",
+      "examples": [
+        [
+          "Swimming is one of my favourite sports.",
+          "sports = the group"
+        ],
+        [
+          "One of my friends lives nearby.",
+          "one friend → lives"
+        ]
+      ],
+      "practice": "Complete: One of my favourite ___ is reading. (activity)",
+      "answer": "activities: One of my favourite activities is reading.",
+      "accent": "#285c50",
+      "tint": "#e5ede5"
+    },
+    {
+      "id": "G04",
+      "category": "Grammar",
+      "title": "Is the past perfect required?",
+      "prompt": "I did not call\nbefore I went.",
+      "explanation": "This sentence can be correct. Before already makes the order clear. Past perfect can add an earlier viewpoint.",
+      "qualification": "Two past events do not automatically require the past perfect.",
+      "examples": [
+        [
+          "I did not call before I went.",
+          "The sequence is already clear."
+        ],
+        [
+          "When I arrived, I realised I had not called.",
+          "Look back from the arrival."
+        ]
+      ],
+      "practice": "Which event happened first? When I arrived, the class had started.",
+      "answer": "The class started before I arrived.",
+      "accent": "#285c50",
+      "tint": "#e5ede5"
+    },
+    {
+      "id": "G05",
+      "category": "Grammar",
+      "title": "Past or present perfect?",
+      "prompt": "yesterday\nor so far?",
+      "explanation": "Use past simple for an event at a finished past time. Present perfect connects experience or a result to now.",
+      "qualification": "No stated date does not automatically mean present perfect.",
+      "examples": [
+        [
+          "I visited the museum yesterday.",
+          "A finished past time"
+        ],
+        [
+          "I have visited that museum before.",
+          "Experience up to now"
+        ]
+      ],
+      "practice": "Complete: I ___ that book last month. (read)",
+      "answer": "read, in the past simple. Its past pronunciation is /red/.",
+      "accent": "#285c50",
+      "tint": "#e5ede5"
+    },
+    {
+      "id": "G06",
+      "category": "Grammar",
+      "title": "For or since?",
+      "prompt": "for two years\nsince Monday",
+      "explanation": "For introduces a duration. Since introduces a starting point. Choose the tense according to the time relationship.",
+      "qualification": "For can also appear with past simple when the period has ended.",
+      "examples": [
+        [
+          "I have lived here for two years.",
+          "The period continues to now."
+        ],
+        [
+          "I lived there for two years, then moved.",
+          "The period is over."
+        ]
+      ],
+      "practice": "Complete: We have known each other ___ we were children.",
+      "answer": "since: the clause identifies the starting point.",
+      "accent": "#285c50",
+      "tint": "#e5ede5"
+    },
+    {
+      "id": "G07",
+      "category": "Grammar",
+      "title": "Have lived or been living?",
+      "prompt": "I have been\nlived here?",
+      "explanation": "Use have lived or have been living for residence continuing to now. Have been lived does not express this meaning.",
+      "qualification": "The continuous form often emphasises the ongoing situation.",
+      "examples": [
+        [
+          "I have lived here for a year.",
+          "Present perfect"
+        ],
+        [
+          "I have been living here for a year.",
+          "Present perfect continuous"
+        ]
+      ],
+      "practice": "Repair: I have been studied English recently.",
+      "answer": "I have been studying English recently.",
+      "accent": "#285c50",
+      "tint": "#e5ede5"
+    },
+    {
+      "id": "G08",
+      "category": "Grammar",
+      "title": "The background and the event",
+      "prompt": "I was reading\nwhen the phone rang.",
+      "explanation": "Past continuous presents an activity in progress. Past simple can introduce an event during that activity.",
+      "qualification": "The grammar does not prove that the background activity stopped.",
+      "examples": [
+        [
+          "I was cooking when a friend called.",
+          "An event during an activity"
+        ],
+        [
+          "I cooked, ate, and washed the dishes.",
+          "Completed events in sequence"
+        ]
+      ],
+      "practice": "Complete: We ___ when the teacher arrived. (talk)",
+      "answer": "were talking, if the talking was already in progress.",
+      "accent": "#285c50",
+      "tint": "#e5ede5"
+    },
+    {
+      "id": "G09",
+      "category": "Grammar",
+      "title": "Future plans have options",
+      "prompt": "I am meeting\na friend tomorrow.",
+      "explanation": "Present continuous can describe an arrangement. Going to often describes an intention. Will can express predictions, offers, or decisions.",
+      "qualification": "These forms overlap; a planned event is not automatically wrong with will.",
+      "examples": [
+        [
+          "I am meeting a friend tomorrow.",
+          "An arrangement"
+        ],
+        [
+          "I will send you the details.",
+          "An offer or promise"
+        ]
+      ],
+      "practice": "Write a sentence about a settled arrangement.",
+      "answer": "One possible answer: I am having lunch with a friend tomorrow.",
+      "accent": "#285c50",
+      "tint": "#e5ede5"
+    },
+    {
+      "id": "G10",
+      "category": "Grammar",
+      "title": "Used to or still?",
+      "prompt": "We used to meet.\nWe still meet.",
+      "explanation": "Used to describes a past habit or state, normally suggesting it has changed. Still shows that something continues.",
+      "qualification": "Do not choose used to only because the topic mentions the past.",
+      "examples": [
+        [
+          "We used to walk to school.",
+          "A past routine that has changed"
+        ],
+        [
+          "We still walk together at weekends.",
+          "A continuing routine"
+        ]
+      ],
+      "practice": "Which fits a habit that continues now: used to or still?",
+      "answer": "still: We still meet regularly.",
+      "accent": "#285c50",
+      "tint": "#e5ede5"
+    },
+    {
+      "id": "G11",
+      "category": "Grammar",
+      "title": "After did, use the base form",
+      "prompt": "Did you went?\nDid you go?",
+      "explanation": "In ordinary questions and negatives with did or did not, the main verb stays in its base form.",
+      "qualification": "The past tense is already carried by did.",
+      "examples": [
+        [
+          "Did you see the film?",
+          "did + see"
+        ],
+        [
+          "I did not buy it online.",
+          "did not + buy"
+        ]
+      ],
+      "practice": "Repair: I did not saw the message.",
+      "answer": "I did not see the message.",
+      "accent": "#285c50",
+      "tint": "#e5ede5"
+    },
+    {
+      "id": "G12",
+      "category": "Grammar",
+      "title": "Swam or swum?",
+      "prompt": "swim → swam → swum",
+      "explanation": "Perfect forms use a past participle after have, has, or had. Some participles differ from the simple past.",
+      "qualification": "Learn irregular verbs as three-part groups.",
+      "examples": [
+        [
+          "I swam yesterday.",
+          "Past simple"
+        ],
+        [
+          "I have never swum in a river.",
+          "have + past participle"
+        ]
+      ],
+      "practice": "Complete: She has ___ the answer. (write)",
+      "answer": "written. The three forms are write, wrote, written.",
+      "accent": "#285c50",
+      "tint": "#e5ede5"
+    },
+    {
+      "id": "G13",
+      "category": "Grammar",
+      "title": "A or an? Listen first.",
+      "prompt": "an hour\na university",
+      "explanation": "Choose a or an by the next sound, not simply the next letter. An goes before a vowel sound.",
+      "qualification": "A silent first letter can change the article you need.",
+      "examples": [
+        [
+          "It was an honest answer.",
+          "honest begins with a vowel sound."
+        ],
+        [
+          "She studies at a university.",
+          "university begins with /j/."
+        ]
+      ],
+      "practice": "Complete: It was ___ amazing experience.",
+      "answer": "an: amazing begins with a vowel sound.",
+      "accent": "#285c50",
+      "tint": "#e5ede5"
+    },
+    {
+      "id": "G14",
+      "category": "Grammar",
+      "title": "Some good news",
+      "prompt": "a good news?",
+      "explanation": "News, advice, and information are normally uncountable in these meanings. Use some or a countable unit such as a piece of.",
+      "qualification": "News ends in s but normally takes a singular verb.",
+      "examples": [
+        [
+          "That is good news.",
+          "No a before news"
+        ],
+        [
+          "She gave me a piece of advice.",
+          "A countable unit"
+        ]
+      ],
+      "practice": "Repair: I received an information.",
+      "answer": "I received some information / a piece of information.",
+      "accent": "#285c50",
+      "tint": "#e5ede5"
+    },
+    {
+      "id": "G15",
+      "category": "Grammar",
+      "title": "Other or another?",
+      "prompt": "other people\nanother person",
+      "explanation": "Other works with plural and uncountable nouns. Another usually introduces one additional singular countable item.",
+      "qualification": "The other person and another two days are also valid patterns.",
+      "examples": [
+        [
+          "I need some other information.",
+          "other + uncountable noun"
+        ],
+        [
+          "I need another example.",
+          "another + singular countable noun"
+        ]
+      ],
+      "practice": "Complete: Could you give me another ___ of advice?",
+      "answer": "piece: another piece of advice.",
+      "accent": "#285c50",
+      "tint": "#e5ede5"
+    },
+    {
+      "id": "G16",
+      "category": "Grammar",
+      "title": "A number of or the number of?",
+      "prompt": "are waiting\nor is increasing?",
+      "explanation": "A number of + plural noun normally takes a plural verb. The number of focuses on one total and takes a singular verb.",
+      "qualification": "Check the whole subject, not only the nearest noun.",
+      "examples": [
+        [
+          "A number of students are waiting.",
+          "Several students"
+        ],
+        [
+          "The number of students is increasing.",
+          "One total"
+        ]
+      ],
+      "practice": "Complete: The number of visitors ___ growing.",
+      "answer": "is: the subject is the singular number.",
+      "accent": "#285c50",
+      "tint": "#e5ede5"
+    },
+    {
+      "id": "G17",
+      "category": "Grammar",
+      "title": "Let, make, and help",
+      "prompt": "Let me explain.",
+      "explanation": "Use let + person + base verb and active make + person + base verb. Help allows a base verb with or without to.",
+      "qualification": "Make + object + adjective is a different pattern: make the task easier.",
+      "examples": [
+        [
+          "Let me explain the idea.",
+          "No to after let in this pattern."
+        ],
+        [
+          "Practice helps me speak clearly.",
+          "helps me to speak is also valid."
+        ]
+      ],
+      "practice": "Repair: It does not let me concentrated.",
+      "answer": "It does not let me concentrate.",
+      "accent": "#285c50",
+      "tint": "#e5ede5"
+    },
+    {
+      "id": "G18",
+      "category": "Grammar",
+      "title": "Easy for me",
+      "prompt": "I am easy\nto get there?",
+      "explanation": "Use It is easy for me to get there when the action is easy for you. You can also say I can get there easily.",
+      "qualification": "I am easy to contact is valid: other people can contact me easily.",
+      "examples": [
+        [
+          "It is easy for me to get there.",
+          "Evaluate the action."
+        ],
+        [
+          "The park is easy to reach.",
+          "The park can be reached easily."
+        ]
+      ],
+      "practice": "Repair the intended meaning: I am easy to make mistakes.",
+      "answer": "I tend to make mistakes / It is easy for me to make mistakes.",
+      "accent": "#285c50",
+      "tint": "#e5ede5"
+    },
+    {
+      "id": "G19",
+      "category": "Grammar",
+      "title": "It happened",
+      "prompt": "It was happened?",
+      "explanation": "Happen and occur are intransitive in this meaning. Use happened or occurred, without a passive was.",
+      "qualification": "Passive voice is valid with suitable verbs: The photo was taken yesterday.",
+      "examples": [
+        [
+          "The incident happened yesterday.",
+          "An event occurred."
+        ],
+        [
+          "The meeting was cancelled.",
+          "A valid passive with cancel."
+        ]
+      ],
+      "practice": "Repair: The situation was occurred suddenly.",
+      "answer": "The situation occurred suddenly / It happened suddenly.",
+      "accent": "#285c50",
+      "tint": "#e5ede5"
+    },
+    {
+      "id": "G20",
+      "category": "Grammar",
+      "title": "Consists of",
+      "prompt": "consists of\nor is composed of",
+      "explanation": "Use consists of to say what something contains. Alternatively, use is composed of or is made up of.",
+      "qualification": "Do not combine is with the base form consist.",
+      "examples": [
+        [
+          "The course consists of three parts.",
+          "A complete active verb phrase"
+        ],
+        [
+          "The course is made up of three parts.",
+          "A different complete phrase"
+        ]
+      ],
+      "practice": "Repair: The system is consist of several parts.",
+      "answer": "The system consists of several parts.",
+      "accent": "#285c50",
+      "tint": "#e5ede5"
+    },
+    {
+      "id": "G21",
+      "category": "Grammar",
+      "title": "Questions with be and do",
+      "prompt": "Is she friendly?\nDoes she like art?",
+      "explanation": "With be, put be before the subject. With an ordinary present-simple verb, use do or does and the base verb.",
+      "qualification": "What is she like? asks about character. What does she like? asks about preferences.",
+      "examples": [
+        [
+          "Is music important to you?",
+          "Question with be"
+        ],
+        [
+          "Does she enjoy music?",
+          "does + base verb"
+        ]
+      ],
+      "practice": "Repair: Does she is interested in art?",
+      "answer": "Is she interested in art?",
+      "accent": "#285c50",
+      "tint": "#e5ede5"
+    },
+    {
+      "id": "G22",
+      "category": "Grammar",
+      "title": "Keep a list parallel",
+      "prompt": "I enjoy reading,\nwalking, and…",
+      "explanation": "When several activities share enjoy as their verb, use -ing for each activity.",
+      "qualification": "Separate clauses can use different forms: I enjoy reading, and I walk every day.",
+      "examples": [
+        [
+          "I enjoy reading and taking notes.",
+          "Two objects of enjoy"
+        ],
+        [
+          "I enjoy reading, and I take notes.",
+          "Two separate clauses"
+        ]
+      ],
+      "practice": "Complete: I enjoy swimming and ___ time outdoors. (spend)",
+      "answer": "spending, when both activities depend on enjoy.",
+      "accent": "#285c50",
+      "tint": "#e5ede5"
+    },
+    {
+      "id": "G23",
+      "category": "Grammar",
+      "title": "Hope or wish?",
+      "prompt": "I wish you\nhave a good time?",
+      "explanation": "For an ordinary positive hope about a future experience, use hope + clause. Wish can take a person and a noun phrase.",
+      "qualification": "These are different patterns, not simply different levels of politeness.",
+      "examples": [
+        [
+          "I hope you have a good time.",
+          "hope + clause"
+        ],
+        [
+          "I wish you a pleasant trip.",
+          "wish + person + noun phrase"
+        ]
+      ],
+      "practice": "Repair: I wish you have a good weekend.",
+      "answer": "I hope you have a good weekend / Have a good weekend!",
+      "accent": "#285c50",
+      "tint": "#e5ede5"
+    },
+    {
+      "id": "G24",
+      "category": "Grammar",
+      "title": "Cleaner, not more cleaner",
+      "prompt": "cleaner\nmore beautiful",
+      "explanation": "Many short adjectives use -er. Longer adjectives often use more. Avoid combining both markers for the same ordinary comparison.",
+      "qualification": "Compare equivalent things: a price with a price, not a price with a shop.",
+      "examples": [
+        [
+          "This room is cleaner.",
+          "Not more cleaner"
+        ],
+        [
+          "This design is more beautiful.",
+          "beautiful is an adjective."
+        ]
+      ],
+      "practice": "Repair: This route is more shorter.",
+      "answer": "This route is shorter.",
+      "accent": "#285c50",
+      "tint": "#e5ede5"
+    },
+    {
+      "id": "V01",
+      "category": "Vocabulary",
+      "title": "Listen or hear?",
+      "prompt": "I listened.\nBut did I hear?",
+      "explanation": "Listen to focuses on paying attention. Hear focuses on perceiving a sound. Remember to after listen when naming its object.",
+      "qualification": "Hearing is not always accidental: I can hear you is about perception.",
+      "examples": [
+        [
+          "I listened to the instructions.",
+          "I paid attention."
+        ],
+        [
+          "I could hear music next door.",
+          "The sound reached me."
+        ]
+      ],
+      "practice": "Complete: Please listen ___ the recording.",
+      "answer": "to: Please listen to the recording.",
+      "accent": "#91492f",
+      "tint": "#f1e3d8"
+    },
+    {
+      "id": "V02",
+      "category": "Vocabulary",
+      "title": "Remember or remind?",
+      "prompt": "This photo\nremembers me?",
+      "explanation": "Remember means have or bring something to mind. Remind means cause someone to remember or think about something.",
+      "qualification": "Use remind someone of something, or remind someone to do something.",
+      "examples": [
+        [
+          "I remember that song.",
+          "The memory is mine."
+        ],
+        [
+          "That song reminds me of summer.",
+          "The song brings a memory back."
+        ]
+      ],
+      "practice": "Complete: Please ___ me to check my notes.",
+      "answer": "remind: Please remind me to check my notes.",
+      "accent": "#91492f",
+      "tint": "#f1e3d8"
+    },
+    {
+      "id": "V03",
+      "category": "Vocabulary",
+      "title": "Remember doing or to do?",
+      "prompt": "remember locking\nremember to lock",
+      "explanation": "Remember doing means recall an experience. Remember to do means not forget a task that needs doing.",
+      "qualification": "The verb form changes the meaning; neither pattern is automatically wrong.",
+      "examples": [
+        [
+          "I remember locking the door.",
+          "I recall the completed action."
+        ],
+        [
+          "Remember to lock the door.",
+          "Do not forget the task."
+        ]
+      ],
+      "practice": "You are giving a reminder before someone leaves. Choose: Remember locking / to lock the door.",
+      "answer": "Remember to lock the door.",
+      "accent": "#91492f",
+      "tint": "#f1e3d8"
+    },
+    {
+      "id": "V04",
+      "category": "Vocabulary",
+      "title": "Memorise, remember, memory",
+      "prompt": "memorise ≠ memory",
+      "explanation": "Memorise means deliberately learn something for later recall. Remember is broader. Memory is a noun for the ability or an experience recalled.",
+      "qualification": "Memorize is the usual American spelling; memorise is common in British English.",
+      "examples": [
+        [
+          "I memorised the key words.",
+          "A deliberate learning activity"
+        ],
+        [
+          "I have fond memories of that trip.",
+          "Remembered experiences"
+        ]
+      ],
+      "practice": "Complete: This is one of my happiest ___. (memory)",
+      "answer": "memories: one of my happiest memories.",
+      "accent": "#91492f",
+      "tint": "#f1e3d8"
+    },
+    {
+      "id": "V05",
+      "category": "Vocabulary",
+      "title": "Recognise or remember?",
+      "prompt": "A familiar face.\nA forgotten name.",
+      "explanation": "Recognise means identify something or someone as familiar. Remember means retain or recall information.",
+      "qualification": "You can recognise a person without remembering their name.",
+      "examples": [
+        [
+          "I recognised her immediately.",
+          "I knew who she was."
+        ],
+        [
+          "I could not remember her name.",
+          "The name did not come to mind."
+        ]
+      ],
+      "practice": "Complete: I ___ the melody, but I cannot remember the title.",
+      "answer": "recognise: I recognise the melody, but I cannot remember the title.",
+      "accent": "#91492f",
+      "tint": "#f1e3d8"
+    },
+    {
+      "id": "V06",
+      "category": "Vocabulary",
+      "title": "See or meet?",
+      "prompt": "We met\nby chance.",
+      "explanation": "Meet can describe a planned meeting or an unexpected encounter. See can mean perceive visually or visit someone.",
+      "qualification": "Run into and bump into make an unexpected encounter especially clear.",
+      "examples": [
+        [
+          "We met by chance at a café.",
+          "An unplanned encounter"
+        ],
+        [
+          "I am seeing a friend tomorrow.",
+          "A planned visit or meeting"
+        ]
+      ],
+      "practice": "Is We met by chance incorrect because meet must be planned?",
+      "answer": "No. Meet can describe both arranged and chance encounters.",
+      "accent": "#91492f",
+      "tint": "#f1e3d8"
+    },
+    {
+      "id": "V07",
+      "category": "Vocabulary",
+      "title": "Approach or go up to?",
+      "prompt": "approach the desk\ngo up to the desk",
+      "explanation": "Approach takes a direct object. Go up to includes to. Both can describe moving closer to a person or a thing.",
+      "qualification": "Approach is often more formal; choose the wording that suits the situation.",
+      "examples": [
+        [
+          "I approached the entrance.",
+          "No extra to after approach."
+        ],
+        [
+          "I went up to the counter.",
+          "A natural conversational option."
+        ]
+      ],
+      "practice": "Repair: I approached to the window.",
+      "answer": "I approached the window / I went up to the window.",
+      "accent": "#91492f",
+      "tint": "#f1e3d8"
+    },
+    {
+      "id": "V08",
+      "category": "Vocabulary",
+      "title": "Cook, cooker, or chef?",
+      "prompt": "A great cook.\nAn electric cooker.",
+      "explanation": "A cook is a person who prepares food. A chef is a professional cook. A cooker is a cooking appliance, especially in British English.",
+      "qualification": "Cook is also a verb: I cook at home.",
+      "examples": [
+        [
+          "My friend is a great cook.",
+          "A person"
+        ],
+        [
+          "We bought a rice cooker.",
+          "An appliance"
+        ]
+      ],
+      "practice": "Choose: The restaurant hired a new chef / cooker.",
+      "answer": "chef: a professional who prepares food.",
+      "accent": "#91492f",
+      "tint": "#f1e3d8"
+    },
+    {
+      "id": "V09",
+      "category": "Vocabulary",
+      "title": "Staff or stuff?",
+      "prompt": "staff = employees\nstuff = things",
+      "explanation": "Staff refers to employees collectively. Stuff is an informal uncountable word for things or material.",
+      "qualification": "Use a member of staff or a staff member for one employee. Staff agreement varies by dialect and context.",
+      "examples": [
+        [
+          "A member of staff helped me.",
+          "One employee"
+        ],
+        [
+          "I left my stuff in a locker.",
+          "My belongings"
+        ]
+      ],
+      "practice": "Complete: Could a member of ___ help me?",
+      "answer": "staff: Could a member of staff help me?",
+      "accent": "#91492f",
+      "tint": "#f1e3d8"
+    },
+    {
+      "id": "V10",
+      "category": "Vocabulary",
+      "title": "Embarrassed or embarrassing?",
+      "prompt": "I felt embarrassed.\nIt was embarrassing.",
+      "explanation": "Embarrassed describes the feeling. Embarrassing describes what causes it. Embarrassment is the noun.",
+      "qualification": "After feel, an adjective is often natural. After cause, a noun can fit.",
+      "examples": [
+        [
+          "I felt embarrassed about the mix-up.",
+          "My reaction"
+        ],
+        [
+          "It was an embarrassing moment.",
+          "The moment caused the feeling."
+        ]
+      ],
+      "practice": "Repair: The mistake made me embarrassment.",
+      "answer": "The mistake made me embarrassed / The mistake caused embarrassment.",
+      "accent": "#91492f",
+      "tint": "#f1e3d8"
+    },
+    {
+      "id": "V11",
+      "category": "Vocabulary",
+      "title": "Proud or arrogant?",
+      "prompt": "proud of your work\narrogant towards others",
+      "explanation": "Proud can express satisfaction in an achievement. Arrogant describes behaving as if you are superior to other people.",
+      "qualification": "Pride has several meanings; context determines whether it is positive or negative.",
+      "examples": [
+        [
+          "She takes pride in her work.",
+          "Positive satisfaction"
+        ],
+        [
+          "His arrogant tone upset the team.",
+          "An attitude of superiority"
+        ]
+      ],
+      "practice": "Complete: I am proud ___ the progress I have made.",
+      "answer": "of: I am proud of the progress I have made.",
+      "accent": "#91492f",
+      "tint": "#f1e3d8"
+    },
+    {
+      "id": "V12",
+      "category": "Vocabulary",
+      "title": "Competition or rivalry?",
+      "prompt": "an event\nor a relationship?",
+      "explanation": "Competition can name an organised event. Rivalry describes a competitive relationship, often over time. They are not interchangeable in every sentence.",
+      "qualification": "Contest often fits an event. It or the event can reduce repetition without changing the meaning.",
+      "examples": [
+        [
+          "We entered a writing competition.",
+          "An organised event"
+        ],
+        [
+          "There is a rivalry between the teams.",
+          "A relationship between competitors"
+        ]
+      ],
+      "practice": "Choose: She won the singing contest / rivalry.",
+      "answer": "contest: the sentence refers to an organised event.",
+      "accent": "#91492f",
+      "tint": "#f1e3d8"
+    },
+    {
+      "id": "V13",
+      "category": "Vocabulary",
+      "title": "Award, prize, or reward?",
+      "prompt": "win a prize\nreceive a reward",
+      "explanation": "An award recognises achievement. A prize is something won. A reward is a benefit or payment for an action or service.",
+      "qualification": "The meanings can overlap. Choose a word that matches why something was given.",
+      "examples": [
+        [
+          "The film won an award.",
+          "Recognition of achievement"
+        ],
+        [
+          "There is a reward for finding the bag.",
+          "Payment for a helpful action"
+        ]
+      ],
+      "practice": "Choose a natural word: Our team won first ___ in the contest.",
+      "answer": "prize: Our team won first prize in the contest.",
+      "accent": "#91492f",
+      "tint": "#f1e3d8"
+    },
+    {
+      "id": "V14",
+      "category": "Vocabulary",
+      "title": "Many or various?",
+      "prompt": "many products\nvarious products",
+      "explanation": "Many emphasises quantity. Various emphasises different examples or kinds. Diverse highlights variety or differences.",
+      "qualification": "A number of means several or a quantity of; it does not always mean very many.",
+      "examples": [
+        [
+          "The shop sells many notebooks.",
+          "A large quantity"
+        ],
+        [
+          "The shop sells various types of notebook.",
+          "Different kinds"
+        ]
+      ],
+      "practice": "Which better highlights different kinds: many options or various options?",
+      "answer": "Various options highlights variety. Many options highlights quantity.",
+      "accent": "#91492f",
+      "tint": "#f1e3d8"
+    },
+    {
+      "id": "V15",
+      "category": "Vocabulary",
+      "title": "What does multiple mean?",
+      "prompt": "multiple items\n≠ one-stop shopping",
+      "explanation": "Multiple means more than one. It does not tell us whether the items come from one shop or several shops.",
+      "qualification": "To express convenience, say I can get everything I need in one place.",
+      "examples": [
+        [
+          "I ordered multiple items.",
+          "More than one item"
+        ],
+        [
+          "I got everything in one place.",
+          "One location met my needs."
+        ]
+      ],
+      "practice": "Does I bought multiple items tell us how many shops I visited?",
+      "answer": "No. It tells us there was more than one item, not how many shops.",
+      "accent": "#91492f",
+      "tint": "#f1e3d8"
+    },
+    {
+      "id": "V16",
+      "category": "Vocabulary",
+      "title": "Buy, purchase, or get?",
+      "prompt": "I bought a book.\nI got a book.",
+      "explanation": "Buy means obtain by paying. Purchase is usually more formal. Get has a broader meaning and does not always involve payment.",
+      "qualification": "Ordinary words such as buy are completely natural in spoken English.",
+      "examples": [
+        [
+          "I bought a book yesterday.",
+          "Payment is part of the meaning."
+        ],
+        [
+          "I got a book for my birthday.",
+          "It may have been a gift."
+        ]
+      ],
+      "practice": "Does I got a book always mean I paid for it?",
+      "answer": "No. Get can mean receive, borrow, buy, or obtain in other ways; context decides.",
+      "accent": "#91492f",
+      "tint": "#f1e3d8"
+    },
+    {
+      "id": "V17",
+      "category": "Vocabulary",
+      "title": "Rent or buy?",
+      "prompt": "rent a bike\nbuy a bike",
+      "explanation": "Rent means pay to use something temporarily. Buy means pay to obtain ownership.",
+      "qualification": "Borrow usually means use something temporarily and return it, without paying a rental fee.",
+      "examples": [
+        [
+          "We rented bikes for the afternoon.",
+          "Temporary paid use"
+        ],
+        [
+          "We bought bikes last year.",
+          "A purchase for ownership"
+        ]
+      ],
+      "practice": "You pay to use a boat for one hour. Did you rent it or buy it?",
+      "answer": "You rented it.",
+      "accent": "#91492f",
+      "tint": "#f1e3d8"
+    },
+    {
+      "id": "V18",
+      "category": "Vocabulary",
+      "title": "Three ways to talk about rest",
+      "prompt": "unwind\nclear my head\ntake a break",
+      "explanation": "Unwind means relax after tension or effort. Clear my head means make thinking feel clearer. Take a break means pause an activity.",
+      "qualification": "These expressions overlap, but describe different aspects of resting.",
+      "examples": [
+        [
+          "I read for a while to unwind.",
+          "Relaxing after a busy day"
+        ],
+        [
+          "A short walk helps me clear my head.",
+          "Making space to think clearly"
+        ]
+      ],
+      "practice": "Complete: Let us take a ___ from studying.",
+      "answer": "break: Let us take a break from studying.",
+      "accent": "#91492f",
+      "tint": "#f1e3d8"
+    },
+    {
+      "id": "V19",
+      "category": "Vocabulary",
+      "title": "Convenient or compatible?",
+      "prompt": "a convenient time\ncompatible people",
+      "explanation": "Convenient means practical or suitable for your needs. Compatible describes things or people that can work well together.",
+      "qualification": "For relationships, get on well or have a lot in common may express the meaning more clearly.",
+      "examples": [
+        [
+          "Is this a convenient time to call?",
+          "Does it fit your needs?"
+        ],
+        [
+          "The software is compatible with my laptop.",
+          "They can work together."
+        ]
+      ],
+      "practice": "Complete: The station is nearby, so the location is ___.",
+      "answer": "convenient: the location is practical for travel.",
+      "accent": "#91492f",
+      "tint": "#f1e3d8"
+    },
+    {
+      "id": "V20",
+      "category": "Vocabulary",
+      "title": "A poem or poetry?",
+      "prompt": "a poem\nsome poetry",
+      "explanation": "Poem is countable: one poem, two poems. Poetry is normally uncountable when naming the art form or a body of poems.",
+      "qualification": "Use a piece of poetry when you need a countable unit.",
+      "examples": [
+        [
+          "I read a short poem.",
+          "One individual work"
+        ],
+        [
+          "I enjoy reading poetry.",
+          "The art form in general"
+        ]
+      ],
+      "practice": "Repair: She wrote two poetries.",
+      "answer": "She wrote two poems.",
+      "accent": "#91492f",
+      "tint": "#f1e3d8"
+    },
+    {
+      "id": "P01",
+      "category": "Pronunciation",
+      "title": "The T in often",
+      "prompt": "of-ten\nor of-en?",
+      "explanation": "Both pronunciations of often, with and without /t/, are accepted. A silent-letter shortcut should not mark either one as wrong.",
+      "qualification": "Listen to a dictionary recording in your chosen reference accent and use a comfortable form.",
+      "examples": [
+        [
+          "often: with /t/",
+          "An accepted pronunciation"
+        ],
+        [
+          "often: without /t/",
+          "Also an accepted pronunciation"
+        ]
+      ],
+      "practice": "True or false: The /t/ in often must always be silent.",
+      "answer": "False. Both forms are accepted.",
+      "accent": "#425a88",
+      "tint": "#e5eaf3"
+    },
+    {
+      "id": "P02",
+      "category": "Pronunciation",
+      "title": "The sound at the end of -ing",
+      "prompt": "sing /sɪŋ/\nnot sin /sɪn/",
+      "explanation": "The usual dictionary ending of -ing is /ɪŋ/. For /ŋ/, the back of the tongue makes the closure. Do not add a separate hard /ɡ/.",
+      "qualification": "Informal -in’ with /ɪn/ is a real accent and style variant, not the rule for every -ing ending.",
+      "examples": [
+        [
+          "sin /sɪn/ → sing /sɪŋ/",
+          "The final consonant changes."
+        ],
+        [
+          "singing /ˈsɪŋɪŋ/",
+          "Two /ŋ/ sounds in this reference form."
+        ]
+      ],
+      "practice": "Which sound normally ends sing: /n/, /ŋ/, or /ŋɡ/?",
+      "answer": "/ŋ/. There is no extra /ɡ/ in the reference pronunciation.",
+      "accent": "#425a88",
+      "tint": "#e5eaf3"
+    },
+    {
+      "id": "P03",
+      "category": "Pronunciation",
+      "title": "Singer is not like finger",
+      "prompt": "singer: /ŋ/\nfinger: /ŋɡ/",
+      "explanation": "In common reference pronunciations, singer has /ŋ/ without a separate /ɡ/. Finger contains /ŋɡ/.",
+      "qualification": "Learn the pronunciation of the whole word; the letters ng do not guarantee one pattern in every accent or word.",
+      "examples": [
+        [
+          "singer /ˈsɪŋə/",
+          "A common non-rhotic reference form"
+        ],
+        [
+          "finger /ˈfɪŋɡə/",
+          "The same reference accent includes /ɡ/."
+        ]
+      ],
+      "practice": "In these reference forms, which word includes /ɡ/: singer or finger?",
+      "answer": "finger. Other accents may realise these words differently.",
+      "accent": "#425a88",
+      "tint": "#e5eaf3"
+    },
+    {
+      "id": "P04",
+      "category": "Pronunciation",
+      "title": "The sound in watch",
+      "prompt": "watch → /tʃ/\nbutcher → /tʃ/",
+      "explanation": "The spelling tch commonly represents the affricate /tʃ/: a stop and release as one sound. Do not reduce watch to a final /ʃ/.",
+      "qualification": "Butcher also has /tʃ/; it is not an exception requiring a separate extra /t/.",
+      "examples": [
+        [
+          "watch, catch, match",
+          "All end with /tʃ/."
+        ],
+        [
+          "butcher /ˈbʊtʃə/",
+          "A common non-rhotic reference form"
+        ]
+      ],
+      "practice": "Does match end with /ʃ/ or /tʃ/?",
+      "answer": "/tʃ/. Practise catch, match, watch slowly, then in a short sentence.",
+      "accent": "#425a88",
+      "tint": "#e5eaf3"
+    },
+    {
+      "id": "P05",
+      "category": "Pronunciation",
+      "title": "Know and write",
+      "prompt": "know → /n/\nwrite → /r/",
+      "explanation": "In familiar words beginning kn-, the k is silent. In words beginning wr-, the w is silent.",
+      "qualification": "These are useful word-initial patterns, not rules for every k–n or w–r sequence across words.",
+      "examples": [
+        [
+          "know, knee, knife",
+          "Begin with /n/."
+        ],
+        [
+          "write, wrist, wrong",
+          "Begin with /r/ in reference forms."
+        ]
+      ],
+      "practice": "Which initial letters are silent in knife and wrist?",
+      "answer": "K in knife; W in wrist.",
+      "accent": "#425a88",
+      "tint": "#e5eaf3"
+    },
+    {
+      "id": "P06",
+      "category": "Pronunciation",
+      "title": "The hidden B",
+      "prompt": "climb · thumb\ndebt · doubt",
+      "explanation": "B is silent in words such as climb, thumb, debt, and doubt. Learning these word groups helps you recognise the pattern.",
+      "qualification": "Do not mute every b beside m or t. Member and obtain retain /b/.",
+      "examples": [
+        [
+          "climb /klaɪm/",
+          "No final /b/"
+        ],
+        [
+          "debt /det/",
+          "No /b/ before /t/"
+        ]
+      ],
+      "practice": "Does obtain lose its /b/ because b is next to t?",
+      "answer": "No. Obtain retains /b/; this is not a universal letter-pair rule.",
+      "accent": "#425a88",
+      "tint": "#e5eaf3"
+    },
+    {
+      "id": "P07",
+      "category": "Pronunciation",
+      "title": "Sign, but signal",
+      "prompt": "sign: no /ɡ/\nsignal: /ɡ/",
+      "explanation": "G is silent in sign, design, and gnome. A related word may pronounce it: signal and signature include /ɡ/.",
+      "qualification": "The spelling gn does not always mean silent g; magnet also includes /ɡ/.",
+      "examples": [
+        [
+          "sign /saɪn/",
+          "No /ɡ/"
+        ],
+        [
+          "signal /ˈsɪɡnəl/",
+          "/ɡ/ is present."
+        ]
+      ],
+      "practice": "Which has a /ɡ/ in the reference pronunciation: sign or signal?",
+      "answer": "signal. Compare sign /saɪn/ with signal /ˈsɪɡnəl/.",
+      "accent": "#425a88",
+      "tint": "#e5eaf3"
+    },
+    {
+      "id": "P08",
+      "category": "Pronunciation",
+      "title": "When L is silent",
+      "prompt": "walk · calm\ncould · would",
+      "explanation": "L is silent in common words such as walk, talk, calm, half, could, and would. Learn the words alongside the patterns.",
+      "qualification": "Always and shoulder keep /l/. Almond has accepted pronunciations with and without /l/.",
+      "examples": [
+        [
+          "could /kʊd/ → would /wʊd/",
+          "Neither contains /l/."
+        ],
+        [
+          "always → shoulder",
+          "Both contain /l/."
+        ]
+      ],
+      "practice": "Must almond have a silent L in every accepted pronunciation?",
+      "answer": "No. Accepted pronunciations include forms with and without /l/.",
+      "accent": "#425a88",
+      "tint": "#e5eaf3"
+    },
+    {
+      "id": "P09",
+      "category": "Pronunciation",
+      "title": "GU and QU need a closer look",
+      "prompt": "guess → /ɡ/\nquick → /kw/",
+      "explanation": "Guess and guitar begin with /ɡ/, without /w/. Quick and queen begin with /kw/. These spellings do not follow one universal silent-U rule.",
+      "qualification": "Letters work together to represent sounds; not every written letter has a separate sound.",
+      "examples": [
+        [
+          "guess /ɡes/",
+          "No /w/ after /ɡ/"
+        ],
+        [
+          "quick /kwɪk/",
+          "Includes /w/ after /k/"
+        ]
+      ],
+      "practice": "Does queen begin with /k/ alone or /kw/?",
+      "answer": "/kw/: queen /kwiːn/.",
+      "accent": "#425a88",
+      "tint": "#e5eaf3"
+    },
+    {
+      "id": "P10",
+      "category": "Pronunciation",
+      "title": "Three sounds for SC",
+      "prompt": "scene → /s/\nschool → /sk/\nconscious → /ʃ/",
+      "explanation": "SC is not always pronounced the same way. Compare scene, school, and conscious before applying a silent-C shortcut.",
+      "qualification": "Pronunciation belongs to the whole word, not just a pair of letters.",
+      "examples": [
+        [
+          "scene /siːn/",
+          "Starts with /s/, not /sk/."
+        ],
+        [
+          "school /skuːl/",
+          "Starts with /sk/."
+        ]
+      ],
+      "practice": "Which sound is represented by sc in conscious: /s/, /sk/, or /ʃ/?",
+      "answer": "/ʃ/ in common reference pronunciations of conscious.",
+      "accent": "#425a88",
+      "tint": "#e5eaf3"
+    },
+    {
+      "id": "P11",
+      "category": "Pronunciation",
+      "title": "Hour, what, and who",
+      "prompt": "hour → vowel\nwhat → /w/\nwho → /h/",
+      "explanation": "Hour and honest have a silent h. What and where usually begin with /w/. Who begins with /h/, without /w/.",
+      "qualification": "Some accents distinguish wh from w, so what can have a different initial sound.",
+      "examples": [
+        [
+          "an hour / an honest answer",
+          "The next sound is a vowel."
+        ],
+        [
+          "who /huː/",
+          "The h sound is present."
+        ]
+      ],
+      "practice": "Choose the article: a / an honest mistake.",
+      "answer": "an honest mistake, because honest begins with a vowel sound.",
+      "accent": "#425a88",
+      "tint": "#e5eaf3"
+    },
+    {
+      "id": "P12",
+      "category": "Pronunciation",
+      "title": "Silent P, word by word",
+      "prompt": "psychology\ncupboard\nraspberry",
+      "explanation": "P is silent in common pronunciations of psychology, pneumonia, cupboard, and raspberry. Recognise these words as useful groups.",
+      "qualification": "Upbeat keeps /p/: there is no universal rule that p disappears before b.",
+      "examples": [
+        [
+          "psychology → initial /s/",
+          "No initial /p/"
+        ],
+        [
+          "cupboard /ˈkʌbəd/",
+          "A common non-rhotic reference form"
+        ]
+      ],
+      "practice": "Does psychology begin with /p/, /ps/, or /s/?",
+      "answer": "/s/ in common reference pronunciations.",
+      "accent": "#425a88",
+      "tint": "#e5eaf3"
+    },
+    {
+      "id": "P13",
+      "category": "Pronunciation",
+      "title": "Can or can’t?",
+      "prompt": "Listen beyond\nthe final T.",
+      "explanation": "Use sentence meaning, stress, vowel quality, and consonant cues together. A clearly released /t/ is not the only clue to can’t.",
+      "qualification": "Can often has a weak form /kən/. The vowel in can’t differs across accents.",
+      "examples": [
+        [
+          "I can help.",
+          "Can may be unstressed and reduced."
+        ],
+        [
+          "Did you say you can or you can’t?",
+          "Clarify when the distinction matters."
+        ]
+      ],
+      "practice": "If you cannot hear a clear final /t/, must the word be can?",
+      "answer": "No. The /t/ may lack an audible release or have another realisation. Check other cues or ask.",
+      "accent": "#425a88",
+      "tint": "#e5eaf3"
+    },
+    {
+      "id": "P14",
+      "category": "Pronunciation",
+      "title": "Linking is not deletion",
+      "prompt": "A quiet consonant\nmay still be there.",
+      "explanation": "Linking connects sounds across word boundaries. Elision omits a sound. An unreleased stop keeps its closure without a clear release burst.",
+      "qualification": "Do not delete every final /t/ or /d/ before another consonant.",
+      "examples": [
+        [
+          "turn it off",
+          "Sounds link across word boundaries."
+        ],
+        [
+          "best man",
+          "Some speakers may omit /t/ in this cluster."
+        ]
+      ],
+      "practice": "If a stop has no audible release, does that prove it was deleted?",
+      "answer": "No. The articulatory closure may remain even without a distinct release burst.",
+      "accent": "#425a88",
+      "tint": "#e5eaf3"
+    },
+    {
+      "id": "P15",
+      "category": "Pronunciation",
+      "title": "Three sounds for plural S",
+      "prompt": "books /s/\ndogs /z/\nbuses /ɪz/",
+      "explanation": "Use /s/ after voiceless non-sibilants, /z/ after voiced non-sibilants, and /ɪz/ after sibilants such as /s, z, ʃ, ʒ, tʃ, dʒ/.",
+      "qualification": "Choose by the preceding sound, not the letter. Some accents use a different vowel in the extra syllable.",
+      "examples": [
+        [
+          "books → /s/; apples → /z/",
+          "No extra syllable"
+        ],
+        [
+          "watches → /ɪz/",
+          "An extra syllable"
+        ]
+      ],
+      "practice": "Which plural ending does bags take: /s/, /z/, or /ɪz/?",
+      "answer": "/z/, because /ɡ/ is a voiced non-sibilant.",
+      "accent": "#425a88",
+      "tint": "#e5eaf3"
+    },
+    {
+      "id": "P16",
+      "category": "Pronunciation",
+      "title": "Various and diversity",
+      "prompt": "VARious\ndiVERsity",
+      "explanation": "Various has first-syllable stress. Diversity has second-syllable stress. Practise the stressed syllable clearly, without giving every syllable equal weight.",
+      "qualification": "The capitals show stress only; use normal spelling in ordinary writing.",
+      "examples": [
+        [
+          "VARious options",
+          "Stress the first syllable of various."
+        ],
+        [
+          "cultural diVERsity",
+          "Stress the second syllable of diversity."
+        ]
+      ],
+      "practice": "Which syllable is stressed in diversity: first, second, or third?",
+      "answer": "The second syllable. Listen to a dictionary model and repeat it in a phrase.",
+      "accent": "#425a88",
+      "tint": "#e5eaf3"
+    },
+    {
+      "id": "P17",
+      "category": "Pronunciation",
+      "title": "Same spelling, different vowels",
+      "prompt": "moon /uː/\nbook /ʊ/\nblood /ʌ/",
+      "explanation": "The spelling oo represents different vowels in these words. Learn a spelling pattern with examples and counterexamples.",
+      "qualification": "These are common reference forms. Accent differences can affect the vowels you hear.",
+      "examples": [
+        [
+          "moon /muːn/ → book /bʊk/",
+          "Two different vowels"
+        ],
+        [
+          "blood /blʌd/",
+          "A third vowel in this reference accent"
+        ]
+      ],
+      "practice": "Does book have the same vowel as moon in these reference forms?",
+      "answer": "No. Book uses /ʊ/ and moon uses /uː/.",
+      "accent": "#425a88",
+      "tint": "#e5eaf3"
+    },
+    {
+      "id": "P18",
+      "category": "Pronunciation",
+      "title": "Same sound, different word",
+      "prompt": "buy · by · bye",
+      "explanation": "Homophones share a pronunciation in a particular accent, but their meanings or spellings differ. Context helps you identify the word.",
+      "qualification": "Not every pair matches in every accent: aunt and ant may sound the same or different.",
+      "examples": [
+        [
+          "I will buy it by Friday.",
+          "buy = purchase; by = no later than"
+        ],
+        [
+          "Please write the right answer.",
+          "write = produce text; right = correct"
+        ]
+      ],
+      "practice": "Complete: I can ___ the sea. (see / sea)",
+      "answer": "see: I can see the sea.",
+      "accent": "#425a88",
+      "tint": "#e5eaf3"
+    },
+    {
+      "id": "P19",
+      "category": "Pronunciation",
+      "title": "Sounds can adapt",
+      "prompt": "ten bucks\ndid you",
+      "explanation": "In connected speech, a sound may adapt to a neighbour. In ten bucks, /n/ may become [m]. In did you, /d/ + /j/ may combine as [dʒ].",
+      "qualification": "These are possible realisations, not compulsory changes or spelling rules.",
+      "examples": [
+        [
+          "ten bucks → possible [m]",
+          "The nasal adapts before /b/."
+        ],
+        [
+          "did you → possible [dʒ]",
+          "Two neighbouring sounds combine."
+        ]
+      ],
+      "practice": "If /n/ becomes [m] before /b/, is that assimilation or deletion?",
+      "answer": "Assimilation: the sound changes rather than simply disappearing.",
+      "accent": "#425a88",
+      "tint": "#e5eaf3"
+    },
+    {
+      "id": "P20",
+      "category": "Pronunciation",
+      "title": "Accent is not a ranking",
+      "prompt": "car · water\nSame words.\nDifferent accents.",
+      "explanation": "Many American accents pronounce the r in car. Some British accents do not in isolation. American water often contains a flap [ɾ].",
+      "qualification": "British and American accents both vary. A flap is not simply the ordinary English r sound.",
+      "examples": [
+        [
+          "car → rhotic or non-rhotic",
+          "Whether post-vocalic r is pronounced"
+        ],
+        [
+          "water → possible flap [ɾ]",
+          "A brief tongue-tip contact in many US accents"
+        ]
+      ],
+      "practice": "Are mixed accent features automatically pronunciation errors?",
+      "answer": "No. Aim for intelligibility and learn to recognise accent variation.",
+      "accent": "#425a88",
+      "tint": "#e5eaf3"
+    },
+    {
+      "id": "S01",
+      "category": "Speaking",
+      "title": "Describe more than an adjective",
+      "prompt": "It is nice.\nWhat makes it nice?",
+      "explanation": "Build a description from one clear detail and its effect on you: place → detail → personal meaning.",
+      "qualification": "Choose useful details instead of listing adjectives. This is a flexible practice framework, not a required exam formula.",
+      "examples": [
+        [
+          "The reading room has large windows, so it feels bright even on cloudy days.",
+          "A visible detail explains the impression."
+        ],
+        [
+          "What I like most is the quiet / the natural light / the comfortable seating.",
+          "Choose one feature and explain why it matters."
+        ]
+      ],
+      "practice": "Describe a fictional study space in two sentences. Include a detail and its effect.",
+      "answer": "One possible answer: The room has a desk beside the window. The natural light makes it a pleasant place to read.",
+      "accent": "#755178",
+      "tint": "#eee4ee"
+    },
+    {
+      "id": "S02",
+      "category": "Speaking",
+      "title": "Give your story a turning point",
+      "prompt": "What happened?\nWhat changed?",
+      "explanation": "Use setting → unexpected change → response → outcome. Keep the main events in a clear time order.",
+      "qualification": "Use past perfect when it helps show an earlier event; do not add it to every past sentence.",
+      "examples": [
+        [
+          "I was waiting for the bus when I realised I had left my bag at home.",
+          "Background → discovery → earlier event"
+        ],
+        [
+          "I went back for it and caught the next bus. In the end, I arrived on time.",
+          "Response → outcome"
+        ]
+      ],
+      "practice": "Continue this fictional story: I was about to give a presentation when the screen went blank…",
+      "answer": "One possible answer: I explained the main idea without the slides. A colleague fixed the screen, and I continued with the examples.",
+      "accent": "#755178",
+      "tint": "#eee4ee"
+    },
+    {
+      "id": "S03",
+      "category": "Speaking",
+      "title": "Develop an opinion",
+      "prompt": "I agree.\nBecause…?",
+      "explanation": "Try position → reason → example → qualification. Explain why your example supports your view.",
+      "qualification": "A qualification can show the limits of your claim. You do not need to force four steps into every short answer.",
+      "examples": [
+        [
+          "I think libraries still matter because they give people access to books without buying them.",
+          "Position + reason"
+        ],
+        [
+          "For example, students can borrow textbooks. However, opening hours affect how useful the service is.",
+          "Example + qualification"
+        ]
+      ],
+      "practice": "Give one reason for keeping public libraries, then add one limitation.",
+      "answer": "One possible answer: Libraries offer quiet study space, but they need suitable opening hours to serve more people.",
+      "accent": "#755178",
+      "tint": "#eee4ee"
+    },
+    {
+      "id": "S04",
+      "category": "Speaking",
+      "title": "Describe what you can see",
+      "prompt": "I can see…\nThey might be…",
+      "explanation": "State visible details directly. Use might, seems, or appears when you infer something the picture does not establish.",
+      "qualification": "A picture alone rarely proves someone’s occupation, relationship, diagnosis, or emotion.",
+      "examples": [
+        [
+          "Two people are sitting at a table with notebooks.",
+          "A description of visible details"
+        ],
+        [
+          "They might be preparing for a meeting.",
+          "A possible interpretation, not a fact"
+        ]
+      ],
+      "practice": "A picture shows someone holding a suitcase. Write one observation and one cautious inference.",
+      "answer": "One possible answer: The person is holding a suitcase. They might be about to travel.",
+      "accent": "#755178",
+      "tint": "#eee4ee"
+    },
+    {
+      "id": "S05",
+      "category": "Speaking",
+      "title": "Make convenient specific",
+      "prompt": "Convenient…\nin what way?",
+      "explanation": "Name the practical benefit: less travel, fewer steps, more choice, or easier access. Then give one concrete detail.",
+      "qualification": "A precise everyday explanation is often stronger than a formal synonym.",
+      "examples": [
+        [
+          "The shop is convenient because I can buy groceries and household items in one place.",
+          "Fewer separate shopping trips"
+        ],
+        [
+          "The site saves me time / is easy to navigate / lets me compare prices.",
+          "Choose the benefit that actually fits."
+        ]
+      ],
+      "practice": "Replace This app is convenient with a sentence explaining a practical benefit.",
+      "answer": "One possible answer: This app lets me check train times without visiting several websites.",
+      "accent": "#755178",
+      "tint": "#eee4ee"
+    },
+    {
+      "id": "S06",
+      "category": "Speaking",
+      "title": "Polite restaurant English",
+      "prompt": "I would like…\nCould I have…?",
+      "explanation": "Use I would like to state an order. Use Could I have…? for a polite request. Would you like…? offers something to another person.",
+      "qualification": "I want is grammatical, but can sound blunt when ordering. Tone and context matter too.",
+      "examples": [
+        [
+          "I would like the vegetable soup, please.",
+          "State an order."
+        ],
+        [
+          "Could we have the bill / a glass of water / the menu, please?",
+          "Choose the item you need."
+        ]
+      ],
+      "practice": "You are offering a drink. Choose: I would like / Would you like some water?",
+      "answer": "Would you like some water? This is an offer, not your own request.",
+      "accent": "#755178",
+      "tint": "#eee4ee"
+    },
+    {
+      "id": "S07",
+      "category": "Speaking",
+      "title": "Explain a problem clearly",
+      "prompt": "What went wrong?\nWhat help do you need?",
+      "explanation": "Use problem → what you tried → request. Give enough detail for the other person to act.",
+      "qualification": "Access is a verb with a direct object: access the file. As a noun, it can take to: access to the file.",
+      "examples": [
+        [
+          "I cannot open the file. I have tried downloading it again, but that has not helped.",
+          "Problem + attempted solution"
+        ],
+        [
+          "Could you send another copy / check the link / help me open it?",
+          "Ask for a specific next step."
+        ]
+      ],
+      "practice": "Write a two-sentence request about a broken link.",
+      "answer": "One possible answer: The link does not open, even in another browser. Could you check it and send a new one?",
+      "accent": "#755178",
+      "tint": "#eee4ee"
+    },
+    {
+      "id": "S08",
+      "category": "Speaking",
+      "title": "Ask instead of guessing",
+      "prompt": "Could you repeat that?\nDo you mean…?",
+      "explanation": "Ask for repetition when you missed the words. Ask for clarification when you heard the words but are unsure of the meaning.",
+      "qualification": "Confirm important details directly instead of pretending you understood.",
+      "examples": [
+        [
+          "Could you say that again a little more slowly?",
+          "Request repetition."
+        ],
+        [
+          "By draft, do you mean the first version?",
+          "Check the intended meaning."
+        ]
+      ],
+      "practice": "You are unsure whether the speaker said can or cannot. What could you ask?",
+      "answer": "Did you say you can or you cannot? / Just to check, are you able to do it?",
+      "accent": "#755178",
+      "tint": "#eee4ee"
+    },
+    {
+      "id": "S09",
+      "category": "Speaking",
+      "title": "Pause, repair, continue",
+      "prompt": "Let me think.\nWhat I mean is…",
+      "explanation": "A short pause can help you organise an answer. If you notice a meaningful error, correct the phrase briefly and continue.",
+      "qualification": "Do not restart a whole answer for every small slip. Repeated fillers can also interrupt the listener.",
+      "examples": [
+        [
+          "Let me think for a moment. The main reason is…",
+          "Create a little thinking time."
+        ],
+        [
+          "We go there yesterday—sorry, we went there yesterday.",
+          "Correct the verb, then continue."
+        ]
+      ],
+      "practice": "Repair only the tense: Last weekend, I buy a new notebook.",
+      "answer": "Last weekend, I bought a new notebook. You can correct buy to bought without restarting the whole story.",
+      "accent": "#755178",
+      "tint": "#eee4ee"
+    },
+    {
+      "id": "S10",
+      "category": "Speaking",
+      "title": "Because or because of?",
+      "prompt": "because it rained\nbecause of the rain",
+      "explanation": "Because introduces a clause with a subject and verb. Because of is followed by a noun phrase or an -ing phrase.",
+      "qualification": "Choose the structure that fits the next words, not whichever sounds more advanced.",
+      "examples": [
+        [
+          "We stayed inside because it was raining.",
+          "because + clause"
+        ],
+        [
+          "We stayed inside because of the rain.",
+          "because of + noun phrase"
+        ]
+      ],
+      "practice": "Complete: The match was delayed ___ bad weather.",
+      "answer": "because of: The match was delayed because of bad weather.",
+      "accent": "#755178",
+      "tint": "#eee4ee"
+    },
+    {
+      "id": "S11",
+      "category": "Speaking",
+      "title": "But, although, however",
+      "prompt": "It was late, but…\nAlthough it was late…",
+      "explanation": "But joins contrasting clauses. Although introduces a subordinate clause. However links ideas and normally needs a sentence boundary or semicolon in writing.",
+      "qualification": "In the standard pattern, do not pair Although… with but to join the same two clauses.",
+      "examples": [
+        [
+          "Although it was late, we kept talking.",
+          "Concession within one sentence"
+        ],
+        [
+          "It was late. However, we kept talking.",
+          "Contrast across a sentence boundary"
+        ]
+      ],
+      "practice": "Repair: Although the café was busy, but we found a seat.",
+      "answer": "Although the café was busy, we found a seat / The café was busy, but we found a seat.",
+      "accent": "#755178",
+      "tint": "#eee4ee"
+    },
+    {
+      "id": "S12",
+      "category": "Speaking",
+      "title": "If or in case?",
+      "prompt": "if it rains\nin case it rains",
+      "explanation": "If introduces a condition. In case often introduces a reason for taking a precaution before a possible event.",
+      "qualification": "In these future-time examples, use present simple after if or in case, rather than automatically adding will.",
+      "examples": [
+        [
+          "Take an umbrella in case it rains.",
+          "Take it now as a precaution."
+        ],
+        [
+          "If it rains, we will stay inside.",
+          "Rain is the condition for the plan."
+        ]
+      ],
+      "practice": "You save a backup now because your laptop might fail. Choose: if / in case it fails.",
+      "answer": "in case it fails: Save a backup in case your laptop fails.",
+      "accent": "#755178",
+      "tint": "#eee4ee"
+    },
+    {
+      "id": "S13",
+      "category": "Speaking",
+      "title": "Examples or exact details?",
+      "prompt": "for example\nsuch as\nnamely",
+      "explanation": "For example introduces an illustration. Such as introduces examples within a phrase. Namely specifies exactly what or who you mean.",
+      "qualification": "Do not use namely when you are only giving a few examples from a larger group.",
+      "examples": [
+        [
+          "I enjoy outdoor activities such as walking and cycling.",
+          "Examples from a larger category"
+        ],
+        [
+          "We need two items, namely a pen and a notebook.",
+          "The exact two items"
+        ]
+      ],
+      "practice": "Complete: There is one problem, ___ the cost.",
+      "answer": "namely: you are specifying the exact problem.",
+      "accent": "#755178",
+      "tint": "#eee4ee"
+    },
+    {
+      "id": "S14",
+      "category": "Speaking",
+      "title": "Eventually or overall?",
+      "prompt": "Eventually, we arrived.\nOverall, it went well.",
+      "explanation": "Eventually means something happens after time, difficulty, or delay. Overall introduces a general judgement after considering the whole situation.",
+      "qualification": "Finally can mark a final point in a list or an eventual result; context decides.",
+      "examples": [
+        [
+          "After two delays, we eventually reached the station.",
+          "A result after waiting"
+        ],
+        [
+          "Overall, the trip was enjoyable.",
+          "A general evaluation"
+        ]
+      ],
+      "practice": "Choose: Eventually / Overall, the course was useful, despite a few difficult lessons.",
+      "answer": "Overall: the sentence gives an evaluation of the course as a whole.",
+      "accent": "#755178",
+      "tint": "#eee4ee"
+    },
+    {
+      "id": "S15",
+      "category": "Speaking",
+      "title": "Compare on a clear basis",
+      "prompt": "Better for what?\nBetter for whom?",
+      "explanation": "Choose one comparison point at a time: portability, focus, cost, or search. Explain the trade-off instead of claiming one option wins for everyone.",
+      "qualification": "Compare equivalent things, and separate your preference from a universal claim.",
+      "examples": [
+        [
+          "E-books are easier to carry, while paper books let me read without screen notifications.",
+          "Two practical benefits"
+        ],
+        [
+          "I prefer paper for long reading sessions, but digital books are useful when I travel.",
+          "Preference with a clear limit"
+        ]
+      ],
+      "practice": "Compare online and in-person shopping using one benefit of each.",
+      "answer": "One possible answer: Online shopping saves travel time, while in-person shopping lets me check the fit before buying.",
+      "accent": "#755178",
+      "tint": "#eee4ee"
+    },
+    {
+      "id": "S16",
+      "category": "Speaking",
+      "title": "Make a claim you can support",
+      "prompt": "Everyone does it?\nOr some people?",
+      "explanation": "Match the strength of your claim to the evidence. Some, often, may, and in my experience can keep a statement accurate.",
+      "qualification": "Do not add an exact statistic unless you have checked its source and date. Specific examples can be enough.",
+      "examples": [
+        [
+          "Some shops have closed as more customers buy online.",
+          "A limited claim about a business trend"
+        ],
+        [
+          "Technology can change shopping habits, though the effect varies by business.",
+          "A qualified explanation"
+        ]
+      ],
+      "practice": "Make this claim more careful: All children hate reading.",
+      "answer": "One possible answer: Some children are reluctant to read, and their interest may depend on the books available.",
+      "accent": "#755178",
+      "tint": "#eee4ee"
+    }
+  ]
+}

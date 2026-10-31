@@ -1,0 +1,23 @@
+{
+  "name": "english-learning-library",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "content": "node web/scripts/build-content.mjs",
+    "dev": "npm run content && vite --config web/vite.config.js --host 127.0.0.1",
+    "build": "npm run content && vite build --config web/vite.config.js",
+    "preview": "vite preview --config web/vite.config.js --host 127.0.0.1",
+    "test": "node --test web/tests/content.test.mjs",
+    "test:browser": "playwright test --config web/playwright.config.js"
+  },
+  "dependencies": {
+    "marked": "^16.4.2",
+    "sanitize-html": "^2.17.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "vite": "^7.1.12"
+  }
+}
