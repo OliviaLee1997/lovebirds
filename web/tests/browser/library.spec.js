@@ -58,7 +58,7 @@ test('existing personal summaries, grammar groups, and all cue cards are readabl
   await expect.poll(() => page.locator(`[id="${targetId}"]`).evaluate(el => el.getBoundingClientRect().top)).toBeLessThan(105);
   await page.goto('/#/cue-cards');
   await expect(page.locator('.group-card')).toHaveCount(22);
-  await page.locator('.group-card[href^="#/read/cue-card-22?"]').click();
+  await page.locator('.group-card[href^="#/read/cue-card-01?"]').click();
   await expect(page.locator('.reader-heading h1')).toContainText('A Motorcycle Workshop');
   await expect(page.locator('[data-wiki-section="extended-model-answer"] .section-body')).toBeVisible();
   await page.goto('/#/resources');
@@ -102,12 +102,13 @@ for (const viewport of [{ width: 1440, height: 1000 }, { width: 390, height: 844
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     const catalog = await (await request.get('/content/catalog.json')).json();
-    const cards = catalog.documents.filter(doc => doc.kind === 'cue-card').sort((a, b) => b.courseOrder.lesson - a.courseOrder.lesson || a.courseOrder.position - b.courseOrder.position);
+    const cards = catalog.documents.filter(doc => doc.kind === 'cue-card').sort((a, b) => b.number - a.number);
     for (const [index, card] of cards.entries()) {
       await page.goto('/#/cue-cards');
       await page.locator('.group-card').nth(index).click();
       await expect(page).toHaveURL(new RegExp(`#/read/${card.id}(?:\\?|$)`));
       await expect(page.locator('.reader-heading h1')).toHaveText(card.title);
+      await expect(page.locator('.reader-heading .eyebrow')).toHaveText(`CUE CARD ${String(card.number).padStart(2, '0')}`);
       await expect(page.locator('.wiki-section[open]')).toHaveCount(5);
       await expect(page.locator('[data-wiki-section="practice-cue-card"] .section-body > p').first()).toBeVisible();
       await expect(page.locator('[data-wiki-section="extended-model-answer"] .section-body > p').first()).toBeVisible();
@@ -160,7 +161,7 @@ test('internal clicks render directly, retain history, and legacy cue-card links
   await page.goBack();
   await expect(page.locator('.group-card')).toHaveCount(22);
   await page.goForward();
-  await expect(page).toHaveURL(/#\/read\/cue-card-17/);
+  await expect(page).toHaveURL(/#\/read\/cue-card-22/);
   await expect(page.locator('.document')).toBeVisible();
   const catalog = await (await request.get('/content/catalog.json')).json();
   const group = catalog.documents.find(doc => doc.id === 'cue-cards').groups.at(-1);
@@ -204,10 +205,10 @@ test('the production build works beneath a GitHub Pages project directory', asyn
   await expect.poll(() => firstImage.evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true);
   await page.goto('/english-library/#/cue-cards');
   await page.locator('.group-card').first().click();
-  await expect(page).toHaveURL(/english-library\/#\/read\/cue-card-17/);
+  await expect(page).toHaveURL(/english-library\/#\/read\/cue-card-22/);
   await expect(page.locator('[data-wiki-section="extended-model-answer"] .section-body')).toBeVisible();
   await page.locator('.reading-pagination.compact a[rel="next"]').click();
-  await expect(page).toHaveURL(/english-library\/#\/read\/cue-card-18/);
+  await expect(page).toHaveURL(/english-library\/#\/read\/cue-card-21/);
   await page.reload();
   await expect(page.locator('[data-wiki-section="practice-cue-card"] .section-body')).toBeVisible();
   await page.goto('/english-library/#/bites');
@@ -295,35 +296,67 @@ test('mobile collections support keyboard dismissal, focus mode and short or res
   await expect(page.locator('.sidebar .nav-link[href="#/resources"]')).toBeInViewport();
 });
 
-test('cue-card order follows courses, including older topics added with later card numbers', async ({ page }) => {
+test('cue-card filenames define chronological order and navigation', async ({ page }) => {
   const ids = () => page.locator('.group-card').evaluateAll(cards => cards.map(card => card.getAttribute('href').match(/cue-card-(\d+)/)[1]));
   await page.goto('/#/cue-cards');
   await expect(page.locator('.group-card')).toHaveCount(22);
-  expect(await ids()).toEqual(['17', '18', '15', '16', '21', '13', '14', '11', '12', '09', '10', '08', '04', '05', '06', '07', '01', '02', '03', '19', '20', '22']);
+  expect(await ids()).toEqual(Array.from({ length: 22 }, (_, i) => String(22 - i).padStart(2, '0')));
   await page.locator('.group-card').first().click();
   await expect(page.locator('.reading-pagination.compact .prev')).toHaveAttribute('aria-disabled', 'true');
   await page.locator('.reading-pagination.compact a[rel="next"]').click();
-  await expect(page).toHaveURL(/read\/cue-card-18/);
+  await expect(page).toHaveURL(/read\/cue-card-21/);
   await page.locator('.reading-pagination:not(.compact) a[rel="next"]').click();
-  await expect(page).toHaveURL(/read\/cue-card-15/);
+  await expect(page).toHaveURL(/read\/cue-card-20/);
   await page.locator('.reader-toolbar .back-link').click();
   await page.locator('#sort').selectOption('asc');
-  expect(await ids()).toEqual(['22', '20', '19', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '21', '17', '18']);
+  expect(await ids()).toEqual(Array.from({ length: 22 }, (_, i) => String(i + 1).padStart(2, '0')));
   await page.locator('.group-card').first().click();
   await page.locator('.reading-pagination.compact a[rel="next"]').click();
-  await expect(page).toHaveURL(/read\/cue-card-20/);
+  await expect(page).toHaveURL(/read\/cue-card-02/);
   await page.reload();
-  await expect(page.locator('.reading-pagination.compact a[rel="prev"]')).toHaveAttribute('href', /cue-card-22/);
+  await expect(page.locator('.reading-pagination.compact a[rel="prev"]')).toHaveAttribute('href', /cue-card-01/);
   await page.locator('.reader-toolbar .back-link').click();
   await expect(page.locator('#sort')).toHaveValue('asc');
   await page.locator('#library-search').fill('wetland');
   await expect(page.locator('.group-card')).toHaveCount(2);
   await page.locator('.group-card').first().click();
   await page.locator('.reading-pagination.compact a[rel="next"]').click();
-  await expect(page).toHaveURL(/read\/cue-card-15/);
+  await expect(page).toHaveURL(/read\/cue-card-18/);
   await expect(page.locator('.reading-pagination.compact .next')).toHaveAttribute('aria-disabled', 'true');
   await page.locator('.reader-toolbar .back-link').click();
   await expect(page.locator('#library-search')).toHaveValue('wetland');
+});
+
+test('cue-card numbers stay attached to topics and reverse with the actual sort control', async ({ page }, testInfo) => {
+  for (const width of [390, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/#/cue-cards');
+    const cards = page.locator('.group-card');
+    const numbers = page.locator('.group-number');
+    await expect(numbers).toHaveText(Array.from({ length: 22 }, (_, i) => String(22 - i).padStart(2, '0')));
+    await expect(cards.first()).toContainText('The Chengdu Panda Base');
+    const snapshots = () => cards.evaluateAll(elements => elements.map(el => ({ number: el.querySelector('.group-number').textContent, title: el.querySelector('h3').textContent })));
+    const descending = await snapshots();
+    await page.screenshot({ path: testInfo.outputPath(`cue-cards-newest-${width}.png`) });
+    await page.getByRole('combobox', { name: 'Sort Cue cards' }).selectOption({ label: 'Oldest first' });
+    await expect(numbers).toHaveText(Array.from({ length: 22 }, (_, i) => String(i + 1).padStart(2, '0')));
+    await expect(cards.first()).toContainText('A Motorcycle Workshop');
+    expect(await snapshots()).toEqual([...descending].reverse());
+    await page.screenshot({ path: testInfo.outputPath(`cue-cards-oldest-${width}.png`) });
+    await page.getByRole('combobox', { name: 'Sort Cue cards' }).selectOption({ label: 'Newest first' });
+    expect(await snapshots()).toEqual(descending);
+    await page.locator('#library-search').fill('wetland');
+    await expect(numbers).toHaveText(['18', '14']);
+    await page.getByRole('combobox', { name: 'Sort Cue cards' }).selectOption('asc');
+    await expect(numbers).toHaveText(['14', '18']);
+    await cards.first().click();
+    await page.locator('.reading-pagination.compact a[rel="next"]').click();
+    await expect(page).toHaveURL(/read\/cue-card-18/);
+    await page.locator('.reader-toolbar .back-link').click();
+    await expect(numbers).toHaveText(['14', '18']);
+    await page.reload();
+    await expect(numbers).toHaveText(['14', '18']);
+  }
 });
 
 test('lesson navigation preserves filters and order through keyboard clicks, reload and browser history', async ({ page }) => {
@@ -394,7 +427,7 @@ test('mobile readers support continuous previous and next reading without overfl
   await page.locator('.reader-toolbar .back-link').click();
   await expect(page.locator('#sort')).toHaveValue('asc');
   await expect(page.locator('[data-category="Grammar"]')).toHaveAttribute('aria-pressed', 'true');
-  await page.goto('/#/read/cue-card-17');
+  await page.goto('/#/read/cue-card-22');
   await expect(page.locator('.reading-pagination.compact')).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
   await page.screenshot({ path: testInfo.outputPath('reader-navigation-mobile-top.png') });
@@ -402,7 +435,7 @@ test('mobile readers support continuous previous and next reading without overfl
   expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
   await page.screenshot({ path: testInfo.outputPath('reader-navigation-mobile-bottom.png') });
   await page.locator('.reading-pagination:not(.compact) a[rel="next"]').click();
-  await expect(page).toHaveURL(/read\/cue-card-18/);
+  await expect(page).toHaveURL(/read\/cue-card-21/);
 });
 
 test('wiki preferences, section links, focus mode, and expanded tables work together', async ({ page, context }) => {
@@ -540,9 +573,9 @@ test('newest-first ordering can be reversed and stays with search when returning
   await expect(page.locator('#sort')).toHaveValue('asc');
   await expect(page.locator('#library-search')).toHaveValue('out of paper');
   await page.goto('/#/cue-cards');
-  await expect(page.locator('.group-card').first()).toHaveAttribute('href', /read\/cue-card-17/);
-  await page.locator('#sort').selectOption('asc');
   await expect(page.locator('.group-card').first()).toHaveAttribute('href', /read\/cue-card-22/);
+  await page.locator('#sort').selectOption('asc');
+  await expect(page.locator('.group-card').first()).toHaveAttribute('href', /read\/cue-card-01/);
 });
 
 test('topic cards open from their body or keyboard while related lessons keep their own destination', async ({ page }) => {

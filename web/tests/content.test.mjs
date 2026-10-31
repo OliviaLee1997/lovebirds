@@ -35,10 +35,23 @@ test('all lesson files and topic mappings are represented without duplicating le
   assert.equal(linkingWords.groups.filter(group => group.terms.includes('However')).length, 1);
   assert.equal(cueCards.groups.length, 22);
   const orderedCues = collectionItems(catalog, 'cue-cards');
-  assert.deepEqual(orderedCues.map(d => d.number), [17, 18, 15, 16, 21, 13, 14, 11, 12, 9, 10, 8, 4, 5, 6, 7, 1, 2, 3, 19, 20, 22]);
-  assert.deepEqual(collectionItems(catalog, 'cue-cards', new URLSearchParams('sort=asc')).map(d => d.number), [22, 20, 19, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 21, 17, 18]);
-  assert.deepEqual(cueCards.groups.map(g => Number(g.title.match(/^\d+/)[0])), orderedCues.map(d => d.number), 'the combined reader follows course order without changing topic anchors');
-  for (const cue of individualCards) assert.ok(lessons.some(lesson => lesson.number === cue.courseOrder.lesson));
+  assert.deepEqual(orderedCues.map(d => d.number), Array.from({ length: 22 }, (_, i) => 22 - i));
+  assert.deepEqual(collectionItems(catalog, 'cue-cards', new URLSearchParams('sort=asc')).map(d => d.number), Array.from({ length: 22 }, (_, i) => i + 1));
+  assert.deepEqual(collectionItems(catalog, 'cue-cards', new URLSearchParams('q=wetland')).map(d => d.number), [18, 14], 'search keeps each topic’s filename number');
+  assert.deepEqual(cueCards.groups.map(g => Number(g.title.match(/^\d+/)[0])), orderedCues.map(d => d.number), 'the combined reader follows descending filename numbers');
+  const cueRoot = 'Practice/IELTS-Speaking/Cue-Cards';
+  const cueIndex = await fs.readFile(path.join(CONTENT_ROOT, cueRoot, 'README.md'), 'utf8');
+  for (const file of cueFiles) {
+    const source = await fs.readFile(path.join(CONTENT_ROOT, cueRoot, file), 'utf8');
+    const number = Number(file.match(/^Cue-Card-(\d+)/)[1]);
+    assert.equal(Number(source.match(/^# Cue Card (\d+) — /)[1]), number);
+    assert.ok(cueIndex.includes(`](${file})`), `index links to ${file}`);
+    const doc = individualCards.find(d => d.number === number);
+    assert.equal(doc.id, `cue-card-${String(number).padStart(2, '0')}`);
+    assert.equal(doc.title, source.split('\n')[0].split(' — ')[1]);
+  }
+  assert.match(individualCards.find(d => d.number === 1).title, /Motorcycle Workshop/);
+  assert.match(individualCards.find(d => d.number === 22).title, /Chengdu Panda Base/);
   for (const doc of catalog.documents) {
     const rendered = JSON.parse(await fs.readFile(path.join(ROOT, 'web/public/content', `${doc.id}.json`), 'utf8'));
     const ids = rendered.headings.map(h => h.id);

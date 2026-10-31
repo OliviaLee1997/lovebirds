@@ -1,4 +1,4 @@
-# Cue Card 16 — An Unexpected Event: The Team Competition
+# Cue Card 19 — An Unexpected Event: The Team Competition
 
 **Study note:** Added model answer for practice towards IELTS Speaking Bands 7–9, not an examiner-scored response. First-person stories and altered quotations are anonymised study examples. Grammar notes retain qualifications and transcription uncertainty.
 

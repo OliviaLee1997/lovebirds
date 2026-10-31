@@ -1,11 +1,6 @@
 // Shared by collection lists and readers so Previous / Next follows the same results.
 export const biteCategories = ['Grammar', 'Vocabulary', 'Pronunciation', 'Speaking'];
 
-export function compareCueCards(a, b, sort = 'desc') {
-  const course = a.courseOrder.lesson - b.courseOrder.lesson;
-  return (sort === 'asc' ? course : -course) || a.courseOrder.position - b.courseOrder.position;
-}
-
 export function selectedTags(catalog, params) {
   return (params.get('tags') || '').split(',').filter(t => catalog.categories.some(c => c.id === t));
 }
@@ -20,7 +15,8 @@ export function collectionItems(catalog, page, params = new URLSearchParams()) {
       (!tags.length || (params.get('mode') === 'any' ? tags.some(t => d.tags.includes(t)) : tags.every(t => d.tags.includes(t)))))
       .sort((a, b) => params.get('sort') === 'asc' ? a.number - b.number : b.number - a.number);
   }
-  if (page === 'cue-cards') return catalog.documents.filter(d => d.kind === 'cue-card' && matches(d.searchText)).sort((a, b) => compareCueCards(a, b, params.get('sort')));
+  if (page === 'cue-cards') return catalog.documents.filter(d => d.kind === 'cue-card' && matches(d.searchText))
+    .sort((a, b) => params.get('sort') === 'asc' ? a.number - b.number : b.number - a.number);
   if (page === 'topics') return catalog.categories.filter(c => matches(`${c.label} ${c.description} ${catalog.documents.find(d => d.id === c.docId).searchText}`));
   if (page === 'grammar' || page === 'linking-words') return catalog.documents.find(d => d.id === page).groups
     .map((g, i) => ({ ...g, originalIndex: i })).filter(g => matches(`${g.title} ${g.label} ${(g.terms || []).join(' ')}`));
