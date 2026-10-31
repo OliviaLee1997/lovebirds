@@ -1,0 +1,13 @@
+[
+  { "lesson": 6, "topics": ["cue-card-22"] },
+  { "lesson": 7, "topics": ["cue-card-20"] },
+  { "lesson": 9, "topics": ["cue-card-19"] },
+  { "lesson": 10, "topics": ["cue-card-01", "cue-card-02", "cue-card-03"] },
+  { "lesson": 11, "topics": ["cue-card-04", "cue-card-05", "cue-card-06", "cue-card-07"] },
+  { "lesson": 12, "topics": ["cue-card-08"] },
+  { "lesson": 14, "topics": ["cue-card-09", "cue-card-10"] },
+  { "lesson": 15, "topics": ["cue-card-11", "cue-card-12"] },
+  { "lesson": 17, "topics": ["cue-card-13", "cue-card-14"] },
+  { "lesson": 18, "topics": ["cue-card-15", "cue-card-16", "cue-card-21"] },
+  { "lesson": 19, "topics": ["cue-card-17", "cue-card-18"] }
+]

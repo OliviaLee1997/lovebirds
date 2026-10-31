@@ -7,6 +7,7 @@ Run all npm commands from the [repository root](../README.md). The site uses Vit
 | File | Responsibility |
 | --- | --- |
 | `src/main.js` | Catalogue views, English labels, filtering, hash routes, and reader loading. |
+| `src/collections.js` | Shared filtering, course-based cue-card ordering, and reader neighbours. |
 | `src/wiki.js` | Section folding, contents highlighting, reading progress, focus mode, global search, table expansion, copied links, and local preferences. |
 | `src/bites.js` | Language Bites filtering, ordering, continuous reading, optional answer folding, legacy step links, and copying complete notes. |
 | `src/style.css` | Warm green theme, compact list and card views, reading columns, dialogs, and mobile layout. |
@@ -20,7 +21,7 @@ The build root is this repository; the source root is `content/` inside it. The 
 
 Course titles come from Markdown headings. The short English topic labels and descriptions are presentation metadata. New lessons do not need hardcoded titles. A missing map entry produces a warning and an **Uncategorised** label without hiding the lesson.
 
-The grammar list uses its document's numbered level-two headings. Cue cards are discovered from `content/Practice/IELTS-Speaking/Cue-Cards/Cue-Card-NN-*.md` and open separate pages such as `#/read/cue-card-01`. Each page uses the same reader as a lesson and opens its learning sections by default. The shared guide and grammar review are separate documents. A combined reader is generated in memory from these sources so existing `#/read/cue-cards?section=…` links still work; there is no second editable combined Markdown. Introductory notes, exercises, and qualifications are retained.
+The grammar list uses its document's numbered level-two headings. Cue cards are discovered from `content/Practice/IELTS-Speaking/Cue-Cards/Cue-Card-NN-*.md` and open separate pages such as `#/read/cue-card-01`. Each page uses the same reader as a lesson and opens its learning sections by default. The shared guide and grammar review are separate documents. `course-order.json` maps every stable cue-card ID to one course and its position within that course. Update it when adding a topic; the build rejects unknown lessons, duplicate cards and missing mappings. It is presentation metadata, not a source label in the study text. The generated combined reader follows the same newest-course-first order. A combined reader is generated in memory from these sources so existing `#/read/cue-cards?section=…` links still work; there is no second editable combined Markdown. Introductory notes, exercises, and qualifications are retained.
 
 Language Bites come from `content/Language-Bites/notes.json`; see [their maintenance guide](../content/Language-Bites/README.md). The builder validates IDs, categories, required learning fields, and example pairs. Routes use `#/bites?category=Grammar&q=worth&sort=desc` for collections and `#/bite/G01` for the complete note. Legacy `?step=4` links scroll to the practice section without hiding the other content. Keep IDs stable and append new notes to the source list. All English educational fields are retained; bilingual image exports are not a runtime dependency.
 
@@ -33,10 +34,11 @@ Document JSON is replaced atomically, with the catalogue written after documents
 ## UI Behaviour
 
 - Collection navigation order is All courses, Cue cards, My topic collections, Personal grammar, Linking words, Language Bites, then Reference shelf.
-- Courses and cue cards default to descending number; Language Bites default to reverse source order. All support `sort=asc` and `sort=desc` in the URL. Categories retain their teaching order.
+- Courses default to descending lesson number; cue cards use `course-order.json`, with descending course number and original topic order within each course; Language Bites default to reverse source order. All support `sort=asc` and `sort=desc` in the URL. Categories retain their teaching order.
 - Topic cards use a stretched native link, with the related-lessons link above it. Background clicks, keyboard activation, and modified clicks keep native link behaviour.
 - Reader typography preserves distinct Markdown heading levels: larger section titles on a pale green background, smaller underlined subheadings, and bold fourth-level headings. Paragraph and section spacing stays more generous than the compact collection lists. Heading sizes scale with the reader's text-size preference, including on mobile.
 - The default course view is a compact list. List/card view, reading size, and focus preference use best-effort local storage; the site still works when storage is unavailable.
+- Previous / Next controls appear above and below readers, outside Markdown. Lists and navigation share the same selectors. Matching collection filters and ordering carry across pages and reloads; direct links use the document's collection. Stale filters that exclude the current item fall back to the full collection. Controls never wrap at boundaries. Grammar, linking words and the legacy combined cue reader navigate sections; the guide and shared grammar review navigate between their two documents.
 - Course and collection filters live in the URL, so returning from a document restores them.
 - Ordinary internal links are handled within the page using History API navigation; they do not rely on a native fragment event to render. Browser history, direct links, and modified clicks remain supported.
 - Global search covers document titles, full text, named grammar/cue-card sections, and Language Bites. Course-list search uses full lesson text; category lists search their displayed category names.

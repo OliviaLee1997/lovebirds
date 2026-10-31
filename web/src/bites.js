@@ -1,6 +1,7 @@
+import { collectionItems, biteCategories as categories } from './collections.js';
+
 let context;
 let currentNote;
-const categories = ['Grammar', 'Vocabulary', 'Pronunciation', 'Speaking'];
 const colours = { Grammar: '#285c50', Vocabulary: '#91492f', Pronunciation: '#425a88', Speaking: '#755178' };
 const sections = ['notice', 'understand', 'examples', 'practise'];
 export function configureBites(value) { context = value; }
@@ -8,10 +9,7 @@ export function configureBites(value) { context = value; }
 export function renderBites(params) {
   const { catalog, escape, icon, url } = context;
   const category = categories.includes(params.get('category')) ? params.get('category') : '';
-  const query = (params.get('q') || '').trim().toLowerCase();
-  const notes = catalog.bites.filter(note => (!category || note.category === category) && (!query || [note.id, note.category, note.title, note.prompt, note.explanation, note.qualification, ...note.examples.flat(), note.practice, note.answer].join(' ').toLowerCase().includes(query)));
-  // Source order is append-only: newly added notes appear first by default.
-  if (params.get('sort') !== 'asc') notes.reverse();
+  const notes = collectionItems(catalog, 'bites', params);
   document.querySelector('#bite-filters').innerHTML = ['', ...categories].map(name => `<button data-bites="category" data-category="${name}" aria-pressed="${name === category}">${name || 'All notes'}<span>${name ? catalog.bites.filter(note => note.category === name).length : catalog.bites.length}</span></button>`).join('');
   document.querySelector('#result-count').textContent = `${notes.length} / ${catalog.bites.length} notes`;
   const results = document.querySelector('#results');
@@ -20,7 +18,7 @@ export function renderBites(params) {
 }
 
 export function renderBite(route) {
-  const { catalog, escape, icon, url } = context;
+  const { catalog, escape, icon, url, readingPagination } = context;
   const note = catalog.bites.find(note => note.id === route.id);
   const main = document.querySelector('#main'); main.className = 'reader-main bite-main';
   currentNote = note;
@@ -30,12 +28,12 @@ export function renderBite(route) {
   const related = { Grammar: 'topic-03', Vocabulary: 'topic-04', Pronunciation: 'topic-01', Speaking: 'topic-05' }[note.category];
   main.innerHTML = `<div class="reader-toolbar"><a class="back-link" href="${escape(back)}">${icon('back')} Language Bites</a><button class="tool-button" data-bites="copy">Copy complete note</button></div>
     <header class="reader-heading"><p class="eyebrow">LANGUAGE BITES · ${note.id}</p><h1>${escape(note.title)}</h1><a class="small-tag" href="${url('bites', { category: note.category })}">${note.category}</a></header>
-    <div class="bite-layout"><article class="bite-viewer" style="--bite-accent:${colours[note.category]}" aria-label="Complete learning note"><div class="bite-content">
+    ${readingPagination({ ...note, kind: 'bite' }, route, true)}<div class="bite-layout"><article class="bite-viewer" style="--bite-accent:${colours[note.category]}" aria-label="Complete learning note"><div class="bite-content">
       <section id="bite-notice" class="bite-panel" aria-labelledby="notice-title"><header class="bite-section-heading"><span>01</span><h2 id="notice-title">Notice</h2></header><p class="bite-prompt">${escape(note.prompt).replaceAll('\n', '<br>')}</p><p class="bite-hint">What do you notice? Think it through, then read on.</p></section>
       <section id="bite-understand" class="bite-panel" aria-labelledby="understand-title"><header class="bite-section-heading"><span>02</span><h2 id="understand-title">Understand</h2></header><p class="bite-rule">${escape(note.explanation)}</p><aside class="bite-qualification"><strong>Keep in mind</strong><p>${escape(note.qualification)}</p></aside></section>
       <section id="bite-examples" class="bite-panel" aria-labelledby="examples-title"><header class="bite-section-heading"><span>03</span><h2 id="examples-title">Examples</h2></header>${note.examples.map(([sentence, meaning], i) => `<div class="bite-example"><span>EXAMPLE ${i + 1}</span><p>${escape(sentence)}</p><small>${escape(meaning)}</small></div>`).join('')}</section>
       <section id="bite-practise" class="bite-panel" aria-labelledby="practise-title"><header class="bite-section-heading"><span>04</span><h2 id="practise-title">Practise</h2></header><p class="bite-rule">${escape(note.practice)}</p><details class="bite-answer" open><summary>Practice answer</summary><p>${escape(note.answer)}</p></details><p class="bite-hint">Try one more example of your own. Fold the answer if you want to test yourself.</p></section>
-    </div></article><aside class="bite-aside"><h2>One idea at a time</h2><p>Read from top to bottom: notice, understand, then use it yourself.</p><div class="bite-source-note">${escape(catalog.bitesNotice)}</div><a href="#/read/${related}">Explore the related collection ${icon('arrow')}</a><a href="${url('bites', { category: note.category })}">More ${note.category.toLowerCase()} notes ${icon('arrow')}</a></aside></div><p id="bite-copy-status" class="bite-copy-status" role="status"></p>`;
+    </div></article><aside class="bite-aside"><h2>One idea at a time</h2><p>Read from top to bottom: notice, understand, then use it yourself.</p><div class="bite-source-note">${escape(catalog.bitesNotice)}</div><a href="#/read/${related}">Explore the related collection ${icon('arrow')}</a><a href="${url('bites', { category: note.category })}">More ${note.category.toLowerCase()} notes ${icon('arrow')}</a></aside></div>${readingPagination({ ...note, kind: 'bite' }, route)}<p id="bite-copy-status" class="bite-copy-status" role="status"></p>`;
   // Existing links to a former step now scroll to that part of the complete note.
   if (route.params.has('step')) {
     const index = Math.max(0, Math.min(3, Math.floor(Number(route.params.get('step')) || 1) - 1));

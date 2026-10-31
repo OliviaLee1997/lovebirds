@@ -102,7 +102,7 @@ for (const viewport of [{ width: 1440, height: 1000 }, { width: 390, height: 844
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     const catalog = await (await request.get('/content/catalog.json')).json();
-    const cards = catalog.documents.filter(doc => doc.kind === 'cue-card').sort((a, b) => b.number - a.number);
+    const cards = catalog.documents.filter(doc => doc.kind === 'cue-card').sort((a, b) => b.courseOrder.lesson - a.courseOrder.lesson || a.courseOrder.position - b.courseOrder.position);
     for (const [index, card] of cards.entries()) {
       await page.goto('/#/cue-cards');
       await page.locator('.group-card').nth(index).click();
@@ -160,7 +160,7 @@ test('internal clicks render directly, retain history, and legacy cue-card links
   await page.goBack();
   await expect(page.locator('.group-card')).toHaveCount(22);
   await page.goForward();
-  await expect(page).toHaveURL(/#\/read\/cue-card-22/);
+  await expect(page).toHaveURL(/#\/read\/cue-card-17/);
   await expect(page.locator('.document')).toBeVisible();
   const catalog = await (await request.get('/content/catalog.json')).json();
   const group = catalog.documents.find(doc => doc.id === 'cue-cards').groups.at(-1);
@@ -204,8 +204,10 @@ test('the production build works beneath a GitHub Pages project directory', asyn
   await expect.poll(() => firstImage.evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true);
   await page.goto('/english-library/#/cue-cards');
   await page.locator('.group-card').first().click();
-  await expect(page).toHaveURL(/english-library\/#\/read\/cue-card-22/);
+  await expect(page).toHaveURL(/english-library\/#\/read\/cue-card-17/);
   await expect(page.locator('[data-wiki-section="extended-model-answer"] .section-body')).toBeVisible();
+  await page.locator('.reading-pagination.compact a[rel="next"]').click();
+  await expect(page).toHaveURL(/english-library\/#\/read\/cue-card-18/);
   await page.reload();
   await expect(page.locator('[data-wiki-section="practice-cue-card"] .section-body')).toBeVisible();
   await page.goto('/english-library/#/bites');
@@ -213,7 +215,119 @@ test('the production build works beneath a GitHub Pages project directory', asyn
   await page.locator('.bite-card').first().click();
   await expect(page.locator('.bite-panel')).toHaveCount(4);
   await expect(page.locator('.bite-answer p')).toBeVisible();
+  await page.locator('.reading-pagination.compact a[rel="next"]').click();
+  await expect(page).toHaveURL(/english-library\/#\/bite\/S15/);
   expect(failedRequests).toEqual([]);
+});
+
+test('cue-card order follows courses, including older topics added with later card numbers', async ({ page }) => {
+  const ids = () => page.locator('.group-card').evaluateAll(cards => cards.map(card => card.getAttribute('href').match(/cue-card-(\d+)/)[1]));
+  await page.goto('/#/cue-cards');
+  await expect(page.locator('.group-card')).toHaveCount(22);
+  expect(await ids()).toEqual(['17', '18', '15', '16', '21', '13', '14', '11', '12', '09', '10', '08', '04', '05', '06', '07', '01', '02', '03', '19', '20', '22']);
+  await page.locator('.group-card').first().click();
+  await expect(page.locator('.reading-pagination.compact .prev')).toHaveAttribute('aria-disabled', 'true');
+  await page.locator('.reading-pagination.compact a[rel="next"]').click();
+  await expect(page).toHaveURL(/read\/cue-card-18/);
+  await page.locator('.reading-pagination:not(.compact) a[rel="next"]').click();
+  await expect(page).toHaveURL(/read\/cue-card-15/);
+  await page.locator('.reader-toolbar .back-link').click();
+  await page.locator('#sort').selectOption('asc');
+  expect(await ids()).toEqual(['22', '20', '19', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '21', '17', '18']);
+  await page.locator('.group-card').first().click();
+  await page.locator('.reading-pagination.compact a[rel="next"]').click();
+  await expect(page).toHaveURL(/read\/cue-card-20/);
+  await page.reload();
+  await expect(page.locator('.reading-pagination.compact a[rel="prev"]')).toHaveAttribute('href', /cue-card-22/);
+  await page.locator('.reader-toolbar .back-link').click();
+  await expect(page.locator('#sort')).toHaveValue('asc');
+  await page.locator('#library-search').fill('wetland');
+  await expect(page.locator('.group-card')).toHaveCount(2);
+  await page.locator('.group-card').first().click();
+  await page.locator('.reading-pagination.compact a[rel="next"]').click();
+  await expect(page).toHaveURL(/read\/cue-card-15/);
+  await expect(page.locator('.reading-pagination.compact .next')).toHaveAttribute('aria-disabled', 'true');
+  await page.locator('.reader-toolbar .back-link').click();
+  await expect(page.locator('#library-search')).toHaveValue('wetland');
+});
+
+test('lesson navigation preserves filters and order through keyboard clicks, reload and browser history', async ({ page }) => {
+  await page.goto('/#/courses?tags=01&sort=asc');
+  await expect(page.locator('.course-card')).toHaveCount(9);
+  const destinations = await page.locator('.card-main').evaluateAll(links => links.map(link => link.getAttribute('href')));
+  await page.locator('.card-main').first().click();
+  const next = page.locator('.reading-pagination.compact a[rel="next"]');
+  await expect(next).toHaveAttribute('href', destinations[1]);
+  await next.focus();
+  await page.keyboard.press('Enter');
+  await expect(page).toHaveURL(new RegExp(destinations[1].split('?')[0]));
+  await page.reload();
+  await expect(page.locator('.reading-pagination.compact a[rel="prev"]')).toHaveAttribute('href', destinations[0]);
+  await page.locator('.reading-pagination:not(.compact) a[rel="next"]').click();
+  await page.goBack();
+  await expect(page.locator('.reading-pagination.compact a[rel="next"]')).toHaveAttribute('href', destinations[2]);
+  await page.locator('.reader-toolbar .back-link').click();
+  await expect(page.locator('#sort')).toHaveValue('asc');
+  await expect(page.locator('.course-card')).toHaveCount(9);
+  await page.goto('/#/courses?q=out+of+paper');
+  await page.locator('.card-main').click();
+  await expect(page.locator('.reading-pagination.compact a')).toHaveCount(0);
+  await page.goto('/#/read/lesson-01');
+  await expect(page.locator('.reading-pagination.compact .next')).toHaveAttribute('aria-disabled', 'true');
+  await page.goto('/#/read/lesson-19?back=%2Fcourses%3Fq%3Dzzzz-no-such-note');
+  await expect(page.locator('.reading-pagination.compact a[rel="next"]')).toHaveAttribute('href', /lesson-18/);
+});
+
+test('every reader family offers relevant neighbours and section navigation follows contents links', async ({ page, request }) => {
+  for (const [id, nextId] of [['topic-01', 'topic-02'], ['ielts-part-1', 'ielts-part-2'], ['cue-card-guide', 'cue-card-grammar']]) {
+    await page.goto(`/#/read/${id}`);
+    await page.locator('.reading-pagination.compact a[rel="next"]').click();
+    await expect(page).toHaveURL(new RegExp(`read/${nextId}`));
+    await expect(page.locator('.document .reading-pagination')).toHaveCount(0);
+  }
+  const catalog = await (await request.get('/content/catalog.json')).json();
+  for (const collection of ['grammar', 'linking-words']) {
+    const groups = catalog.documents.find(d => d.id === collection).groups;
+    await page.goto(`/#/${collection}`);
+    await page.locator('.group-card').nth(2).click();
+    await page.locator('.reading-pagination.compact a[rel="next"]').click();
+    await expect(page.locator(`[data-wiki-section="${groups[3].id}"]`)).toHaveJSProperty('open', true);
+    await page.locator(`.reader-index [data-section="${groups[4].id}"]`).click();
+    await expect(page.locator('.reading-pagination.compact a[rel="next"]')).toHaveAttribute('href', new RegExp(groups[5].id));
+    await page.locator('.reading-pagination:not(.compact) a[rel="next"]').click();
+    await page.reload();
+    await expect(page.locator(`[data-wiki-section="${groups[5].id}"]`)).toHaveJSProperty('open', true);
+  }
+  await page.goto('/#/linking-words?q=however');
+  await page.locator('.group-card').click();
+  await expect(page.locator('.reading-pagination.compact a')).toHaveCount(0);
+  await page.goto('/#/read/cue-cards');
+  await page.locator('.reading-pagination.compact a[rel="next"]').click();
+  await expect(page.locator('.wiki-section[open]')).toHaveCount(1);
+});
+
+test('mobile readers support continuous previous and next reading without overflow', async ({ page }, testInfo) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/#/bites?category=Grammar&sort=asc');
+  await page.locator('.bite-card').first().click();
+  await page.locator('.reading-pagination.compact a[rel="next"]').click();
+  await expect(page).toHaveURL(/bite\/G02/);
+  await page.reload();
+  await expect(page.locator('.reading-pagination.compact a[rel="prev"]')).toHaveAttribute('href', /bite\/G01/);
+  await page.locator('.reading-pagination:not(.compact) a[rel="next"]').click();
+  await expect(page).toHaveURL(/bite\/G03/);
+  await page.locator('.reader-toolbar .back-link').click();
+  await expect(page.locator('#sort')).toHaveValue('asc');
+  await expect(page.locator('[data-category="Grammar"]')).toHaveAttribute('aria-pressed', 'true');
+  await page.goto('/#/read/cue-card-17');
+  await expect(page.locator('.reading-pagination.compact')).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
+  await page.screenshot({ path: testInfo.outputPath('reader-navigation-mobile-top.png') });
+  await page.locator('.reading-pagination:not(.compact)').scrollIntoViewIfNeeded();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
+  await page.screenshot({ path: testInfo.outputPath('reader-navigation-mobile-bottom.png') });
+  await page.locator('.reading-pagination:not(.compact) a[rel="next"]').click();
+  await expect(page).toHaveURL(/read\/cue-card-18/);
 });
 
 test('wiki preferences, section links, focus mode, and expanded tables work together', async ({ page, context }) => {
@@ -351,9 +465,9 @@ test('newest-first ordering can be reversed and stays with search when returning
   await expect(page.locator('#sort')).toHaveValue('asc');
   await expect(page.locator('#library-search')).toHaveValue('out of paper');
   await page.goto('/#/cue-cards');
-  await expect(page.locator('.group-card').first()).toHaveAttribute('href', /read\/cue-card-22/);
+  await expect(page.locator('.group-card').first()).toHaveAttribute('href', /read\/cue-card-17/);
   await page.locator('#sort').selectOption('asc');
-  await expect(page.locator('.group-card').first()).toHaveAttribute('href', /read\/cue-card-01/);
+  await expect(page.locator('.group-card').first()).toHaveAttribute('href', /read\/cue-card-22/);
 });
 
 test('topic cards open from their body or keyboard while related lessons keep their own destination', async ({ page }) => {

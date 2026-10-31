@@ -1,4 +1,4 @@
-# English Library
+# Olivia’s English Notes
 
 A personal English-learning wiki with complete course notes, classified topic summaries, grammar corrections, and speaking examples. The interface is entirely in English, with a warm green theme and a compact reading layout.
 
@@ -57,12 +57,13 @@ The collection currently contains **19 lessons, 9 topic collections, 13 grammar 
 - **Linking words:** A dedicated collection before Language Bites, organised into 12 purposes such as contrast, addition and reason. Search by category or phrase, then open its examples directly. Shared passages and recall practice remain available.
 - **Cue cards:** Each of the 22 topics has its own Markdown file and reader page with the same prompt, model-answer, linking-language, grammar, and exam-practice sections. The shared guide and grammar exercises remain available; the full collection is generated automatically for existing links.
 - **Grammar:** Open the relevant category directly. The selected section expands while the remaining categories stay available.
+- **Previous / Next:** Available above and below every reader. Continue through the current collection with its search, filters and sorting preserved. Grammar and linking-word readers move between sections. The first and last items have an inactive boundary control.
 - **Wiki reader:** Fold individual sections, expand or collapse all sections, follow the sticky contents list, or switch to focus mode.
 - **Tables:** Open a larger table view without losing your reading position. Close it with Escape.
 - **Search:** Use the search button or **⌘K / Ctrl+K** to search across the wiki. Use **/** for the current list search, or global search while reading. Arrow keys and Enter navigate search results.
 - **Links and preferences:** Copy page or section links. Text size, list/card layout, and focus preference are saved in the current browser. No account or cloud sync is required.
 
-Courses and cue cards default to descending lesson/topic number. Language Bites default to reverse source order; append new notes to the JSON list. Each offers a Newest first / Oldest first control that is retained in the URL. Topic, grammar and linking-word categories retain their teaching order rather than implying a date.
+Courses default to descending lesson number. Cue cards follow their mapped course order, newest course first; topics within a course keep their teaching order. Stable cue-card numbers are identifiers, not chronology. Language Bites default to reverse source order; append new notes to the JSON list. Each offers a Newest first / Oldest first control that is retained in the URL. Topic, grammar and linking-word categories retain their teaching order rather than implying a date.
 
 ## Maintain the Content
 

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { buildContent, parseCourseMap, renderDocument, ROOT, CONTENT_ROOT } from '../scripts/build-content.mjs';
+import { collectionItems } from '../src/collections.js';
 
 test('all lesson files and topic mappings are represented without duplicating lessons', async () => {
   const catalog = await buildContent();
@@ -33,6 +34,11 @@ test('all lesson files and topic mappings are represented without duplicating le
   assert.equal(linkingWords.groups.length, 12);
   assert.equal(linkingWords.groups.filter(group => group.terms.includes('However')).length, 1);
   assert.equal(cueCards.groups.length, 22);
+  const orderedCues = collectionItems(catalog, 'cue-cards');
+  assert.deepEqual(orderedCues.map(d => d.number), [17, 18, 15, 16, 21, 13, 14, 11, 12, 9, 10, 8, 4, 5, 6, 7, 1, 2, 3, 19, 20, 22]);
+  assert.deepEqual(collectionItems(catalog, 'cue-cards', new URLSearchParams('sort=asc')).map(d => d.number), [22, 20, 19, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 21, 17, 18]);
+  assert.deepEqual(cueCards.groups.map(g => Number(g.title.match(/^\d+/)[0])), orderedCues.map(d => d.number), 'the combined reader follows course order without changing topic anchors');
+  for (const cue of individualCards) assert.ok(lessons.some(lesson => lesson.number === cue.courseOrder.lesson));
   for (const doc of catalog.documents) {
     const rendered = JSON.parse(await fs.readFile(path.join(ROOT, 'web/public/content', `${doc.id}.json`), 'utf8'));
     const ids = rendered.headings.map(h => h.id);

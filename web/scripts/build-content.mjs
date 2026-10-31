@@ -3,6 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { marked } from 'marked';
 import sanitizeHtml from 'sanitize-html';
+import { compareCueCards } from '../src/collections.js';
 
 export const ROOT = fileURLToPath(new URL('../../', import.meta.url));
 export const CONTENT_ROOT = path.join(ROOT, 'content');
@@ -101,6 +102,19 @@ export async function buildContent() {
   const lessons = (await fs.readdir(path.join(CONTENT_ROOT, 'Course-Notes'))).filter(f => /^Lesson-\d+-.*\.md$/.test(f)).sort();
   const topics = (await fs.readdir(path.join(CONTENT_ROOT, 'Topic-Review'))).filter(f => /^\d+-.*\.md$/.test(f)).sort();
   const cueFiles = (await fs.readdir(path.join(CONTENT_ROOT, CUE_ROOT))).filter(f => /^Cue-Card-\d+-.*\.md$/.test(f)).sort();
+  const courseOrder = new Map();
+  const lessonNumbers = new Set(lessons.map(file => Number(file.match(/^Lesson-(\d+)/)[1])));
+  const cueId = file => `cue-card-${String(Number(file.match(/^Cue-Card-(\d+)/)[1])).padStart(2, '0')}`;
+  const cueIds = new Set(cueFiles.map(cueId));
+  for (const group of JSON.parse(await read(`${CUE_ROOT}/course-order.json`))) {
+    if (!lessonNumbers.has(group.lesson)) throw new Error(`Cue-card order references missing lesson ${group.lesson}`);
+    for (const [position, id] of group.topics.entries()) {
+      if (!cueIds.has(id) || courseOrder.has(id)) throw new Error(`Unknown or duplicate cue card in course order: ${id}`);
+      courseOrder.set(id, { lesson: group.lesson, position });
+    }
+  }
+  for (const id of cueIds) if (!courseOrder.has(id)) throw new Error(`Missing course order for ${id}`);
+  cueFiles.sort((a, b) => compareCueCards({ courseOrder: courseOrder.get(cueId(a)) }, { courseOrder: courseOrder.get(cueId(b)) }));
   const cueSources = new Map();
   for (const file of cueFiles) cueSources.set(`${CUE_ROOT}/${file}`, await read(`${CUE_ROOT}/${file}`));
   // Preserve existing collection and section links without maintaining another Markdown copy.
@@ -124,7 +138,7 @@ export async function buildContent() {
   const inputs = [
     ...lessons.map(file => { const number = Number(file.match(/^Lesson-(\d+)/)[1]); return { source: `Course-Notes/${file}`, id: `lesson-${String(number).padStart(2, '0')}`, number, kind: 'lesson', label: LESSON_LABELS[number - 1] || '' }; }),
     ...topics.map(file => { const n = Number(file.slice(0, 2)); return { source: `Topic-Review/${file}`, id: `topic-${file.slice(0, 2)}`, number: n, kind: 'topic', label: TOPIC_LABELS[n - 1] || '', tags: [file.slice(0, 2)] }; }),
-    ...cueFiles.map(file => { const number = Number(file.match(/^Cue-Card-(\d+)/)[1]); return { source: `${CUE_ROOT}/${file}`, id: `cue-card-${String(number).padStart(2, '0')}`, number, kind: 'cue-card', tags: ['07', '08', '09'] }; }),
+    ...cueFiles.map(file => { const number = Number(file.match(/^Cue-Card-(\d+)/)[1]); return { source: `${CUE_ROOT}/${file}`, id: cueId(file), number, courseOrder: courseOrder.get(cueId(file)), kind: 'cue-card', tags: ['07', '08', '09'] }; }),
     { source: `${CUE_ROOT}/Guide.md`, id: 'cue-card-guide', kind: 'cue-reference', label: 'Cue card practice guide', tags: ['07', '08', '09'] },
     { source: `${CUE_ROOT}/Grammar-Review.md`, id: 'cue-card-grammar', kind: 'cue-reference', label: 'Cue card grammar review', tags: ['02', '03'] },
     ...practice.map(([source, id, label, tags]) => ({ source, id, label, tags, kind: ['grammar', 'cue-cards', 'linking-words'].includes(id) ? id : 'resource' })),

@@ -1,6 +1,7 @@
 import './style.css';
 import { configureWiki, mountWikiChrome, enhanceReader, clearReader, revealSection, applyCollectionLayout, getView, getReadingSize } from './wiki.js';
 import { configureBites, renderBites, renderBite } from './bites.js';
+import { collectionItems, selectedTags as getSelectedTags, readingNeighbours } from './collections.js';
 
 const app = document.querySelector('#app');
 document.querySelector('.skip-link').addEventListener('click', event => {
@@ -76,7 +77,7 @@ function activePage(route) {
 }
 function sidebar(active) {
   return `<aside class="sidebar" id="sidebar" aria-label="Library navigation">
-    <a class="brand" href="#/courses"><span class="brand-mark">${icon('book')}</span><span>English Library<small>PERSONAL LEARNING WIKI</small></span></a>
+    <a class="brand" href="#/courses"><span class="brand-mark">${icon('book')}</span><span>Olivia’s<br>English Notes<small>PERSONAL LEARNING WIKI</small></span></a>
     <p class="nav-caption">COLLECTIONS <span>LIBRARY</span></p>
     <nav>${Object.entries(config).map(([key, value]) => `<a class="nav-link ${active === key ? 'active' : ''}" ${active === key ? 'aria-current="page"' : ''} href="#/${key}">${icon(value.icon)}<span>${value.label}</span><span class="nav-count">${countFor(key)}</span></a>`).join('')}</nav>
     <div class="sidebar-note"><span class="note-line"></span><p>A place for everything<br>you are learning.</p><small>Read. Connect. Make it yours.</small></div>
@@ -84,7 +85,7 @@ function sidebar(active) {
   </aside>`;
 }
 function shell(active) {
-  app.innerHTML = `${sidebar(active)}<button class="menu-overlay" aria-label="Close navigation" data-action="menu-close"></button><div class="workspace"><header class="topbar"><div class="topbar-left"><button class="icon-button mobile-menu" data-action="menu" aria-label="Open navigation" aria-expanded="false" aria-controls="sidebar">${icon('menu')}</button><span class="breadcrumb">Library <span>/</span> <strong>${config[active].label}</strong></span></div><button class="global-search-trigger" data-wiki="search" aria-label="Search all notes">${icon('search')}<span>Search all notes</span><kbd>⌘ K</kbd></button></header><main id="main" tabindex="-1"></main><footer class="site-footer"><span>ENGLISH LIBRARY</span><span>Read. Connect. Revisit.</span></footer></div>`;
+  app.innerHTML = `${sidebar(active)}<button class="menu-overlay" aria-label="Close navigation" data-action="menu-close"></button><div class="workspace"><header class="topbar"><div class="topbar-left"><button class="icon-button mobile-menu" data-action="menu" aria-label="Open navigation" aria-expanded="false" aria-controls="sidebar">${icon('menu')}</button><span class="breadcrumb">Library <span>/</span> <strong>${config[active].label}</strong></span></div><button class="global-search-trigger" data-wiki="search" aria-label="Search all notes">${icon('search')}<span>Search all notes</span><kbd>⌘ K</kbd></button></header><main id="main" tabindex="-1"></main><footer class="site-footer"><span>OLIVIA’S ENGLISH NOTES</span><span>Read. Connect. Revisit.</span></footer></div>`;
   setMenu(false);
   mountWikiChrome();
 }
@@ -95,20 +96,14 @@ function hero(page) {
 function queryControls(page, params) {
   const query = params.get('q') || '';
   const sortable = ['courses', 'cue-cards', 'bites'].includes(page);
-  const sort = sortable ? `<label class="sort-select"><span class="sr-only">Sort ${config[page].label}</span><select id="sort"><option value="desc" ${params.get('sort') !== 'asc' ? 'selected' : ''}>Newest first</option><option value="asc" ${params.get('sort') === 'asc' ? 'selected' : ''}>Oldest first</option></select></label>` : '';
+  const sort = sortable ? `<label class="sort-select"><span class="sr-only">Sort ${config[page].label}</span><select id="sort"><option value="desc" ${params.get('sort') !== 'asc' ? 'selected' : ''}>${page === 'cue-cards' ? 'Newest course first' : 'Newest first'}</option><option value="asc" ${params.get('sort') === 'asc' ? 'selected' : ''}>${page === 'cue-cards' ? 'Oldest course first' : 'Oldest first'}</option></select></label>` : '';
   const view = page === 'courses' ? `<div class="view-switch" role="group" aria-label="Course layout"><button data-wiki="view-list" aria-label="List view" aria-pressed="${getView() === 'list'}">${icon('file')}</button><button data-wiki="view-cards" aria-label="Card view" aria-pressed="${getView() === 'cards'}">${icon('grid')}</button></div>` : '';
   return `<div class="collection-toolbar"><label class="search-box">${icon('search')}<input id="library-search" type="search" value="${escape(query)}" placeholder="${page === 'courses' ? 'Search lesson titles or full text…' : 'Search titles or content…'}" aria-label="Search ${config[page].label}" autocomplete="off"/><kbd>/</kbd></label><div class="toolbar-controls"><span id="result-count" class="result-count" aria-live="polite"></span>${sort}${view}</div></div>`;
 }
-function selectedTags(params) { return (params.get('tags') || '').split(',').filter(t => catalog.categories.some(c => c.id === t)); }
+function selectedTags(params) { return getSelectedTags(catalog, params); }
 function filters(params) {
   const tags = selectedTags(params);
   return `<details class="filter-panel" ${filtersOpen ? 'open' : ''}><summary>${icon('tag')} <span>Filter by topic</span><span class="filter-selection">${tags.length ? `${tags.length} selected` : 'All topics'}</span>${icon('chevron')}</summary><div class="filter-body"><div class="filter-heading"><span>A lesson can belong to several topics.</span><select id="match-mode" aria-label="Topic matching"><option value="all" ${params.get('mode') !== 'any' ? 'selected' : ''}>Match all selected</option><option value="any" ${params.get('mode') === 'any' ? 'selected' : ''}>Match any selected</option></select></div><div class="filter-tags"><button class="filter-tag ${!tags.length ? 'selected' : ''}" data-action="all-tags" aria-pressed="${!tags.length}">All lessons <span>${countFor('courses')}</span></button>${catalog.categories.map(c => `<button class="filter-tag ${tags.includes(c.id) ? 'selected' : ''}" data-action="tag" data-tag="${c.id}" aria-pressed="${tags.includes(c.id)}">${tags.includes(c.id) ? icon('check') : ''}${escape(c.label)}<span>${c.count}</span></button>`).join('')}</div></div></details><div id="filter-summary" class="filter-summary"></div>`;
-}
-function courseMatches(d, params) {
-  const query = (params.get('q') || '').trim().toLowerCase();
-  const tags = selectedTags(params);
-  const tagText = d.tags.map(id => catalog.categories.find(t => t.id === id)?.label || '').join(' ');
-  return (!query || `${d.searchText} ${tagText}`.includes(query)) && (!tags.length || (params.get('mode') === 'any' ? tags.some(t => d.tags.includes(t)) : tags.every(t => d.tags.includes(t))));
 }
 function tagLinks(tags, limit = tags.length) {
   return `${tags.slice(0, limit).map(id => { const c = catalog.categories.find(c => c.id === id); return c ? `<a class="small-tag tag-${id}" href="${url('courses', { tags: id })}">${c.label}</a>` : ''; }).join('')}${tags.length > limit ? `<span class="tag-overflow" title="${escape(tags.slice(limit).map(id => catalog.categories.find(c => c.id === id)?.label).join(', '))}">+${tags.length - limit}</span>` : ''}`;
@@ -132,9 +127,8 @@ function updateResults() {
   if (!target || !config[page]) return;
   const query = (params.get('q') || '').trim().toLowerCase();
   if (page === 'bites') { renderBites(params); return; }
-  let items = [];
+  const items = collectionItems(catalog, page, params);
   if (page === 'courses') {
-    items = catalog.documents.filter(d => d.kind === 'lesson' && courseMatches(d, params)).sort((a, b) => params.get('sort') === 'asc' ? a.number - b.number : b.number - a.number);
     target.className = 'course-grid';
     target.innerHTML = items.map(courseCard).join('');
     const summary = document.querySelector('#filter-summary');
@@ -142,20 +136,16 @@ function updateResults() {
     summary.innerHTML = tags.length || query ? `<span>${tags.length ? `${tags.length} topics selected${query ? ' · Full-text search' : ''}` : 'Full-text search'}</span><button class="text-button" data-action="reset">Clear filters ${icon('close')}</button>` : '';
     summary.hidden = !tags.length && !query;
   } else if (page === 'topics') {
-    items = catalog.categories.filter(c => !query || `${c.label} ${c.description} ${catalog.documents.find(d => d.id === c.docId).searchText}`.toLowerCase().includes(query));
     target.className = 'topic-grid';
     target.innerHTML = items.map(topicCard).join('');
   } else if (page === 'cue-cards') {
-    items = catalog.documents.filter(d => d.kind === 'cue-card' && (!query || d.searchText.includes(query))).sort((a, b) => params.get('sort') === 'asc' ? a.number - b.number : b.number - a.number);
     target.className = 'group-grid';
     target.innerHTML = items.map(d => groupCard({ label: d.title }, d, d.number - 1)).join('');
   } else if (page === 'grammar' || page === 'linking-words') {
     const d = catalog.documents.find(d => d.id === page);
-    items = d.groups.map((g, i) => ({ ...g, originalIndex: i })).filter(g => !query || `${g.title} ${g.label} ${(g.terms || []).join(' ')}`.toLowerCase().includes(query));
     target.className = 'group-grid';
     target.innerHTML = items.map(g => groupCard(g, d, g.originalIndex)).join('');
   } else {
-    items = catalog.documents.filter(d => d.kind === 'resource' && (!query || d.searchText.includes(query)));
     target.className = 'resource-grid';
     target.innerHTML = items.map(d => `<a class="resource-card" href="${readUrl(d.id)}">${icon('file')}<div><h3>${escape(d.label)}</h3><p>${escape(d.title)}</p><span>${d.sections} sections</span></div>${icon('arrow')}</a>`).join('');
   }
@@ -170,7 +160,7 @@ function collection(route) {
   main.innerHTML = `${hero(page)}${queryControls(page, params)}${page === 'courses' ? filters(params) : ''}${page === 'bites' ? '<div id="bite-filters" class="bite-filters" aria-label="Language Bites categories"></div>' : ''}${page === 'grammar' || page === 'cue-cards' ? `<div class="collection-intro"><span>${page === 'grammar' ? 'Corrections and practice, organised by structure' : 'Complete notes, organised by speaking topic'}</span><a href="${readUrl(page)}">Read the full collection ${icon('arrow')}</a></div>` : ''}<div id="results" aria-live="polite"></div>`;
   if (page === 'grammar') document.querySelector('#library-search').placeholder = 'Search category names…';
   if (page === 'cue-cards') {
-    document.querySelector('.collection-intro > span').textContent = 'One topic per page · prompt, answer and review';
+    document.querySelector('.collection-intro > span').textContent = 'Topics follow course order · one topic per page';
     document.querySelector('.collection-intro').insertAdjacentHTML('beforeend', `<a href="${readUrl('cue-card-guide')}">Practice guide</a><a href="${readUrl('cue-card-grammar')}">Shared grammar review</a>`);
   }
   if (page === 'linking-words') {
@@ -188,6 +178,22 @@ async function getDocument(id) {
   cache.set(id, doc);
   return doc;
 }
+function readingPagination(doc, route, compact = false) {
+  const { previous, next, index, total, back, page, grouped } = readingNeighbours(catalog, doc, route);
+  if (index < 0) return '';
+  const item = (entry, direction) => {
+    const label = direction === 'prev' ? 'Previous' : 'Next';
+    const arrow = icon(direction === 'prev' ? 'back' : 'arrow');
+    if (!entry) return `<span class="pagination-item ${direction} unavailable" aria-disabled="true">${direction === 'prev' ? arrow : ''}<span>${label}${compact ? '' : `<small>${direction === 'prev' ? 'Start' : 'End'} of this collection</small>`}</span>${direction === 'next' ? arrow : ''}</span>`;
+    const href = page === 'bites' ? url(`bite/${entry.id}`, { back }) : readUrl(entry.id, entry.section || '', back);
+    const title = page === 'courses' ? `Lesson ${String(entry.number).padStart(2, '0')} · ${entry.title}` : entry.title;
+    return `<a class="pagination-item ${direction}" rel="${direction}" href="${escape(href)}" aria-label="${label}: ${escape(title)}" title="${escape(title)}">${direction === 'prev' ? arrow : ''}<span>${label}${compact ? '' : `<strong>${escape(title)}</strong>`}</span>${direction === 'next' ? arrow : ''}</a>`;
+  };
+  return `<nav class="reading-pagination ${compact ? 'compact' : ''}" aria-label="${compact ? 'Quick reading navigation' : 'Reading navigation'}">${item(previous, 'prev')}${compact ? `<span class="pagination-count">${index + 1} / ${total}${grouped ? ' sections' : ''}</span>` : ''}${item(next, 'next')}</nav>`;
+}
+function updateReadingPagination(doc, route) {
+  document.querySelectorAll('[data-reading-pagination]').forEach(el => { el.innerHTML = readingPagination(doc, route, el.dataset.readingPagination === 'compact'); });
+}
 async function reader(route, request) {
   const main = document.querySelector('#main');
   const metadata = catalog.documents.find(d => d.id === route.id);
@@ -202,7 +208,7 @@ async function reader(route, request) {
     const back = /^\/(courses|topics|grammar|cue-cards|linking-words|resources|bites)(\?|$)/.test(proposed) ? `#${proposed}` : `#/${active}`;
     const topHeading = doc.headings.find(h => h.depth === 1);
     const html = doc.html.replace(/^<h1[^>]*>.*?<\/h1>\s*/s, '');
-    main.innerHTML = `<div class="reading-progress" aria-hidden="true"><span></span></div><div class="reader-toolbar"><a class="back-link" href="${escape(back)}">${icon('back')} ${config[active].label}</a><div class="reader-tools"><button class="tool-button" data-wiki="focus" aria-pressed="false">Focus mode</button><button class="tool-button" data-wiki="copy-link">Copy link</button><button class="type-button" data-action="font-down" aria-label="Decrease text size">A−</button><button class="type-button" data-action="font-up" aria-label="Increase text size">A+</button></div></div><header class="reader-heading"><p class="eyebrow">${doc.kind === 'lesson' ? `LESSON ${String(doc.number).padStart(2, '0')}` : config[active].english}</p><h1 id="${escape(topHeading?.id || 'document-title')}">${escape(doc.title)}</h1><div class="reader-tags">${tagLinks(doc.tags)}<span class="reader-sections">${doc.sections} sections</span></div></header><div class="reader-layout"><article class="document" lang="en" style="--reading-size:${readerSize}px">${html}</article><aside class="reader-aside"><details class="reader-index" ${matchMedia('(min-width: 1101px)').matches ? 'open' : ''}><summary>On this page <span>${doc.headings.filter(h => h.depth === 2).length}</span></summary><nav aria-label="On this page">${doc.headings.filter(h => h.depth === 2).map(h => `<a href="${readUrl(doc.id, h.id, proposed)}" data-section="${escape(h.id)}">${escape(h.title.replace(/^\d+[. —]+/, ''))}</a>`).join('')}</nav></details>${doc.kind === 'lesson' ? `<div class="related-review"><p>Related collections</p>${doc.tags.map(id => { const c = catalog.categories.find(c => c.id === id); return `<a href="${readUrl(c.docId, '', `/${active}`)}">${escape(c.label)}${icon('chevron')}</a>`; }).join('')}</div>` : doc.kind === 'topic' ? `<a class="related-courses-link" href="${url('courses', { tags: doc.tags.join(',') })}">Browse related lessons ${icon('arrow')}</a>` : ''}</aside></div><div class="reader-end"><a class="back-link" href="${escape(back)}">${icon('back')} Back to ${config[active].label.toLowerCase()}</a><button class="text-button" data-wiki="top">Back to top ↑</button></div>`;
+    main.innerHTML = `<div class="reading-progress" aria-hidden="true"><span></span></div><div class="reader-toolbar"><a class="back-link" href="${escape(back)}">${icon('back')} ${config[active].label}</a><div class="reader-tools"><button class="tool-button" data-wiki="focus" aria-pressed="false">Focus mode</button><button class="tool-button" data-wiki="copy-link">Copy link</button><button class="type-button" data-action="font-down" aria-label="Decrease text size">A−</button><button class="type-button" data-action="font-up" aria-label="Increase text size">A+</button></div></div><header class="reader-heading"><p class="eyebrow">${doc.kind === 'lesson' ? `LESSON ${String(doc.number).padStart(2, '0')}` : config[active].english}</p><h1 id="${escape(topHeading?.id || 'document-title')}">${escape(doc.title)}</h1><div class="reader-tags">${tagLinks(doc.tags)}<span class="reader-sections">${doc.sections} sections</span></div></header><div data-reading-pagination="compact">${readingPagination(doc, route, true)}</div><div class="reader-layout"><article class="document" lang="en" style="--reading-size:${readerSize}px">${html}</article><aside class="reader-aside"><details class="reader-index" ${matchMedia('(min-width: 1101px)').matches ? 'open' : ''}><summary>On this page <span>${doc.headings.filter(h => h.depth === 2).length}</span></summary><nav aria-label="On this page">${doc.headings.filter(h => h.depth === 2).map(h => `<a href="${readUrl(doc.id, h.id, proposed)}" data-section="${escape(h.id)}">${escape(h.title.replace(/^\d+[. —]+/, ''))}</a>`).join('')}</nav></details>${doc.kind === 'lesson' ? `<div class="related-review"><p>Related collections</p>${doc.tags.map(id => { const c = catalog.categories.find(c => c.id === id); return `<a href="${readUrl(c.docId, '', `/${active}`)}">${escape(c.label)}${icon('chevron')}</a>`; }).join('')}</div>` : doc.kind === 'topic' ? `<a class="related-courses-link" href="${url('courses', { tags: doc.tags.join(',') })}">Browse related lessons ${icon('arrow')}</a>` : ''}</aside></div><div data-reading-pagination="full">${readingPagination(doc, route)}</div><div class="reader-end"><a class="back-link" href="${escape(back)}">${icon('back')} Back to ${config[active].label.toLowerCase()}</a><button class="text-button" data-wiki="top">Back to top ↑</button></div>`;
     enhanceReader(doc, route);
     if (route.params.get('section')) scrollToSection(route.params.get('section'));
   } catch (error) {
@@ -247,7 +253,7 @@ async function render() {
   else if (config[route.page]) collection(route);
   else { history.replaceState(null, '', '#/courses'); collection(currentRoute()); }
   if (request !== renderId) return;
-  document.title = `${route.page === 'read' ? catalog.documents.find(d => d.id === route.id)?.title || 'Notes' : route.page === 'bite' ? catalog.bites.find(b => b.id === route.id)?.title || 'Language Bite' : config[activePage(route)].label} · English Library`;
+  document.title = `${route.page === 'read' ? catalog.documents.find(d => d.id === route.id)?.title || 'Notes' : route.page === 'bite' ? catalog.bites.find(b => b.id === route.id)?.title || 'Language Bite' : config[activePage(route)].label} · Olivia’s English Notes`;
 }
 
 app.addEventListener('click', event => {
@@ -256,6 +262,8 @@ app.addEventListener('click', event => {
     event.preventDefault();
     const route = currentRoute(); route.params.set('section', section.dataset.section);
     history.replaceState(null, '', url(`read/${route.id}`, Object.fromEntries(route.params)));
+    const doc = cache.get(route.id);
+    if (doc) updateReadingPagination(doc, route);
     scrollToSection(section.dataset.section);
     return;
   }
@@ -306,7 +314,7 @@ try {
   if (!response.ok) throw new Error('The library could not be loaded. Please try again.');
   catalog = await response.json();
   configureWiki({ catalog, icon, escape, readUrl, getDocument, closeMenu: () => setMenu(false) });
-  configureBites({ catalog, icon, escape, url, navigate });
+  configureBites({ catalog, icon, escape, url, navigate, readingPagination });
   await render();
 } catch (error) {
   app.innerHTML = `<main class="error-state"><h1>Unable to open the library</h1><p>${escape(error.message)}</p><button id="reload" class="text-button">Try again</button></main>`;
