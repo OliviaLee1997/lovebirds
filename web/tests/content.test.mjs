@@ -28,6 +28,10 @@ test('all lesson files and topic mappings are represented without duplicating le
   assert.equal(individualCards.length, cueFiles.length);
   assert.equal(cueCards.groups.length, individualCards.length);
   assert.equal(grammar.groups.length, 13);
+  const linkingWords = catalog.documents.find(d => d.id === 'linking-words');
+  assert.equal(linkingWords.kind, 'linking-words');
+  assert.equal(linkingWords.groups.length, 12);
+  assert.equal(linkingWords.groups.filter(group => group.terms.includes('However')).length, 1);
   assert.equal(cueCards.groups.length, 22);
   for (const doc of catalog.documents) {
     const rendered = JSON.parse(await fs.readFile(path.join(ROOT, 'web/public/content', `${doc.id}.json`), 'utf8'));

@@ -127,7 +127,7 @@ export async function buildContent() {
     ...cueFiles.map(file => { const number = Number(file.match(/^Cue-Card-(\d+)/)[1]); return { source: `${CUE_ROOT}/${file}`, id: `cue-card-${String(number).padStart(2, '0')}`, number, kind: 'cue-card', tags: ['07', '08', '09'] }; }),
     { source: `${CUE_ROOT}/Guide.md`, id: 'cue-card-guide', kind: 'cue-reference', label: 'Cue card practice guide', tags: ['07', '08', '09'] },
     { source: `${CUE_ROOT}/Grammar-Review.md`, id: 'cue-card-grammar', kind: 'cue-reference', label: 'Cue card grammar review', tags: ['02', '03'] },
-    ...practice.map(([source, id, label, tags]) => ({ source, id, label, tags, kind: ['grammar', 'cue-cards'].includes(id) ? id : 'resource' })),
+    ...practice.map(([source, id, label, tags]) => ({ source, id, label, tags, kind: ['grammar', 'cue-cards', 'linking-words'].includes(id) ? id : 'resource' })),
   ];
   if (new Set(inputs.map(input => input.id)).size !== inputs.length) throw new Error('Duplicate document ID or cue-card number');
   const registry = new Map(inputs.map(d => [d.source, d.id]));
@@ -150,7 +150,13 @@ export async function buildContent() {
     const focus = source.match(/^>?\s*\*\*(?:Focus|Main communication goal):\*\*\s*(.+)$/m)?.[1];
     const description = input.kind === 'topic' ? TOPIC_DESCRIPTIONS[input.number - 1] || '' : focusMap.get(input.source) || (focus ? plainText(focus) : 'Notes, examples and review exercises.');
     const sections = rendered.headings.filter(h => h.depth === 2);
-    const groups = sections.filter(h => input.kind === 'grammar' ? /^\d+\. /.test(h.title) : input.kind === 'cue-cards' ? /^\d+ — /.test(h.title) : false).map((h, i) => ({ ...h, label: input.kind === 'grammar' ? GRAMMAR_LABELS[i] || h.title.replace(/^\d+\. /, '') : h.title.replace(/^\d+ — /, '') }));
+    const groups = sections.filter(h => input.kind === 'grammar' ? /^\d+\. /.test(h.title) : input.kind === 'linking-words' ? /^(?:[1-9]|1[0-2])\. /.test(h.title) : input.kind === 'cue-cards' ? /^\d+ — /.test(h.title) : false).map((h, i) => ({ ...h, label: input.kind === 'grammar' ? GRAMMAR_LABELS[i] || h.title.replace(/^\d+\. /, '') : h.title.replace(/^\d+(?:\.| —) /, '') }));
+    if (input.kind === 'linking-words') for (const group of groups) {
+      const start = rendered.headings.findIndex(h => h.id === group.id) + 1;
+      const rest = rendered.headings.slice(start);
+      const end = rest.findIndex(h => h.depth === 2);
+      group.terms = rest.slice(0, end < 0 ? rest.length : end).filter(h => h.depth === 3).map(h => h.title);
+    }
     const text = plainText(source);
     const metadata = { ...input, source: undefined, title, label: input.label || title, description, tags, sections: sections.length, groups, words: text.split(/\s+/).length, searchText: `${input.label || ''} ${title} ${text}`.toLowerCase() };
     documents.push(metadata);

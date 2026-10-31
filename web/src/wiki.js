@@ -69,7 +69,7 @@ export function enhanceReader(doc, route) {
     section.className = 'wiki-section';
     section.dataset.wikiSection = heading.id;
     const selected = route.params.get('section');
-    section.open = doc.kind === 'grammar' || doc.kind === 'cue-cards' ? (selected ? selected === heading.id : index === 0) : true;
+    section.open = ['grammar', 'cue-cards', 'linking-words'].includes(doc.kind) ? (selected ? selected === heading.id : index === 0) : true;
     const summary = document.createElement('summary');
     const content = document.createElement('div');
     content.className = 'section-body';
@@ -160,7 +160,7 @@ function searchResults(query = '') {
   for (const doc of catalog.documents) {
     if (doc.id === 'cue-cards') continue; // Individual topic pages are the search destinations.
     if (needle) for (const group of doc.groups) {
-      if (`${group.title} ${group.label}`.toLowerCase().includes(needle)) candidates.push({ title: group.label, subtitle: doc.title, href: readUrl(doc.id, group.id), score: 5 });
+      if (`${group.title} ${group.label} ${(group.terms || []).join(' ')}`.toLowerCase().includes(needle)) candidates.push({ title: group.label, subtitle: doc.title, href: readUrl(doc.id, group.id), score: 5 });
     }
     const titleMatch = `${doc.title} ${doc.label}`.toLowerCase().includes(needle);
     if (!needle || titleMatch || doc.searchText.includes(needle)) candidates.push({ title: doc.title, subtitle: doc.kind === 'lesson' ? `Lesson ${String(doc.number).padStart(2, '0')} · ${doc.sections} sections` : doc.label, href: readUrl(doc.id), score: titleMatch && needle ? 4 : 1 });

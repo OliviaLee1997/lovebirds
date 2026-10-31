@@ -38,8 +38,9 @@ const config = {
   'cue-cards': { label: 'Cue cards', english: 'MY SPEAKING COLLECTION', title: 'Cue card collection', description: 'Extended speaking models, linking language and personal grammar notes.', icon: 'speech' },
   topics: { label: 'My topic collections', english: 'MY TOPIC COLLECTIONS', title: 'My topic collections', description: 'Your existing notes, brought together by subject. Read a summary or explore its lessons.', icon: 'layers' },
   grammar: { label: 'Personal grammar', english: 'MY GRAMMAR REVIEW', title: 'Personal grammar review', description: 'Corrections, explanations and exercises organised by grammatical structure.', icon: 'grammar' },
+  'linking-words': { label: 'Linking words', english: 'CONNECT YOUR IDEAS', title: 'Linking words', description: 'Explore connecting phrases by purpose, with examples and read-aloud practice.', icon: 'layers' },
   bites: { label: 'Language Bites', english: 'ONE IDEA AT A TIME', title: 'Language Bites', description: 'Short explanations, useful examples and a little recall practice.', icon: 'grid' },
-  resources: { label: 'Reference shelf', english: 'THE REFERENCE SHELF', title: 'Reference shelf', description: 'Reusable IELTS templates and linking-word practice.', icon: 'file' },
+  resources: { label: 'Reference shelf', english: 'THE REFERENCE SHELF', title: 'Reference shelf', description: 'Reusable IELTS speaking templates for Parts 1, 2 and 3.', icon: 'file' },
 };
 function currentRoute() {
   const raw = location.hash.slice(1) || '/courses';
@@ -89,11 +90,14 @@ function shell(active) {
 }
 function hero(page) {
   const c = config[page];
-  return `<header class="collection-header"><div><p class="eyebrow">PERSONAL ENGLISH WIKI</p><h1>${c.title}</h1><p>${c.description}</p></div><span class="collection-total">${countFor(page)}<small>${page === 'courses' ? 'lessons' : page === 'topics' ? 'collections' : page === 'grammar' ? 'categories' : page === 'cue-cards' ? 'topics' : page === 'bites' ? 'notes' : 'documents'}</small></span></header>`;
+  return `<header class="collection-header"><div><p class="eyebrow">PERSONAL ENGLISH WIKI</p><h1>${c.title}</h1><p>${c.description}</p></div><span class="collection-total">${countFor(page)}<small>${page === 'courses' ? 'lessons' : page === 'topics' ? 'collections' : page === 'grammar' || page === 'linking-words' ? 'categories' : page === 'cue-cards' ? 'topics' : page === 'bites' ? 'notes' : 'documents'}</small></span></header>`;
 }
 function queryControls(page, params) {
   const query = params.get('q') || '';
-  return `<div class="collection-toolbar"><label class="search-box">${icon('search')}<input id="library-search" type="search" value="${escape(query)}" placeholder="${page === 'courses' ? 'Search lesson titles or full text…' : 'Search titles or content…'}" aria-label="Search ${config[page].label}" autocomplete="off"/><kbd>/</kbd></label><div class="toolbar-controls"><span id="result-count" class="result-count" aria-live="polite"></span>${page === 'courses' ? `<label class="sort-select"><span class="sr-only">Sort lessons</span><select id="sort"><option value="asc" ${params.get('sort') !== 'desc' ? 'selected' : ''}>First to last</option><option value="desc" ${params.get('sort') === 'desc' ? 'selected' : ''}>Last to first</option></select></label><div class="view-switch" role="group" aria-label="Course layout"><button data-wiki="view-list" aria-label="List view" aria-pressed="${getView() === 'list'}">${icon('file')}</button><button data-wiki="view-cards" aria-label="Card view" aria-pressed="${getView() === 'cards'}">${icon('grid')}</button></div>` : ''}</div></div>`;
+  const sortable = ['courses', 'cue-cards', 'bites'].includes(page);
+  const sort = sortable ? `<label class="sort-select"><span class="sr-only">Sort ${config[page].label}</span><select id="sort"><option value="desc" ${params.get('sort') !== 'asc' ? 'selected' : ''}>Newest first</option><option value="asc" ${params.get('sort') === 'asc' ? 'selected' : ''}>Oldest first</option></select></label>` : '';
+  const view = page === 'courses' ? `<div class="view-switch" role="group" aria-label="Course layout"><button data-wiki="view-list" aria-label="List view" aria-pressed="${getView() === 'list'}">${icon('file')}</button><button data-wiki="view-cards" aria-label="Card view" aria-pressed="${getView() === 'cards'}">${icon('grid')}</button></div>` : '';
+  return `<div class="collection-toolbar"><label class="search-box">${icon('search')}<input id="library-search" type="search" value="${escape(query)}" placeholder="${page === 'courses' ? 'Search lesson titles or full text…' : 'Search titles or content…'}" aria-label="Search ${config[page].label}" autocomplete="off"/><kbd>/</kbd></label><div class="toolbar-controls"><span id="result-count" class="result-count" aria-live="polite"></span>${sort}${view}</div></div>`;
 }
 function selectedTags(params) { return (params.get('tags') || '').split(',').filter(t => catalog.categories.some(c => c.id === t)); }
 function filters(params) {
@@ -114,7 +118,7 @@ function courseCard(d) {
 }
 function topicCard(c) {
   const d = catalog.documents.find(d => d.id === c.docId);
-  return `<article class="topic-card"><span class="topic-symbol tone-${Number(c.id) % 3}">${icon(['book', 'grammar', 'file', 'speech'][Number(c.id) % 4])}</span><span class="topic-index">${c.id}</span><h3>${c.label}</h3><p class="topic-english">${escape(d.title)}</p><p class="topic-description">${c.description}</p><div class="topic-actions"><a href="${readUrl(c.docId)}">Read collection ${icon('arrow')}</a><a class="subtle-link" href="${url('courses', { tags: c.id })}">${c.count} related lessons ${icon('chevron')}</a></div></article>`;
+  return `<article class="topic-card"><span class="topic-symbol tone-${Number(c.id) % 3}">${icon(['book', 'grammar', 'file', 'speech'][Number(c.id) % 4])}</span><span class="topic-index">${c.id}</span><h3><a class="topic-open" href="${readUrl(c.docId)}">${c.label}</a></h3><p class="topic-english">${escape(d.title)}</p><p class="topic-description">${c.description}</p><div class="topic-actions"><span class="topic-read">Read collection ${icon('arrow')}</span><a class="subtle-link" href="${url('courses', { tags: c.id })}">${c.count} related lessons ${icon('chevron')}</a></div></article>`;
 }
 function groupCard(group, d, index) {
   return `<a class="group-card" href="${readUrl(d.id, d.kind === 'cue-card' ? '' : group.id)}"><span class="group-number">${String(index + 1).padStart(2, '0')}</span><div><h3>${escape(group.label)}</h3>${d.kind === 'cue-card' ? '<p>Model answer · Linking language · Grammar</p>' : ''}</div><span class="group-arrow">${icon('arrow')}</span></a>`;
@@ -130,7 +134,7 @@ function updateResults() {
   if (page === 'bites') { renderBites(params); return; }
   let items = [];
   if (page === 'courses') {
-    items = catalog.documents.filter(d => d.kind === 'lesson' && courseMatches(d, params)).sort((a, b) => params.get('sort') === 'desc' ? b.number - a.number : a.number - b.number);
+    items = catalog.documents.filter(d => d.kind === 'lesson' && courseMatches(d, params)).sort((a, b) => params.get('sort') === 'asc' ? a.number - b.number : b.number - a.number);
     target.className = 'course-grid';
     target.innerHTML = items.map(courseCard).join('');
     const summary = document.querySelector('#filter-summary');
@@ -142,12 +146,12 @@ function updateResults() {
     target.className = 'topic-grid';
     target.innerHTML = items.map(topicCard).join('');
   } else if (page === 'cue-cards') {
-    items = catalog.documents.filter(d => d.kind === 'cue-card' && (!query || d.searchText.includes(query))).sort((a, b) => a.number - b.number);
+    items = catalog.documents.filter(d => d.kind === 'cue-card' && (!query || d.searchText.includes(query))).sort((a, b) => params.get('sort') === 'asc' ? a.number - b.number : b.number - a.number);
     target.className = 'group-grid';
     target.innerHTML = items.map(d => groupCard({ label: d.title }, d, d.number - 1)).join('');
-  } else if (page === 'grammar') {
+  } else if (page === 'grammar' || page === 'linking-words') {
     const d = catalog.documents.find(d => d.id === page);
-    items = d.groups.map((g, i) => ({ ...g, originalIndex: i })).filter(g => !query || `${g.title} ${g.label}`.toLowerCase().includes(query));
+    items = d.groups.map((g, i) => ({ ...g, originalIndex: i })).filter(g => !query || `${g.title} ${g.label} ${(g.terms || []).join(' ')}`.toLowerCase().includes(query));
     target.className = 'group-grid';
     target.innerHTML = items.map(g => groupCard(g, d, g.originalIndex)).join('');
   } else {
@@ -168,6 +172,10 @@ function collection(route) {
   if (page === 'cue-cards') {
     document.querySelector('.collection-intro > span').textContent = 'One topic per page · prompt, answer and review';
     document.querySelector('.collection-intro').insertAdjacentHTML('beforeend', `<a href="${readUrl('cue-card-guide')}">Practice guide</a><a href="${readUrl('cue-card-grammar')}">Shared grammar review</a>`);
+  }
+  if (page === 'linking-words') {
+    document.querySelector('#results').insertAdjacentHTML('beforebegin', `<div class="collection-intro"><span>12 functions · examples, passages and recall practice</span><a href="${readUrl('linking-words')}">Read the full collection ${icon('arrow')}</a><a href="${readUrl('linking-words', '13-short-passages-for-repeated-reading')}">Practice passages</a><a href="${readUrl('linking-words', '14-quick-recall-practice')}">Quick recall</a></div>`);
+    document.querySelector('#library-search').placeholder = 'Search a purpose or phrase, e.g. however…';
   }
   updateResults();
 }
@@ -191,7 +199,7 @@ async function reader(route, request) {
     if (renderId !== request) return;
     const active = activePage(route);
     const proposed = route.params.get('back') || `/${active}`;
-    const back = /^\/(courses|topics|grammar|cue-cards|resources|bites)(\?|$)/.test(proposed) ? `#${proposed}` : `#/${active}`;
+    const back = /^\/(courses|topics|grammar|cue-cards|linking-words|resources|bites)(\?|$)/.test(proposed) ? `#${proposed}` : `#/${active}`;
     const topHeading = doc.headings.find(h => h.depth === 1);
     const html = doc.html.replace(/^<h1[^>]*>.*?<\/h1>\s*/s, '');
     main.innerHTML = `<div class="reading-progress" aria-hidden="true"><span></span></div><div class="reader-toolbar"><a class="back-link" href="${escape(back)}">${icon('back')} ${config[active].label}</a><div class="reader-tools"><button class="tool-button" data-wiki="focus" aria-pressed="false">Focus mode</button><button class="tool-button" data-wiki="copy-link">Copy link</button><button class="type-button" data-action="font-down" aria-label="Decrease text size">A−</button><button class="type-button" data-action="font-up" aria-label="Increase text size">A+</button></div></div><header class="reader-heading"><p class="eyebrow">${doc.kind === 'lesson' ? `LESSON ${String(doc.number).padStart(2, '0')}` : config[active].english}</p><h1 id="${escape(topHeading?.id || 'document-title')}">${escape(doc.title)}</h1><div class="reader-tags">${tagLinks(doc.tags)}<span class="reader-sections">${doc.sections} sections</span></div></header><div class="reader-layout"><article class="document" lang="en" style="--reading-size:${readerSize}px">${html}</article><aside class="reader-aside"><details class="reader-index" ${matchMedia('(min-width: 1101px)').matches ? 'open' : ''}><summary>On this page <span>${doc.headings.filter(h => h.depth === 2).length}</span></summary><nav aria-label="On this page">${doc.headings.filter(h => h.depth === 2).map(h => `<a href="${readUrl(doc.id, h.id, proposed)}" data-section="${escape(h.id)}">${escape(h.title.replace(/^\d+[. —]+/, ''))}</a>`).join('')}</nav></details>${doc.kind === 'lesson' ? `<div class="related-review"><p>Related collections</p>${doc.tags.map(id => { const c = catalog.categories.find(c => c.id === id); return `<a href="${readUrl(c.docId, '', `/${active}`)}">${escape(c.label)}${icon('chevron')}</a>`; }).join('')}</div>` : doc.kind === 'topic' ? `<a class="related-courses-link" href="${url('courses', { tags: doc.tags.join(',') })}">Browse related lessons ${icon('arrow')}</a>` : ''}</aside></div><div class="reader-end"><a class="back-link" href="${escape(back)}">${icon('back')} Back to ${config[active].label.toLowerCase()}</a><button class="text-button" data-wiki="top">Back to top ↑</button></div>`;
@@ -298,7 +306,7 @@ try {
   if (!response.ok) throw new Error('The library could not be loaded. Please try again.');
   catalog = await response.json();
   configureWiki({ catalog, icon, escape, readUrl, getDocument, closeMenu: () => setMenu(false) });
-  configureBites({ catalog, icon, escape, url });
+  configureBites({ catalog, icon, escape, url, navigate });
   await render();
 } catch (error) {
   app.innerHTML = `<main class="error-state"><h1>Unable to open the library</h1><p>${escape(error.message)}</p><button id="reload" class="text-button">Try again</button></main>`;

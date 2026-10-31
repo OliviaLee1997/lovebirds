@@ -44,7 +44,7 @@ test('browse every lesson, combine tags, search full text, and return with filte
 test('existing personal summaries, grammar groups, and all cue cards are readable and deep-linkable', async ({ page }) => {
   await page.goto('/#/topics');
   await expect(page.locator('.topic-card')).toHaveCount(9);
-  await page.locator('.topic-card').first().getByText('Read collection').click();
+  await page.locator('.topic-card').first().click({ position: { x: 12, y: 12 } });
   await expect(page.locator('.document')).toContainText('Pronunciation');
   await page.goto('/#/grammar');
   await expect(page.locator('.group-card')).toHaveCount(13);
@@ -58,11 +58,11 @@ test('existing personal summaries, grammar groups, and all cue cards are readabl
   await expect.poll(() => page.locator(`[id="${targetId}"]`).evaluate(el => el.getBoundingClientRect().top)).toBeLessThan(105);
   await page.goto('/#/cue-cards');
   await expect(page.locator('.group-card')).toHaveCount(22);
-  await page.locator('.group-card').last().click();
+  await page.locator('.group-card[href^="#/read/cue-card-22?"]').click();
   await expect(page.locator('.reader-heading h1')).toContainText('A Motorcycle Workshop');
   await expect(page.locator('[data-wiki-section="extended-model-answer"] .section-body')).toBeVisible();
   await page.goto('/#/resources');
-  await expect(page.locator('.resource-card')).toHaveCount(4);
+  await expect(page.locator('.resource-card')).toHaveCount(3);
 });
 
 test('mobile navigation, reading tables, and search work without page-wide horizontal overflow', async ({ page }, testInfo) => {
@@ -102,7 +102,7 @@ for (const viewport of [{ width: 1440, height: 1000 }, { width: 390, height: 844
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     const catalog = await (await request.get('/content/catalog.json')).json();
-    const cards = catalog.documents.filter(doc => doc.kind === 'cue-card').sort((a, b) => a.number - b.number);
+    const cards = catalog.documents.filter(doc => doc.kind === 'cue-card').sort((a, b) => b.number - a.number);
     for (const [index, card] of cards.entries()) {
       await page.goto('/#/cue-cards');
       await page.locator('.group-card').nth(index).click();
@@ -160,7 +160,7 @@ test('internal clicks render directly, retain history, and legacy cue-card links
   await page.goBack();
   await expect(page.locator('.group-card')).toHaveCount(22);
   await page.goForward();
-  await expect(page).toHaveURL(/#\/read\/cue-card-01/);
+  await expect(page).toHaveURL(/#\/read\/cue-card-22/);
   await expect(page.locator('.document')).toBeVisible();
   const catalog = await (await request.get('/content/catalog.json')).json();
   const group = catalog.documents.find(doc => doc.id === 'cue-cards').groups.at(-1);
@@ -174,7 +174,7 @@ test('unavailable document responses show a working retry instead of an empty re
     ? route.fulfill({ status: 200, contentType: 'text/html', body: '<html>Unavailable</html>' })
     : route.continue());
   await page.goto('/');
-  await page.locator('.card-main').first().click();
+  await page.locator('.card-main[href^="#/read/lesson-01?"]').click();
   await expect(page.getByRole('heading', { name: 'Unable to open these notes' })).toBeVisible();
   await expect(page.locator('.error-state')).toContainText('Refresh the library');
   unavailable = false;
@@ -197,22 +197,21 @@ test('the production build works beneath a GitHub Pages project directory', asyn
   });
   await page.goto('/english-library/#/courses?tags=01');
   await expect(page.locator('.course-card')).toHaveCount(9);
-  await page.locator('.card-main').first().click();
+  await page.locator('.card-main[href^="#/read/lesson-02?"]').click();
   await expect(page.locator('.document')).toContainText('The printer');
   const firstImage = page.locator('.document img').first();
   await firstImage.scrollIntoViewIfNeeded();
   await expect.poll(() => firstImage.evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true);
   await page.goto('/english-library/#/cue-cards');
   await page.locator('.group-card').first().click();
-  await expect(page).toHaveURL(/english-library\/#\/read\/cue-card-01/);
+  await expect(page).toHaveURL(/english-library\/#\/read\/cue-card-22/);
   await expect(page.locator('[data-wiki-section="extended-model-answer"] .section-body')).toBeVisible();
   await page.reload();
   await expect(page.locator('[data-wiki-section="practice-cue-card"] .section-body')).toBeVisible();
   await page.goto('/english-library/#/bites');
   await expect(page.locator('.bite-card')).toHaveCount(80);
   await page.locator('.bite-card').first().click();
-  await page.getByRole('tab', { name: '4 Practise' }).click();
-  await page.getByText('Reveal answer', { exact: true }).click();
+  await expect(page.locator('.bite-panel')).toHaveCount(4);
   await expect(page.locator('.bite-answer p')).toBeVisible();
   expect(failedRequests).toEqual([]);
 });
@@ -258,55 +257,52 @@ test('wiki preferences, section links, focus mode, and expanded tables work toge
   await expect(page.locator('.sidebar')).toBeVisible();
 });
 
-test('Language Bites preserve all content, filter state, keyboard steps and copied notes', async ({ page, request, context }, testInfo) => {
+test('Language Bites show the complete note and preserve filters, sorting and copied content', async ({ page, request, context }, testInfo) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
   await page.setViewportSize({ width: 1440, height: 1000 });
   const catalog = await (await request.get('/content/catalog.json')).json();
   await page.goto('/#/bites');
   await expect(page.locator('.bite-card')).toHaveCount(80);
+  await expect(page.locator('.bite-card').first()).toContainText(catalog.bites.at(-1).title);
   await page.screenshot({ path: testInfo.outputPath('bites-desktop.png') });
+  await page.locator('#sort').selectOption('asc');
   for (const [category, count] of [['Grammar', 24], ['Vocabulary', 20], ['Pronunciation', 20], ['Speaking', 16]]) {
     await page.locator(`[data-category="${category}"]`).click();
     await expect(page.locator('.bite-card')).toHaveCount(count);
+    await expect(page.locator('#sort')).toHaveValue('asc');
   }
   await page.locator('[data-category="Grammar"]').click();
   await page.locator('#library-search').fill('worth');
   await expect(page.locator('.bite-card')).toHaveCount(1);
   await page.locator('.bite-card').click();
   const note = catalog.bites.find(note => note.id === 'G01');
-  await expect(page.getByRole('tabpanel')).toContainText('worth visiting?');
-  await expect(page.getByRole('button', { name: 'Previous', exact: true })).toBeDisabled();
-  await page.getByRole('button', { name: 'Next', exact: true }).click();
-  await expect(page.getByRole('tabpanel')).toContainText(note.explanation);
-  await expect(page.getByRole('tabpanel')).toContainText(note.qualification);
-  await page.getByRole('tab', { name: '3 Examples' }).click();
+  await expect(page.locator('.bite-panel')).toHaveCount(4);
+  await expect(page.getByRole('tab')).toHaveCount(0);
+  for (const panel of await page.locator('.bite-panel').all()) await expect(panel).toBeVisible();
+  await expect(page.locator('#bite-notice')).toContainText('worth visiting?');
+  await expect(page.locator('#bite-understand')).toContainText(note.explanation);
+  await expect(page.locator('#bite-understand')).toContainText(note.qualification);
   for (const [sentence, meaning] of note.examples) {
-    await expect(page.getByRole('tabpanel')).toContainText(sentence);
-    await expect(page.getByRole('tabpanel')).toContainText(meaning);
+    await expect(page.locator('#bite-examples')).toContainText(sentence);
+    await expect(page.locator('#bite-examples')).toContainText(meaning);
   }
-  await page.keyboard.press('ArrowRight');
-  await expect(page.getByRole('tab', { name: '4 Practise' })).toBeFocused();
-  await expect(page.getByRole('tabpanel')).toContainText(note.practice);
-  await expect(page.locator('.bite-answer p')).not.toBeVisible();
-  await page.getByText('Reveal answer', { exact: true }).click();
+  await expect(page.locator('#bite-practise')).toContainText(note.practice);
+  await expect(page.locator('.bite-answer p')).toBeVisible();
   await expect(page.locator('.bite-answer p')).toHaveText(note.answer);
-  await expect(page.getByRole('button', { name: 'Next', exact: true })).toBeDisabled();
-  await page.reload();
-  await expect(page.getByRole('tab', { name: '4 Practise' })).toHaveAttribute('aria-selected', 'true');
-  await expect(page.locator('.bite-answer p')).not.toBeVisible();
+  await page.screenshot({ path: testInfo.outputPath('bite-complete-desktop.png'), fullPage: true });
   await page.getByRole('button', { name: 'Copy complete note', exact: true }).click();
   await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toContain(note.answer);
   await page.locator('.reader-toolbar .back-link').click();
   await expect(page.locator('#library-search')).toHaveValue('worth');
+  await expect(page.locator('#sort')).toHaveValue('asc');
   await expect(page.locator('[data-category="Grammar"]')).toHaveAttribute('aria-pressed', 'true');
-  await expect(page.locator('.bite-card')).toHaveCount(1);
   await page.locator('#library-search').fill('zzzzz-no-note');
   await page.getByRole('button', { name: 'Clear filters' }).click();
   await expect(page.locator('.bite-card')).toHaveCount(80);
   expect(await page.locator('body').innerText()).not.toMatch(/instagram|[\p{Script=Han}]/iu);
 });
 
-test('global search reaches short notes with the keyboard and mobile reading stays within the viewport', async ({ page }, testInfo) => {
+test('global search opens a complete mobile note and old step links scroll without hiding content', async ({ page }, testInfo) => {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await page.setViewportSize({ width: 390, height: 844 });
@@ -314,7 +310,6 @@ test('global search reaches short notes with the keyboard and mobile reading sta
   await expect(page.locator('.bite-card')).toHaveCount(80);
   await page.screenshot({ path: testInfo.outputPath('bites-mobile.png') });
   await page.keyboard.press('Control+k');
-  await expect(page.locator('#wiki-search')).toBeFocused();
   await page.locator('#wiki-search').fill('worth');
   await expect(page.locator('#search-results [role="option"]').first()).toContainText('Language Bites');
   await page.keyboard.press('ArrowDown');
@@ -323,17 +318,74 @@ test('global search reaches short notes with the keyboard and mobile reading sta
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL(/#\/bite\/G01/);
   await expect(page.locator('#search-dialog')).not.toBeVisible();
-  for (const name of ['1 Notice', '2 Understand', '3 Examples', '4 Practise']) {
-    await page.getByRole('tab', { name }).click();
+  for (const section of ['notice', 'understand', 'examples', 'practise']) {
+    const panel = page.locator(`#bite-${section}`);
+    await expect(panel).toBeVisible();
+    await panel.scrollIntoViewIfNeeded();
     expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
   }
-  await page.getByText('Reveal answer', { exact: true }).click();
+  await expect(page.locator('.bite-answer p')).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath('bite-mobile.png'), fullPage: true });
   await page.goto('/#/bite/G01?step=2.5');
-  await expect(page.getByRole('tab', { name: '2 Understand' })).toHaveAttribute('aria-selected', 'true');
+  await expect.poll(() => page.locator('#bite-understand').evaluate(el => el.getBoundingClientRect().top)).toBeLessThan(100);
+  await expect(page.locator('#bite-notice')).toBeVisible();
+  await expect(page.locator('#bite-practise')).toBeVisible();
+  await page.reload();
+  await expect.poll(() => page.locator('#bite-understand').evaluate(el => el.getBoundingClientRect().top)).toBeLessThan(100);
   await page.goto('/#/bite/unknown');
   await expect(page.getByText('Note not found', { exact: true })).toBeVisible();
   await page.getByRole('link', { name: 'Back to Language Bites' }).click();
   await expect(page.locator('.bite-card')).toHaveCount(80);
   expect(errors).toEqual([]);
+});
+
+test('newest-first ordering can be reversed and stays with search when returning from a lesson', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('.card-main').first()).toHaveAttribute('href', /read\/lesson-19/);
+  await page.locator('#sort').selectOption('asc');
+  await expect(page.locator('.card-main').first()).toHaveAttribute('href', /read\/lesson-01/);
+  await page.locator('#library-search').fill('out of paper');
+  await expect(page.locator('.course-card')).toHaveCount(1);
+  await page.locator('.card-main').click();
+  await page.locator('.reader-toolbar .back-link').click();
+  await expect(page.locator('#sort')).toHaveValue('asc');
+  await expect(page.locator('#library-search')).toHaveValue('out of paper');
+  await page.goto('/#/cue-cards');
+  await expect(page.locator('.group-card').first()).toHaveAttribute('href', /read\/cue-card-22/);
+  await page.locator('#sort').selectOption('asc');
+  await expect(page.locator('.group-card').first()).toHaveAttribute('href', /read\/cue-card-01/);
+});
+
+test('topic cards open from their body or keyboard while related lessons keep their own destination', async ({ page }) => {
+  for (const width of [1440, 390]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/#/topics');
+    await page.locator('.topic-card').first().click({ position: { x: 12, y: 12 } });
+    await expect(page).toHaveURL(/read\/topic-01/);
+    await page.locator('.reader-toolbar .back-link').click();
+    await page.locator('.topic-card').first().locator('.subtle-link').click();
+    await expect(page).toHaveURL(/courses\?tags=01/);
+    await page.goto('/#/topics');
+    await page.locator('.topic-open').first().focus();
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(/read\/topic-01/);
+  }
+});
+
+test('Linking words has its own searchable categories and preserves phrase deep links', async ({ page }, testInfo) => {
+  await page.goto('/#/linking-words');
+  await expect(page.locator('.group-card')).toHaveCount(12);
+  await expect(page.locator('.nav-link.active')).toContainText('Linking words');
+  await page.screenshot({ path: testInfo.outputPath('linking-words.png') });
+  await page.locator('#library-search').fill('however');
+  await expect(page.locator('.group-card')).toHaveCount(1);
+  await page.locator('.group-card').first().click();
+  await expect(page.locator('.wiki-section[open]')).toHaveCount(1);
+  await expect(page.locator('.wiki-section[open]').getByRole('heading', { name: 'However', exact: true })).toBeVisible();
+  await page.reload();
+  await expect(page.locator('.wiki-section[open]').getByRole('heading', { name: 'However', exact: true })).toBeVisible();
+  await page.locator('.reader-toolbar .back-link').click();
+  await expect(page.locator('#library-search')).toHaveValue('however');
+  await page.getByRole('link', { name: 'Quick recall', exact: true }).click();
+  await expect(page.locator('[data-wiki-section="14-quick-recall-practice"] .section-body')).toBeVisible();
 });
