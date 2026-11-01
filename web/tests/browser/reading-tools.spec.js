@@ -113,6 +113,7 @@ test('Android prefers on-device English and retries a failed passage without ski
   expect(await page.evaluate(() => window.spoken.at(-1).voice.voiceURI)).toBe('online');
   await page.evaluate(() => window.spoken.at(-1).onerror({ error: 'network' }));
   expect(await page.evaluate(() => window.spoken.at(-1).voice.voiceURI)).toBe('backup');
+  await expect(page.locator('.speech-help')).toBeHidden();
   await expect(page.locator('.reading-tool-status')).toHaveText('');
 });
 
@@ -125,7 +126,13 @@ test('unavailable mobile voices end retries with actionable advice and stop prev
   await page.locator('.reading-tools > summary').click();
   await page.getByRole('button', { name: 'Read article', exact: true }).click();
   await page.evaluate(() => window.spoken.at(-1).onerror({ error: 'network' }));
-  await expect(page.locator('.reading-tool-status')).toContainText('Text-to-speech settings');
+  await expect(page.locator('.reading-tool-status')).toHaveText('No English voice could play.');
+  await expect(page.locator('.speech-help')).toBeVisible();
+  await expect(page.locator('.speech-help li')).toHaveCount(4);
+  await expect(page.locator('.speech-help')).toContainText('Open this page directly in Chrome');
+  await expect(page.locator('.speech-help')).toContainText('On-device');
+  await expect(page.locator('.speech-help')).toContainText('Read selection');
+  await expect(page.locator('.speech-help')).toContainText('Text-to-speech output');
   expect(await page.evaluate(() => window.spoken.length)).toBe(1);
   await expect(page.getByRole('button', { name: 'Stop', exact: true })).toBeDisabled();
   await page.getByLabel('English voice', { exact: true }).selectOption('0');
@@ -135,4 +142,5 @@ test('unavailable mobile voices end retries with actionable advice and stop prev
   await page.evaluate(() => window.staleError({ error: 'network' }));
   expect(await page.evaluate(() => window.spoken.length)).toBe(2);
   await expect(page.locator('.reading-tool-status')).toHaveText('Stopped.');
+  await expect(page.locator('.speech-help')).toBeHidden();
 });

@@ -17,7 +17,16 @@ export function mountReadingTools() {
       <button type="button" data-lookup>Look up</button></div>
       <div class="reading-tool-options"><label>Speed <select aria-label="Reading speed"><option value="0.75">0.75×</option><option value="0.9">0.9×</option><option value="1" selected>1×</option><option value="1.15">1.15×</option><option value="1.25">1.25×</option></select></label>
       <label>Voice <select aria-label="English voice"><option value="">Automatic English (prefer on-device)</option></select></label></div>
-      <p class="reading-tool-status" role="status"></p></div>`;
+      <p class="reading-tool-status" role="status"></p>
+      <div class="speech-help reading-tool-hint" hidden>
+        <p><strong>Try these steps:</strong></p>
+        <ol>
+          <li>Open this page directly in Chrome and refresh it.</li>
+          <li>In Voice, choose an English voice manually. Prefer one marked On-device.</li>
+          <li>Select one short sentence in the article, then tap Read selection.</li>
+          <li>If it still does not play on Android, open your phone's Settings and search for Text-to-speech output. Choose a speech engine, set the language to English, and tap Play to test it. If the engine list is empty and Google Play is available, install Speech Recognition &amp; Synthesis by Google. Then return here and refresh the page.</li>
+        </ol>
+      </div></div>`;
   const column = article.closest('.reading-column') || article.parentElement;
   if (column.classList.contains('reading-column')) column.prepend(panel); else article.before(panel);
   const dialog = document.createElement('dialog');
@@ -29,6 +38,7 @@ export function mountReadingTools() {
     <p class="reading-tool-hint">Meanings open in an external dictionary or translation service in a new tab. Only the word or phrase you submit is included in the link.</p>`;
   panel.after(dialog);
   const status = panel.querySelector('[role="status"]');
+  const speechHelp = panel.querySelector('.speech-help');
   const speed = panel.querySelector('[aria-label="Reading speed"]');
   const voice = panel.querySelector('[aria-label="English voice"]');
   const selectedButton = panel.querySelector('[data-listen="selection"]');
@@ -45,7 +55,11 @@ export function mountReadingTools() {
     if (synth) synth.cancel();
     playing = paused = false; utterance = null;
     pause.disabled = stop.disabled = true; pause.textContent = 'Pause';
-    unhighlight(); status.textContent = message;
+    unhighlight(); status.textContent = message; speechHelp.hidden = true;
+  }
+  function speechError(message) {
+    reset(message);
+    speechHelp.hidden = false;
   }
   function updateVoices() {
     const previous = voice.value === '' ? '' : voiceKey(voices[Number(voice.value)]);
@@ -75,7 +89,7 @@ export function mountReadingTools() {
   }
   function speak(queue) {
     reset();
-    if (!supported) { status.textContent = 'Read aloud is unavailable in this browser. Try a browser with speech support.'; return; }
+    if (!supported) { speechError('Read aloud is unavailable in this browser.'); return; }
     if (!queue.length) { status.textContent = 'No text to read. Select a passage and try again.'; return; }
     updateVoices();
     playing = true; pause.disabled = stop.disabled = false;
@@ -97,7 +111,7 @@ export function mountReadingTools() {
       if (index >= queue.length) { reset('Finished reading.'); return; }
       if (activeVoice === undefined) {
         if (candidateIndex >= unique.length) {
-          reset('No English voice could play. On Android, check Text-to-speech settings, install an English voice in your speech engine, then reopen this page. You can also try another browser.');
+          speechError('No English voice could play.');
           return;
         }
         activeVoice = unique[candidateIndex++];
@@ -124,9 +138,9 @@ export function mountReadingTools() {
           paused = false; pause.textContent = 'Pause';
           next();
         } else if (event.error === 'not-allowed') {
-          reset('Your browser blocked speech. Open this page directly in Chrome or your system browser, then tap Read article again.');
+          speechError('Your browser blocked speech.');
         } else {
-          reset('Audio could not play. Check your device speech settings or try another English voice.');
+          speechError('Audio could not play.');
         }
       };
       synth.speak(attempt);
@@ -174,7 +188,7 @@ export function mountReadingTools() {
   if (supported) { updateVoices(); synth.addEventListener('voiceschanged', updateVoices); }
   else {
     panel.querySelectorAll('[data-listen], select').forEach(control => { control.disabled = true; });
-    status.textContent = 'Read aloud is unavailable in this browser. Word lookup is still available.';
+    speechError('Read aloud is unavailable in this browser. Word lookup is still available.');
   }
   document.addEventListener('selectionchange', captureSelection);
   const onPageHide = () => reset();
