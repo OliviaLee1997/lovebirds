@@ -134,6 +134,7 @@ export async function buildContent() {
     ...cueFiles.map(file => ({ source: `${CUE_ROOT}/${file}`, id: cueId(file), number: cueNumber(file), kind: 'cue-card', tags: ['07', '08', '09'] })),
     { source: `${CUE_ROOT}/Guide.md`, id: 'cue-card-guide', kind: 'cue-reference', label: 'Cue card practice guide', tags: ['07', '08', '09'] },
     { source: `${CUE_ROOT}/Grammar-Review.md`, id: 'cue-card-grammar', kind: 'cue-reference', label: 'Cue card grammar review', tags: ['02', '03'] },
+    { source: `${CUE_ROOT}/Answer-Templates.md`, id: 'cue-card-templates', kind: 'cue-reference', label: 'Cue card answer templates', tags: ['07', '08', '09'] },
     ...practice.map(([source, id, label, tags]) => ({ source, id, label, tags, kind: ['grammar', 'cue-cards', 'linking-words'].includes(id) ? id : 'resource' })),
   ];
   if (new Set(inputs.map(input => input.id)).size !== inputs.length) throw new Error('Duplicate document ID or cue-card number');

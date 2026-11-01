@@ -204,6 +204,15 @@ test('the production build works beneath a GitHub Pages project directory', asyn
   await firstImage.scrollIntoViewIfNeeded();
   await expect.poll(() => firstImage.evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true);
   await page.goto('/english-library/#/cue-cards');
+  await page.getByRole('link', { name: 'Answer templates', exact: true }).click();
+  await expect(page.locator('.reader-heading')).toContainText('All 22 Topics');
+  await page.locator('.reading-tools > summary').click();
+  await page.getByRole('button', { name: 'Look up', exact: true }).click();
+  await page.getByLabel('English word or phrase').fill('steady progress');
+  await page.getByRole('button', { name: 'Find meaning', exact: true }).click();
+  await expect(page.getByRole('link', { name: 'English–Chinese dictionary' })).toHaveAttribute('href', /steady%20progress/);
+  await page.keyboard.press('Escape');
+  await page.locator('.reader-toolbar .back-link').click();
   await page.locator('.group-card').first().click();
   await expect(page).toHaveURL(/english-library\/#\/read\/cue-card-22/);
   await expect(page.locator('[data-wiki-section="extended-model-answer"] .section-body')).toBeVisible();

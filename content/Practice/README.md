@@ -11,6 +11,7 @@
 ## IELTS Speaking
 
 - [Course Cue Card Review — Extended Answers and Personal Grammar](IELTS-Speaking/Cue-Cards/README.md): 22 individual topic documents with 3–5-minute model answers, highlighted linking language, personal corrections, and grammar review exercises.
+- [Cue Card Answer Templates](IELTS-Speaking/Cue-Cards/Answer-Templates.md): A summary of all 22 topics with ten adaptable spoken-answer templates and practice.
 - [Part 1 — Questions and Templates](IELTS-Speaking/IELTS-Speaking-Part-1-Questions-and-Templates.md): Everyday topics, short model answers, and review exercises.
 - [Part 2 — Cue Card Templates](IELTS-Speaking/IELTS-Speaking-Part-2-Cue-Card-Templates.md): Topic frameworks, alternative expressions, and extended speaking practice.
 - [Part 3 — Discussion Templates](IELTS-Speaking/IELTS-Speaking-Part-3-Discussion-Templates.md): Discussion patterns, broader topics, and developed model answers.

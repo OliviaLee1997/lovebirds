@@ -312,3 +312,27 @@ a.pagination-item:hover { background: #eef4e7; border-color: #b3c7a2; }
 .bite-copy-status { font-size: 11px; color: #5c7e47; margin: 15px 0; min-height: 18px; }
 @media(max-width:1100px) { .bites-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }.bite-layout { grid-template-columns: minmax(0,1fr); }.bite-aside { position: static; display: grid; grid-template-columns: 1fr 1fr; gap: 0 25px; }.bite-aside h2 { margin-bottom: 10px; }.bite-source-note { grid-row: 1 / 3; grid-column: 2; border-top: 0; padding: 0; }.bite-panel { padding: 25px; } }
 @media(max-width:540px) { .bites-grid { grid-template-columns: 1fr; }.bite-card { padding: 17px 19px 13px; }.bite-card h3 { font-size: 20px; }.bite-card > p { margin-bottom: 12px; }.bite-filters { gap: 6px; }.bite-filters button { padding: 8px; font-size: 10px; }.bite-filters button span { font-size: 9px; margin-left: 5px; }.bite-panel { padding: 24px 20px; }.bite-panel h2 { font-size: 21px; }.bite-prompt { font-size: 25px; }.bite-rule { font-size: 17px; }.bite-example p { font-size: 18px; }.bite-aside { display: block; padding-top: 10px; }.bite-aside h2 { font-size: 18px; }.bite-aside > p { font-size: 11px; }.bite-source-note { border-top: 1px solid #e1e8d7; padding: 14px 0; }.bite-aside a { padding-block: 8px; } }
+
+/* Optional reading tools share the compact reader layout. */
+.reading-tools { border: 1px solid var(--line, #cbd8ce); border-radius: 6px; margin-bottom: 18px; background: var(--paper, #f8faf5); font-size: 13px; }
+.reading-tools > summary { padding: 11px 13px; cursor: pointer; font-weight: 600; }
+.reading-tools-body { padding: 0 13px 12px; }
+.reading-tool-actions, .reading-tool-options, .lookup-links { display: flex; flex-wrap: wrap; gap: 8px; }
+.reading-tool-actions button, .lookup-dialog button, .lookup-form input, .reading-tool-options select { font: inherit; color: inherit; border: 1px solid #b8cbbd; border-radius: 4px; background: #fffef8; padding: 7px 10px; }
+.reading-tool-actions button, .lookup-dialog button { cursor: pointer; min-height: 36px; }
+.reading-tools button:disabled, .lookup-dialog button:disabled { opacity: .45; cursor: default; }
+.reading-tool-options { margin-top: 10px; align-items: center; gap: 12px; }
+.reading-tool-options label { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; min-width: 0; max-width: 100%; }
+.reading-tool-options select { max-width: 100%; min-width: 0; }
+.reading-tool-hint, .reading-tool-status { font-size: 12px; line-height: 1.6; margin: 10px 0 0; }
+.reading-tool-status:empty { display: none; }
+.is-being-read { background: #e5efbc; outline: 2px solid #8b9f51; outline-offset: 3px; }
+.lookup-dialog { color: #24483c; background: #f8faf5; border: 1px solid #b8cbbd; border-radius: 8px; width: min(520px, calc(100vw - 32px)); max-height: 85dvh; padding: 0 0 18px; overflow-y: auto; }
+.lookup-dialog::backdrop { background: #172d2555; }
+.lookup-form, .lookup-results, .lookup-dialog > .reading-tool-hint { margin: 16px 20px 0; }
+.lookup-form { display: grid; gap: 8px; }
+.lookup-form input { width: 100%; min-width: 0; box-sizing: border-box; }
+.lookup-term { font-weight: 600; overflow-wrap: anywhere; }
+.lookup-links { margin-top: 14px; flex-direction: column; }
+.bite-layout > .reading-tools { grid-column: 1 / -1; }
+@media (max-width: 600px) { .reading-tool-options { align-items: stretch; flex-direction: column; } .reading-tools button { min-height: 40px; } }

@@ -1,4 +1,5 @@
 import './style.css';
+import { mountReadingTools, clearReadingTools } from './reading-tools.js';
 import { configureWiki, mountWikiChrome, enhanceReader, clearReader, revealSection, applyCollectionLayout, getView, getReadingSize } from './wiki.js';
 import { configureBites, renderBites, renderBite } from './bites.js';
 import { collectionItems, selectedTags as getSelectedTags, readingNeighbours } from './collections.js';
@@ -166,7 +167,7 @@ function collection(route) {
   if (page === 'grammar') document.querySelector('#library-search').placeholder = 'Search category names…';
   if (page === 'cue-cards') {
     document.querySelector('.collection-intro > span').textContent = 'Topics follow course order · one topic per page';
-    document.querySelector('.collection-intro').insertAdjacentHTML('beforeend', `<a href="${readUrl('cue-card-guide')}">Practice guide</a><a href="${readUrl('cue-card-grammar')}">Shared grammar review</a>`);
+    document.querySelector('.collection-intro').insertAdjacentHTML('beforeend', `<a href="${readUrl('cue-card-templates')}">Answer templates</a><a href="${readUrl('cue-card-guide')}">Practice guide</a><a href="${readUrl('cue-card-grammar')}">Shared grammar review</a>`);
   }
   if (page === 'linking-words') {
     document.querySelector('#results').insertAdjacentHTML('beforebegin', `<div class="collection-intro"><span>12 functions · examples, passages and recall practice</span><a href="${readUrl('linking-words')}">Read the full collection ${icon('arrow')}</a><a href="${readUrl('linking-words', '13-short-passages-for-repeated-reading')}">Practice passages</a><a href="${readUrl('linking-words', '14-quick-recall-practice')}">Quick recall</a></div>`);
@@ -251,6 +252,7 @@ async function render() {
   if (!catalog) return;
   const request = ++renderId;
   const route = currentRoute();
+  clearReadingTools();
   clearReader();
   shell(activePage(route));
   window.scrollTo(0, 0);
@@ -259,6 +261,7 @@ async function render() {
   else if (config[route.page]) collection(route);
   else { history.replaceState(null, '', '#/courses'); collection(currentRoute()); }
   if (request !== renderId) return;
+  if (route.page === 'read' || route.page === 'bite') mountReadingTools();
   document.title = `${route.page === 'read' ? catalog.documents.find(d => d.id === route.id)?.title || 'Notes' : route.page === 'bite' ? catalog.bites.find(b => b.id === route.id)?.title || 'Language Bite' : config[activePage(route)].label} · Olivia’s English Notes`;
 }
 

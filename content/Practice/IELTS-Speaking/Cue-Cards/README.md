@@ -2,6 +2,7 @@
 
 One Markdown file per topic, with a consistent learning format. Each topic contains the practice prompt, extended model answer, linking language, grammar review, and advice for a shorter IELTS answer.
 
+- [Answer templates](Answer-Templates.md): Ten reusable answer frameworks, a mapping of all 22 topics, topic-specific substitutions and recall practice.
 - [Practice guide](Guide.md): Timing, learning goals, anonymisation and model-answer qualifications.
 - [Shared grammar review](Grammar-Review.md): Cross-topic corrections, exercises and answers.
 
