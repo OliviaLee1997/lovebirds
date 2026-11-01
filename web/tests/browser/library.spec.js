@@ -85,6 +85,7 @@ test('mobile navigation, reading tables, and search work without page-wide horiz
   await expect(page.locator('.table-scroll').first()).toBeVisible();
   await page.locator('.document h3').filter({ hasText: 'Practice Dialogues' }).evaluate(heading => heading.scrollIntoView({ block: 'start' }));
   await page.screenshot({ path: testInfo.outputPath('reader-heading-levels-mobile.png') });
+  if (await page.locator('.mobile-reading-options').count()) await page.locator('.mobile-reading-options > summary').click();
   await page.getByRole('button', { name: 'Increase text size' }).click();
   await expect(page.locator('.document')).toHaveCSS('font-size', '18px');
 });
@@ -277,6 +278,7 @@ test('phone collections stay discoverable and all seven destinations open from t
 test('mobile collections support keyboard dismissal, focus mode and short or resized screens', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/#/read/lesson-19');
+  await page.locator('.mobile-reading-options > summary').click();
   await page.getByRole('button', { name: 'Focus mode', exact: true }).click();
   const opener = page.getByRole('button', { name: 'Open collections' });
   await opener.click();
@@ -359,7 +361,7 @@ test('cue-card numbers stay attached to topics and reverse with the actual sort 
     await page.getByRole('combobox', { name: 'Sort Cue cards' }).selectOption('asc');
     await expect(numbers).toHaveText(['14', '18']);
     await cards.first().click();
-    await page.locator('.reading-pagination.compact a[rel="next"]').click();
+    await page.locator(width <= 800 ? '.reading-pagination:not(.compact) a[rel="next"]' : '.reading-pagination.compact a[rel="next"]').click();
     await expect(page).toHaveURL(/read\/cue-card-18/);
     await page.locator('.reader-toolbar .back-link').click();
     await expect(numbers).toHaveText(['14', '18']);
@@ -427,7 +429,7 @@ test('mobile readers support continuous previous and next reading without overfl
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/#/bites?category=Grammar&sort=asc');
   await page.locator('.bite-card').first().click();
-  await page.locator('.reading-pagination.compact a[rel="next"]').click();
+  await page.locator('.reading-pagination:not(.compact) a[rel="next"]').click();
   await expect(page).toHaveURL(/bite\/G02/);
   await page.reload();
   await expect(page.locator('.reading-pagination.compact a[rel="prev"]')).toHaveAttribute('href', /bite\/G01/);
@@ -437,7 +439,8 @@ test('mobile readers support continuous previous and next reading without overfl
   await expect(page.locator('#sort')).toHaveValue('asc');
   await expect(page.locator('[data-category="Grammar"]')).toHaveAttribute('aria-pressed', 'true');
   await page.goto('/#/read/cue-card-22');
-  await expect(page.locator('.reading-pagination.compact')).toBeVisible();
+  await expect(page.locator('.reading-pagination.compact')).toBeHidden();
+  await expect(page.locator('.mobile-reading-options')).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
   await page.screenshot({ path: testInfo.outputPath('reader-navigation-mobile-top.png') });
   await page.locator('.reading-pagination:not(.compact)').scrollIntoViewIfNeeded();

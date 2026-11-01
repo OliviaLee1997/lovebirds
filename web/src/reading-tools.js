@@ -74,7 +74,7 @@ export function mountReadingTools() {
     if (range?.rangeCount && !range.isCollapsed && article.contains(range.anchorNode) && article.contains(range.focusNode)) {
       selection = range.toString().trim();
     } else if (range?.rangeCount && !range.isCollapsed) selection = '';
-    else if (!panel.contains(document.activeElement) && !dialog.contains(document.activeElement)) selection = '';
+    else if (!panel.contains(document.activeElement) && !dialog.contains(document.activeElement) && !document.activeElement?.closest('.mobile-reading-options')) selection = '';
     selectedButton.disabled = !supported || !selection;
   }
   function pieces(text, node = null) {

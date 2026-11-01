@@ -336,3 +336,32 @@ a.pagination-item:hover { background: #eef4e7; border-color: #b3c7a2; }
 .lookup-links { margin-top: 14px; flex-direction: column; }
 .bite-layout > .reading-tools { grid-column: 1 / -1; }
 @media (max-width: 600px) { .reading-tool-options { align-items: stretch; flex-direction: column; } .reading-tools button { min-height: 40px; } }
+
+/* Phone readers expose one optional tools row before the learning content. */
+@media (max-width: 800px) {
+  .reader-main .reading-pagination.compact { display: none; }
+  .reader-toolbar { margin-bottom: 12px; }
+  .reader-heading { padding-bottom: 12px; margin-bottom: 12px; }
+  .reader-heading h1 { font-size: 24px; line-height: 1.3; margin-bottom: 0; }
+  .reader-heading .eyebrow { margin-bottom: 6px; }
+  .mobile-reading-options { border-bottom: 1px solid var(--line); margin-bottom: 16px; color: var(--green); }
+  .mobile-reading-options > summary { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 5px 10px; min-height: 44px; padding: 8px 0; font-size: 12px; font-weight: 600; cursor: pointer; list-style: none; }
+  .mobile-reading-options > summary::-webkit-details-marker { display: none; }
+  .mobile-reading-options > summary::after { content: '+'; font-size: 18px; }
+  .mobile-reading-options[open] > summary::after { content: '−'; }
+  .mobile-reading-options > summary > span { margin-left: auto; color: var(--muted); font-size: 10px; font-weight: 400; }
+  .mobile-reading-options-body { padding: 8px 0 14px; display: flex; flex-direction: column; gap: 14px; }
+  .mobile-reading-options-body > * { margin: 0; }
+  .mobile-reading-options .reader-tools { margin-left: 0; flex-wrap: wrap; }
+  .mobile-reading-options .reader-tools button { min-height: 40px; padding: 8px 10px; font-size: 12px; }
+  .mobile-reading-options .reader-tags { gap: 8px; }
+  .mobile-reading-options .small-tag { min-height: 32px; display: inline-flex; align-items: center; }
+  .mobile-reading-options .reader-aside, .focus-reading .mobile-reading-options .reader-aside { display: block; position: static; max-height: none; }
+  .mobile-reading-options .reader-index > summary { min-height: 24px; }
+  .mobile-reading-options .reader-index nav a { padding-block: 10px; font-size: 12px; }
+  .mobile-reading-options .section-controls > span { display: none; }
+  .mobile-reading-options .section-controls button { min-height: 40px; font-size: 12px; }
+  .mobile-reading-options .source-details { font-size: 12px; }
+  .mobile-reading-options .source-details > summary { padding-block: 12px; font-size: 12px; }
+  .document .section-link { display: none; }
+}

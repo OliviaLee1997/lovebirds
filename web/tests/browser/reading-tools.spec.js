@@ -23,6 +23,7 @@ test('all 22 topics have a discoverable template summary and working topic refer
   const doc = await (await request.get('/content/cue-card-templates.json')).json();
   for (let i = 1; i <= 10; i++) expect(doc.headings.some(h => h.depth === 2 && h.title.startsWith(`${i}. `))).toBeTruthy();
   await expect(page.locator('.reading-pagination.compact a[rel="prev"]')).toHaveAttribute('href', /cue-card-grammar/);
+  if (await page.locator('.mobile-reading-options').count()) await page.locator('.mobile-reading-options > summary').click();
   await page.locator('.reading-tools > summary').click();
   await page.screenshot({ path: testInfo.outputPath('templates-and-tools-desktop.png') });
   await page.reload();
@@ -32,6 +33,7 @@ test('all 22 topics have a discoverable template summary and working topic refer
 test('speech reads chosen text, handles controls and voice, and cancels stale queues on navigation', async ({ page }) => {
   await mockSpeech(page);
   await page.goto('/#/read/cue-card-01');
+  if (await page.locator('.mobile-reading-options').count()) await page.locator('.mobile-reading-options > summary').click();
   await page.locator('.reading-tools > summary').click();
   await expect(page.locator('[aria-label="English voice"] option')).toHaveCount(2);
   await page.getByLabel('Reading speed').selectOption('0.75');
@@ -68,6 +70,7 @@ test('mobile lookup works without speech, safely encodes phrases and works in La
   await page.setViewportSize({ width: 390, height: 844 });
   await page.addInitScript(() => { delete window.speechSynthesis; delete window.SpeechSynthesisUtterance; });
   await page.goto('/#/read/cue-card-templates');
+  if (await page.locator('.mobile-reading-options').count()) await page.locator('.mobile-reading-options > summary').click();
   await page.locator('.reading-tools > summary').click();
   await expect(page.getByRole('button', { name: 'Read article', exact: true })).toBeDisabled();
   await page.getByRole('button', { name: 'Look up', exact: true }).click();
@@ -81,6 +84,7 @@ test('mobile lookup works without speech, safely encodes phrases and works in La
   await page.keyboard.press('Escape');
   await expect(page.locator('.lookup-dialog')).not.toBeVisible();
   await page.goto('/#/bite/G01');
+  if (await page.locator('.mobile-reading-options').count()) await page.locator('.mobile-reading-options > summary').click();
   await page.locator('.reading-tools > summary').click();
   await page.getByRole('button', { name: 'Look up', exact: true }).click();
   await expect(page.getByLabel('English word or phrase')).toHaveValue('');
@@ -97,6 +101,7 @@ test('Android prefers on-device English and retries a failed passage without ski
   });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/#/read/cue-card-01');
+  if (await page.locator('.mobile-reading-options').count()) await page.locator('.mobile-reading-options > summary').click();
   await page.locator('.reading-tools > summary').click();
   await page.getByRole('button', { name: 'Read article', exact: true }).click();
   expect(await page.evaluate(() => window.spoken[0].voice.voiceURI)).toBe('local');
@@ -123,6 +128,7 @@ test('unavailable mobile voices end retries with actionable advice and stop prev
     window.speechSynthesis.getVoices = () => [{ name: 'Online English', lang: 'en-US', localService: false }];
   });
   await page.goto('/#/read/cue-card-01');
+  if (await page.locator('.mobile-reading-options').count()) await page.locator('.mobile-reading-options > summary').click();
   await page.locator('.reading-tools > summary').click();
   await page.getByRole('button', { name: 'Read article', exact: true }).click();
   await page.evaluate(() => window.spoken.at(-1).onerror({ error: 'network' }));

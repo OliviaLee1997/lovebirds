@@ -1,4 +1,5 @@
 import './style.css';
+import { mountMobileReader, clearMobileReader } from './mobile-reader.js';
 import { mountReadingTools, clearReadingTools } from './reading-tools.js';
 import { configureWiki, mountWikiChrome, enhanceReader, clearReader, revealSection, applyCollectionLayout, getView, getReadingSize } from './wiki.js';
 import { configureBites, renderBites, renderBite } from './bites.js';
@@ -252,6 +253,7 @@ async function render() {
   if (!catalog) return;
   const request = ++renderId;
   const route = currentRoute();
+  clearMobileReader();
   clearReadingTools();
   clearReader();
   shell(activePage(route));
@@ -261,7 +263,7 @@ async function render() {
   else if (config[route.page]) collection(route);
   else { history.replaceState(null, '', '#/courses'); collection(currentRoute()); }
   if (request !== renderId) return;
-  if (route.page === 'read' || route.page === 'bite') mountReadingTools();
+  if (route.page === 'read' || route.page === 'bite') { mountReadingTools(); mountMobileReader(); }
   document.title = `${route.page === 'read' ? catalog.documents.find(d => d.id === route.id)?.title || 'Notes' : route.page === 'bite' ? catalog.bites.find(b => b.id === route.id)?.title || 'Language Bite' : config[activePage(route)].label} · Olivia’s English Notes`;
 }
 
