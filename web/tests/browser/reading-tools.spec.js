@@ -85,3 +85,54 @@ test('mobile lookup works without speech, safely encodes phrases and works in La
   await page.getByRole('button', { name: 'Look up', exact: true }).click();
   await expect(page.getByLabel('English word or phrase')).toHaveValue('');
 });
+
+test('Android prefers on-device English and retries a failed passage without skipping text', async ({ page }) => {
+  await mockSpeech(page);
+  await page.addInitScript(() => {
+    window.speechSynthesis.getVoices = () => [
+      { name: 'Online English', lang: 'en-US', voiceURI: 'online', localService: false },
+      { name: 'Local English', lang: 'en-GB', voiceURI: 'local', localService: true },
+      { name: 'Backup English', lang: 'en-AU', voiceURI: 'backup', localService: true },
+    ];
+  });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/#/read/cue-card-01');
+  await page.locator('.reading-tools > summary').click();
+  await page.getByRole('button', { name: 'Read article', exact: true }).click();
+  expect(await page.evaluate(() => window.spoken[0].voice.voiceURI)).toBe('local');
+  const original = await page.evaluate(() => window.spoken[0].text);
+  await page.evaluate(() => { window.oldAttempt = window.spoken[0]; window.oldAttempt.onerror({ error: 'network' }); });
+  expect(await page.evaluate(() => window.spoken[1].voice.voiceURI)).toBe('backup');
+  expect(await page.evaluate(() => window.spoken[1].text)).toBe(original);
+  await page.evaluate(() => window.spoken[1].onend());
+  expect(await page.evaluate(() => window.spoken[2].voice.voiceURI)).toBe('backup');
+  expect(await page.evaluate(() => window.spoken[2].text)).not.toBe(original);
+  await page.getByRole('button', { name: 'Stop', exact: true }).click();
+  await page.getByLabel('English voice', { exact: true }).selectOption('0');
+  await page.getByRole('button', { name: 'Read article', exact: true }).click();
+  expect(await page.evaluate(() => window.spoken.at(-1).voice.voiceURI)).toBe('online');
+  await page.evaluate(() => window.spoken.at(-1).onerror({ error: 'network' }));
+  expect(await page.evaluate(() => window.spoken.at(-1).voice.voiceURI)).toBe('backup');
+  await expect(page.locator('.reading-tool-status')).toHaveText('');
+});
+
+test('unavailable mobile voices end retries with actionable advice and stop prevents retry', async ({ page }) => {
+  await mockSpeech(page);
+  await page.addInitScript(() => {
+    window.speechSynthesis.getVoices = () => [{ name: 'Online English', lang: 'en-US', localService: false }];
+  });
+  await page.goto('/#/read/cue-card-01');
+  await page.locator('.reading-tools > summary').click();
+  await page.getByRole('button', { name: 'Read article', exact: true }).click();
+  await page.evaluate(() => window.spoken.at(-1).onerror({ error: 'network' }));
+  await expect(page.locator('.reading-tool-status')).toContainText('Text-to-speech settings');
+  expect(await page.evaluate(() => window.spoken.length)).toBe(1);
+  await expect(page.getByRole('button', { name: 'Stop', exact: true })).toBeDisabled();
+  await page.getByLabel('English voice', { exact: true }).selectOption('0');
+  await page.getByRole('button', { name: 'Read article', exact: true }).click();
+  await page.evaluate(() => { window.staleError = window.spoken.at(-1).onerror; });
+  await page.getByRole('button', { name: 'Stop', exact: true }).click();
+  await page.evaluate(() => window.staleError({ error: 'network' }));
+  expect(await page.evaluate(() => window.spoken.length)).toBe(2);
+  await expect(page.locator('.reading-tool-status')).toHaveText('Stopped.');
+});

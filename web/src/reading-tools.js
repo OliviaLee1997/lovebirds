@@ -16,7 +16,7 @@ export function mountReadingTools() {
       <button type="button" data-listen="pause" disabled>Pause</button><button type="button" data-listen="stop" disabled>Stop</button>
       <button type="button" data-lookup>Look up</button></div>
       <div class="reading-tool-options"><label>Speed <select aria-label="Reading speed"><option value="0.75">0.75×</option><option value="0.9">0.9×</option><option value="1" selected>1×</option><option value="1.15">1.15×</option><option value="1.25">1.25×</option></select></label>
-      <label>Voice <select aria-label="English voice"><option value="">Device default English</option></select></label></div>
+      <label>Voice <select aria-label="English voice"><option value="">Automatic English (prefer on-device)</option></select></label></div>
       <p class="reading-tool-status" role="status"></p></div>`;
   const column = article.closest('.reading-column') || article.parentElement;
   if (column.classList.contains('reading-column')) column.prepend(panel); else article.before(panel);
@@ -36,6 +36,8 @@ export function mountReadingTools() {
   const stop = panel.querySelector('[data-listen="stop"]');
   const input = dialog.querySelector('input');
   let selection = '', voices = [], version = 0, playing = false, paused = false, highlighted;
+  const failedVoices = new Set();
+  const voiceKey = v => v ? (v.voiceURI || `${v.name}|${v.lang}`) : 'device-default';
   let utterance; // Retain a reference while the device is speaking.
   function unhighlight() { highlighted?.classList.remove('is-being-read'); highlighted = null; }
   function reset(message = '') {
@@ -46,11 +48,12 @@ export function mountReadingTools() {
     unhighlight(); status.textContent = message;
   }
   function updateVoices() {
-    const previous = voice.value;
+    const previous = voice.value === '' ? '' : voiceKey(voices[Number(voice.value)]);
     voices = synth.getVoices().filter(v => /^en(?:[-_]|$)/i.test(v.lang));
-    voice.replaceChildren(new Option('Device default English', ''));
-    voices.forEach((v, i) => voice.add(new Option(`${v.name} (${v.lang})`, String(i))));
-    if ([...voice.options].some(o => o.value === previous)) voice.value = previous;
+    voice.replaceChildren(new Option('Automatic English (prefer on-device)', ''));
+    voices.forEach((v, i) => voice.add(new Option(`${v.name} (${v.lang})${v.localService === true ? ' · On-device' : v.localService === false ? ' · Online' : ''}`, String(i))));
+    const match = voices.findIndex(v => voiceKey(v) === previous);
+    voice.value = previous && match >= 0 ? String(match) : '';
   }
   function captureSelection() {
     const range = window.getSelection();
@@ -74,24 +77,59 @@ export function mountReadingTools() {
     reset();
     if (!supported) { status.textContent = 'Read aloud is unavailable in this browser. Try a browser with speech support.'; return; }
     if (!queue.length) { status.textContent = 'No text to read. Select a passage and try again.'; return; }
+    updateVoices();
     playing = true; pause.disabled = stop.disabled = false;
     const current = version;
     let index = 0;
+    let activeVoice;
+    const preferred = voice.value === '' ? null : voices[Number(voice.value)];
+    // Android may expose online voices even when their service is unreachable.
+    // Keep each failed passage in place while trying a different English voice.
+    const candidates = [...(preferred ? [preferred] : []),
+      ...voices.filter(v => v.localService === true),
+      ...voices.filter(v => v.localService !== true)];
+    const unique = [...new Map(candidates.map(v => [voiceKey(v), v])).values()]
+      .filter(v => !failedVoices.has(voiceKey(v)) || v === preferred);
+    if (!unique.length && !voices.length) unique.push(null);
+    let candidateIndex = 0;
     const next = () => {
       if (current !== version) return;
       if (index >= queue.length) { reset('Finished reading.'); return; }
-      const item = queue[index++];
+      if (activeVoice === undefined) {
+        if (candidateIndex >= unique.length) {
+          reset('No English voice could play. On Android, check Text-to-speech settings, install an English voice in your speech engine, then reopen this page. You can also try another browser.');
+          return;
+        }
+        activeVoice = unique[candidateIndex++];
+      }
+      const item = queue[index];
       unhighlight(); highlighted = item.node; highlighted?.classList.add('is-being-read');
       let ancestor = highlighted?.parentElement;
       while (ancestor && article.contains(ancestor)) { if (ancestor.tagName === 'DETAILS') ancestor.open = true; ancestor = ancestor.parentElement; }
-      utterance = new SpeechSynthesisUtterance(item.text);
-      utterance.lang = 'en-US'; utterance.rate = Number(speed.value);
-      if (voice.value !== '' && voices[Number(voice.value)]) {
-        utterance.voice = voices[Number(voice.value)]; utterance.lang = utterance.voice.lang;
-      }
-      utterance.onend = next;
-      utterance.onerror = event => { if (current === version) reset(`Reading stopped (${event.error || 'voice unavailable'}). Try another voice or a shorter selection.`); };
-      synth.speak(utterance);
+      const attempt = new SpeechSynthesisUtterance(item.text);
+      utterance = attempt;
+      attempt.lang = activeVoice?.lang || 'en-US'; attempt.rate = Number(speed.value);
+      if (activeVoice) attempt.voice = activeVoice;
+      attempt.onend = () => {
+        if (current !== version || utterance !== attempt) return;
+        index++; next();
+      };
+      attempt.onerror = event => {
+        if (current !== version || utterance !== attempt) return;
+        if (['network', 'voice-unavailable', 'language-unavailable', 'synthesis-unavailable', 'synthesis-failed', 'audio-busy'].includes(event.error)) {
+          failedVoices.add(voiceKey(activeVoice));
+          attempt.onend = attempt.onerror = null;
+          synth.cancel();
+          activeVoice = undefined;
+          paused = false; pause.textContent = 'Pause';
+          next();
+        } else if (event.error === 'not-allowed') {
+          reset('Your browser blocked speech. Open this page directly in Chrome or your system browser, then tap Read article again.');
+        } else {
+          reset('Audio could not play. Check your device speech settings or try another English voice.');
+        }
+      };
+      synth.speak(attempt);
     };
     next();
   }
