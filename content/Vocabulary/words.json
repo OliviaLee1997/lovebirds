@@ -1,0 +1,110 @@
+[
+  {
+    "word": "contemplate",
+    "ipa": "/ˈkɒn.təm.pleɪt/",
+    "pos": "verb",
+    "meaning": "To think carefully about something for a long time.",
+    "collocation": "contemplate a decision",
+    "example": "Take time to contemplate your next step.",
+    "lesson": 1
+  },
+  {
+    "word": "prejudice",
+    "ipa": "/ˈpredʒ.ə.dɪs/",
+    "pos": "noun",
+    "meaning": "An unfair opinion formed without enough knowledge.",
+    "collocation": "challenge prejudice",
+    "example": "Education can help people challenge prejudice.",
+    "lesson": 7
+  },
+  {
+    "word": "resilience",
+    "ipa": "/rɪˈzɪl.i.əns/",
+    "pos": "noun",
+    "meaning": "The ability to recover after difficulties.",
+    "collocation": "show resilience",
+    "example": "Learning from setbacks can build resilience.",
+    "lesson": 9
+  },
+  {
+    "word": "conserve",
+    "ipa": "/kənˈsɜːv/",
+    "pos": "verb",
+    "meaning": "To protect something from waste, loss or damage.",
+    "collocation": "conserve energy",
+    "example": "Runners conserve energy for the final stretch.",
+    "lesson": 10
+  },
+  {
+    "word": "stereotype",
+    "ipa": "/ˈster.i.ə.taɪp/",
+    "pos": "noun",
+    "meaning": "A fixed, oversimplified belief about a group of people.",
+    "collocation": "challenge a stereotype",
+    "example": "One person cannot represent an entire group or stereotype.",
+    "lesson": 13
+  },
+  {
+    "word": "discrimination",
+    "ipa": "/dɪˌskrɪm.ɪˈneɪ.ʃən/",
+    "pos": "noun",
+    "meaning": "Unfair treatment because of identity or group membership.",
+    "collocation": "racial discrimination",
+    "example": "The law protects people against racial discrimination.",
+    "lesson": 13
+  },
+  {
+    "word": "rivalry",
+    "ipa": "/ˈraɪ.vəl.ri/",
+    "pos": "noun",
+    "meaning": "An ongoing competitive relationship between people or groups.",
+    "collocation": "a rivalry between two teams",
+    "example": "There is a friendly rivalry between the two teams.",
+    "lesson": 18
+  },
+  {
+    "word": "entrepreneurship",
+    "ipa": "/ˌɒn.trə.prəˈnɜː.ʃɪp/",
+    "pos": "noun",
+    "meaning": "The activity of starting and running businesses, including taking risks.",
+    "collocation": "encourage entrepreneurship",
+    "example": "The programme encourages entrepreneurship through practical training.",
+    "lesson": 19
+  },
+  {
+    "word": "conservation",
+    "ipa": "/ˌkɒn.səˈveɪ.ʃən/",
+    "pos": "noun",
+    "meaning": "The protection of wildlife and the natural environment.",
+    "collocation": "wildlife conservation",
+    "example": "Wildlife conservation includes protecting natural habitats.",
+    "lesson": 19
+  },
+  {
+    "word": "habitat",
+    "ipa": "/ˈhæb.ɪ.tæt/",
+    "pos": "noun",
+    "meaning": "The natural environment in which an animal or plant lives.",
+    "collocation": "natural habitat",
+    "example": "Habitat loss threatens many species.",
+    "lesson": 19
+  },
+  {
+    "word": "vulnerable",
+    "ipa": "/ˈvʌl.nər.ə.bəl/",
+    "pos": "adjective",
+    "meaning": "Easily harmed; in conservation, a category indicating a high risk of extinction in the wild.",
+    "collocation": "vulnerable species",
+    "example": "Vulnerable species still need protection.",
+    "lesson": 19
+  },
+  {
+    "word": "fragmented",
+    "ipa": "/fræɡˈmen.tɪd/",
+    "pos": "adjective",
+    "meaning": "Broken or divided into separate parts.",
+    "collocation": "fragmented habitat",
+    "example": "Roads can leave wildlife with fragmented habitat.",
+    "lesson": 19
+  }
+]

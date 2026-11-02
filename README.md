@@ -51,7 +51,7 @@ The collection currently contains **19 lessons, 9 topic collections, 13 grammar 
 
 ## Read and Explore
 
-- **On a phone:** The labelled Collections button and fixed bottom bar keep navigation within reach. Tap All collections to see all seven sections and their counts, or use the Courses and Cue cards shortcuts. The current collection stays highlighted, including while reading.
+- **On a phone:** The labelled Collections button and fixed bottom bar keep navigation within reach. Tap All collections to see all eight sections and their counts, or use the Courses and Cue cards shortcuts. The current collection stays highlighted, including while reading.
 - **Courses:** Compact list, newest lessons first. Switch to cards, filter by multiple topics, search full text, or select Oldest first.
 - **Topic collections:** Click anywhere on a card to read its summary. The related-lessons link opens the filtered course list separately.
 - **Language Bites:** Browse 80 short notes across Grammar, Vocabulary, Pronunciation, and Speaking, with newly added notes first. Read Notice → Understand → Examples → Practise on one continuous page. Answers are visible by default and can be folded for self-testing. Copy the complete note when needed.
@@ -91,3 +91,7 @@ No credentials belong in this folder. `node_modules/`, build outputs, test artif
 The repository contains the edited Markdown used by the site, 80 English short notes, five reviewed lesson images, and a linking-words reference chart. Original videos, private transcripts, unrelated PDFs, archived render inputs, legacy pronunciation HTML, and bilingual card exports remain outside this folder. Existing images are copied unchanged; new assets must be reviewed for identifying information before inclusion. Adding an image also requires updating the asset allowlist in `web/scripts/build-content.mjs`.
 
 Source statements, grammar uncertainties, privacy notes, and exercise answers remain available in the reader. Folding a section changes its presentation, not its content. This is a public static website when deployed; it has no login gate.
+
+## Vocabulary
+
+The Vocabulary collection (`#/vocabulary`) contains 12 selected words from lesson notes, including added study material. Maintain `content/Vocabulary/words.json`; it is bundled by Vite. Each entry includes British IPA, an English definition, a collocation, an added example and its lesson number. Search covers words, meanings and examples. Hide meanings for recall, use device speech for pronunciation, or open the external dictionary for audio. Device voices may differ from the IPA accent. This collection has no saved mastery or review schedule.

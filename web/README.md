@@ -36,7 +36,7 @@ Document JSON is replaced atomically, with the catalogue written after documents
 ## UI Behaviour
 
 - Collection navigation order is All courses, Cue cards, My topic collections, Personal grammar, Linking words, Language Bites, then Reference shelf.
-- At widths up to 800px, a labelled Collections button and fixed bottom navigation expose Courses, Cue cards and All collections. The wider drawer shows all seven sections with counts, an explicit close button, keyboard focus containment and focus restoration. Short screens can scroll the drawer. Bottom padding and scroll padding include the device safe area so navigation does not cover the final reading controls. Mobile collection access remains available in focus mode; desktop navigation stays in the sidebar.
+- At widths up to 800px, a labelled Collections button and fixed bottom navigation expose Courses, Cue cards and All collections. The wider drawer shows all eight sections with counts, an explicit close button, keyboard focus containment and focus restoration. Short screens can scroll the drawer. Bottom padding and scroll padding include the device safe area so navigation does not cover the final reading controls. Mobile collection access remains available in focus mode; desktop navigation stays in the sidebar.
 - Courses default to descending lesson number; cue cards default to descending filename number; Language Bites default to reverse source order. All support `sort=asc` and `sort=desc` in the URL. Categories retain their teaching order.
 - Cue-card filenames, Markdown title numbers, reader labels, document IDs and list badges agree. Newest-first shows 22 to 01; oldest-first shows 01 to 22. Filtering preserves these file numbers. If explicitly renumbering files, update titles, the folder index and all affected links together.
 - Topic cards use a stretched native link, with the related-lessons link above it. Background clicks, keyboard activation, and modified clicks keep native link behaviour.
@@ -69,3 +69,7 @@ npm run test:browser
 Run these sequentially because content generation writes the same output folder. Browser checks use Google Chrome on macOS if available, otherwise Playwright Chromium. Install it with `npx playwright install chromium` when needed. The test server uses port 5173.
 
 Test desktop and mobile layouts, filters, document and section links, image loading, global search, keyboard navigation, collapsed content, table dialogs, and focus mode when changing those features. Validate the production build beneath a project subdirectory before changing deployment or asset paths. Keep screenshots and test artifacts out of Git.
+
+## Vocabulary
+
+The Vocabulary collection (`#/vocabulary`) contains 12 selected words from lesson notes, including added study material. Maintain `content/Vocabulary/words.json`; it is bundled by Vite. Each entry includes British IPA, an English definition, a collocation, an added example and its lesson number. Search covers words, meanings and examples. Hide meanings for recall, use device speech for pronunciation, or open the external dictionary for audio. Device voices may differ from the IPA accent. This collection has no saved mastery or review schedule.

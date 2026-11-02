@@ -236,10 +236,10 @@ test('the production build works beneath a GitHub Pages project directory', asyn
   expect(failedRequests).toEqual([]);
 });
 
-test('phone collections stay discoverable and all seven destinations open from the drawer', async ({ page }, testInfo) => {
+test('phone collections stay discoverable and all eight destinations open from the drawer', async ({ page }, testInfo) => {
   const collections = [
     ['courses', 'Course library'], ['cue-cards', 'Cue card collection'], ['topics', 'My topic collections'],
-    ['grammar', 'Personal grammar review'], ['linking-words', 'Linking words'], ['bites', 'Language Bites'], ['resources', 'Reference shelf'],
+    ['grammar', 'Personal grammar review'], ['linking-words', 'Linking words'], ['bites', 'Language Bites'], ['vocabulary', 'Vocabulary'], ['resources', 'Reference shelf'],
   ];
   for (const width of [320, 390]) {
     await page.setViewportSize({ width, height: width === 320 ? 568 : 844 });
@@ -251,7 +251,7 @@ test('phone collections stay discoverable and all seven destinations open from t
     for (const [id, title] of collections) {
       await nav.getByRole('button', { name: 'All collections', exact: true }).click();
       await expect(page.locator('.workspace')).toHaveJSProperty('inert', true);
-      await expect(page.locator('.sidebar .nav-link')).toHaveCount(7);
+      await expect(page.locator('.sidebar .nav-link')).toHaveCount(8);
       for (const link of await page.locator('.sidebar .nav-link').all()) await expect(link).toBeInViewport();
       if (id === 'courses') await page.screenshot({ path: testInfo.outputPath(`collections-drawer-${width}.png`) });
       await page.locator(`.sidebar .nav-link[href="#/${id}"]`).click();

@@ -1,3 +1,5 @@
+import vocabulary from '../../content/Vocabulary/words.json';
+import { renderVocabulary, vocabularyAction, stopVocabularySpeech } from './vocabulary.js';
 import './style.css';
 import { mountMobileReader, clearMobileReader } from './mobile-reader.js';
 import { mountReadingTools, clearReadingTools } from './reading-tools.js';
@@ -44,6 +46,7 @@ const config = {
   grammar: { label: 'Personal grammar', english: 'MY GRAMMAR REVIEW', title: 'Personal grammar review', description: 'Corrections, explanations and exercises organised by grammatical structure.', icon: 'grammar' },
   'linking-words': { label: 'Linking words', english: 'CONNECT YOUR IDEAS', title: 'Linking words', description: 'Explore connecting phrases by purpose, with examples and read-aloud practice.', icon: 'layers' },
   bites: { label: 'Language Bites', english: 'ONE IDEA AT A TIME', title: 'Language Bites', description: 'Short explanations, useful examples and a little recall practice.', icon: 'grid' },
+  vocabulary: { label: 'Vocabulary', english: 'WORDS TO USE AND REMEMBER', title: 'Vocabulary', description: 'Useful words from your lessons, with pronunciation, meanings and recall practice.', icon: 'grammar' },
   resources: { label: 'Reference shelf', english: 'THE REFERENCE SHELF', title: 'Reference shelf', description: 'Reusable IELTS speaking templates for Parts 1, 2 and 3.', icon: 'file' },
 };
 function currentRoute() {
@@ -65,6 +68,7 @@ function navigate(hash) {
   render();
 }
 function countFor(page) {
+  if (page === 'vocabulary') return vocabulary.length;
   if (page === 'bites') return catalog.bites.length;
   if (page === 'courses') return catalog.documents.filter(d => d.kind === 'lesson').length;
   if (page === 'topics') return catalog.categories.length;
@@ -98,7 +102,7 @@ function shell(active) {
 }
 function hero(page) {
   const c = config[page];
-  return `<header class="collection-header"><div><p class="eyebrow">PERSONAL ENGLISH WIKI</p><h1>${c.title}</h1><p>${c.description}</p></div><span class="collection-total">${countFor(page)}<small>${page === 'courses' ? 'lessons' : page === 'topics' ? 'collections' : page === 'grammar' || page === 'linking-words' ? 'categories' : page === 'cue-cards' ? 'topics' : page === 'bites' ? 'notes' : 'documents'}</small></span></header>`;
+  return `<header class="collection-header"><div><p class="eyebrow">PERSONAL ENGLISH WIKI</p><h1>${c.title}</h1><p>${c.description}</p></div><span class="collection-total">${countFor(page)}<small>${page === 'courses' ? 'lessons' : page === 'topics' ? 'collections' : page === 'grammar' || page === 'linking-words' ? 'categories' : page === 'cue-cards' ? 'topics' : page === 'bites' ? 'notes' : page === 'vocabulary' ? 'words' : 'documents'}</small></span></header>`;
 }
 function queryControls(page, params) {
   const query = params.get('q') || '';
@@ -133,6 +137,7 @@ function updateResults() {
   const target = document.querySelector('#results');
   if (!target || !config[page]) return;
   const query = (params.get('q') || '').trim().toLowerCase();
+  if (page === 'vocabulary') { renderVocabulary(vocabulary, params, { escape, readUrl, catalog }); return; }
   if (page === 'bites') { renderBites(params); return; }
   const items = collectionItems(catalog, page, params);
   if (page === 'courses') {
@@ -253,6 +258,7 @@ async function render() {
   if (!catalog) return;
   const request = ++renderId;
   const route = currentRoute();
+  stopVocabularySpeech();
   clearMobileReader();
   clearReadingTools();
   clearReader();
@@ -268,6 +274,7 @@ async function render() {
 }
 
 app.addEventListener('click', event => {
+  if (vocabularyAction(event)) return;
   const section = event.target.closest('[data-section]');
   if (section && currentRoute().page === 'read') {
     event.preventDefault();

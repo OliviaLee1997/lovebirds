@@ -365,3 +365,13 @@ a.pagination-item:hover { background: #eef4e7; border-color: #b3c7a2; }
   .mobile-reading-options .source-details > summary { padding-block: 12px; font-size: 12px; }
   .document .section-link { display: none; }
 }
+
+.vocabulary-note { color: var(--muted); max-width: 75ch; }
+.vocabulary-recall { display: flex; align-items: center; gap: .6rem; margin: 1rem 0; }
+.vocabulary-word { padding: 1.2rem 0; border-bottom: 1px solid #d9e3da; overflow-wrap: anywhere; }
+.vocabulary-word header { display: flex; align-items: center; flex-wrap: wrap; gap: .8rem; }
+.vocabulary-word h2 { margin: 0; font-size: 1.3rem; }
+.vocabulary-word header > span, .vocabulary-ipa { color: #52695e; }
+.vocabulary-word p { margin: .6rem 0; line-height: 1.65; }
+.vocabulary-word summary { cursor: pointer; color: #285c50; }
+.vocabulary-word footer { margin-top: .8rem; font-size: .85rem; }
