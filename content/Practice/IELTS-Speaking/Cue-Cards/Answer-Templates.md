@@ -10,6 +10,8 @@ Use **Direct answer → Background → One developed scene → Personal meaning*
 
 The scripts below are **starting points, not finished two-minute answers**. Replace each bracket with a relevant phrase or sentence, choose one option wherever alternatives are separated by a slash, develop the example, and time yourself. IELTS Part 2 gives you one minute to prepare and one to two minutes to speak. Practise longer only when developing ideas outside an exam simulation.
 
+Each template below includes a **filled example** and **preparation keywords**. Read the example to see how the structure works, then retell it from the keywords before replacing the details with your own. These compact examples are starting points: record yourself and add relevant detail or shorten them to fit one to two minutes.
+
 During preparation, note **subject · background · two details · example · meaning**. Do not write or memorise a complete script. You do not need a dramatic ending if the examiner stops you.
 
 ## All 22 Topics at a Glance
@@ -53,6 +55,20 @@ During preparation, note **subject · background · two details · example · me
 
 **Fill it from Card 01:** repair motorcycles and run a workshop; technical problem-solving; proper training and supervised experience; costs and customer communication. Say **I would need…**, not **I am opening…**, unless arrangements exist.
 
+### Filled Example — A motorcycle workshop
+
+**Fictional practice scenario:** This completed answer illustrates the template; its details are not verified personal history.
+
+**Preparation keywords:** workshop · problem-solving · training · costs · independence.
+
+> One ambition I have is to learn to repair motorcycles and eventually run a small workshop. I like the idea of understanding how a machine works and finding out why something has stopped working. At the moment, though, this is an idea I would like to explore rather than a business I am about to open.
+>
+> **Before I could do that**, I would need proper mechanical training and supervised experience. For example, I would need to learn how to inspect a motorcycle safely and explain a repair clearly to a customer. I would also have to understand the costs of tools, parts and renting a workspace.
+>
+> **The main challenge would be** gaining enough experience while managing those costs. My first step could be an introductory course, followed by finding out what working in a workshop actually involves.
+>
+> **What appeals to me most is** being able to solve a practical problem and see a clear result. If I eventually became capable of running a workshop, I think I would feel proud of the independence I had developed.
+
 ## 2. A Challenge, Achievement or Return to Confidence
 
 **Use for:** Cards 02 and 03. **Plan:** Situation → Difficulty → Support and action → Outcome → Meaning.
@@ -69,6 +85,20 @@ During preparation, note **subject · background · two details · example · me
 
 **Card 03 version:** Start with regaining confidence. Develop the effect of classmates' encouragement and your response; do not claim that encouragement alone caused later academic success.
 
+### Filled Example — Regaining confidence in maths
+
+**Fictional practice scenario:** This completed answer illustrates the template; its details are not verified personal history.
+
+**Preparation keywords:** maths · discouraged · classmates · small steps · progress.
+
+> I'd like to talk about a time when I regained some confidence in maths. This happened while I was a student. I had been struggling with several topics, and after getting questions wrong repeatedly, I started to think I simply wasn't good at the subject.
+>
+> **At first**, I avoided asking questions because I felt embarrassed. The turning point was studying with classmates who were willing to explain their thinking. Instead of just showing me an answer, they asked me to explain which step I found confusing.
+>
+> **With that support**, I began working through smaller sets of questions. One moment I remember clearly was solving a problem that I had previously given up on. I checked each step and could finally explain why the method worked.
+>
+> **Eventually**, I became more willing to attempt difficult questions. I still made mistakes, but they felt like problems I could work on. Looking back, the important change was learning to ask for help and then put that help into practice.
+
 ## 3. A Meaningful Gift or Favourite Photograph
 
 **Use for:** Cards 04 and 15. **Plan:** Object → Origin → Visible detail → Associated moment → Meaning now.
@@ -84,6 +114,20 @@ During preparation, note **subject · background · two details · example · me
 **Card 04 version:** Use **A university souvenir a friend gave me at graduation…** Explain the gift and the friendship; do not invent its colour or material as source facts.
 
 **Card 15 version:** Use **A photograph of four school friends at the school gate…** Describe what the image shows before discussing how the friendships continued. Use present tense for the picture and past tense for the occasion.
+
+### Filled Example — A school photograph
+
+**Fictional practice scenario:** This completed answer illustrates the template; its details are not verified personal history.
+
+**Preparation keywords:** four friends · school gate · laughter · less contact · friendship.
+
+> One thing I have kept for a long time is a photograph of four school friends, including me. It was taken outside the school gate near the end of our time there. I keep a digital copy so I can look at it easily.
+>
+> **In terms of appearance**, the picture is quite ordinary. We are standing close together, and the school entrance is visible behind us. The detail I notice most is our expressions: we look relaxed, as though someone has just made us laugh.
+>
+> **I still remember** how strange it felt to be leaving a place we had visited almost every day. We were talking about what might happen next, but none of us really knew how much our routines would change.
+>
+> **Whenever I see it**, it brings back that mixture of excitement and uncertainty. We have less time to meet now, so the photograph reminds me to keep in touch. For me, its value comes from the friendship it captures, rather than the quality of the picture.
 
 ## 4. An Activity, Sport, Hobby or Enjoyable Routine
 
@@ -106,6 +150,20 @@ During preparation, note **subject · background · two details · example · me
 | 16 | Tell how initial fear of water became greater comfort through learning. | **It combines exercise with a break from screens.** |
 | 18 | Explain the walk, the surroundings and the absence of a target to achieve. | **I can enjoy the activity without needing it to produce a result.** |
 
+### Filled Example — Swimming
+
+**Fictional practice scenario:** This completed answer illustrates the template; its details are not verified personal history.
+
+**Preparation keywords:** coach · nervous · breathing · short distance · screen break.
+
+> An activity I enjoy is swimming. I started learning with a coach because I wanted a form of exercise that would also give me a break from screens. At first, I felt nervous in the water, so becoming comfortable was an important part of learning.
+>
+> **What it involves is** coordinating my breathing with my movements. I try to stay relaxed and pay attention to technique instead of simply moving as fast as possible. If I start rushing, I usually find it harder to breathe steadily.
+>
+> **To give you an example**, during one practice session I concentrated on breathing out slowly in the water. I managed a short distance without stopping as often as before. It was a small improvement, but it made the activity feel much more manageable.
+>
+> **For me, the main benefit is** having something physical to concentrate on. I have to pay attention to what I am doing, which helps me take my mind off other tasks. I'm still learning, but that sense of gradual progress is one reason I enjoy it.
+
 ## 5. A Useful Website, Interesting Book or Meaningful Song
 
 **Use for:** Cards 06, 13 and 20. **Plan:** Identify → Discovery → Content → Specific example → Personal value.
@@ -124,6 +182,20 @@ During preparation, note **subject · background · two details · example · me
 
 **Card 20 version:** Give the actual title if you know it; otherwise describe the subject. Introduce a claim with **The author argues that…** and your reaction with **It made me wonder whether…** Keep reading in progress distinct from finishing the book.
 
+### Filled Example — Hacker News
+
+**Fictional practice scenario:** This completed answer illustrates the template; its details are not verified personal history.
+
+**Preparation keywords:** technology · links · discussion · original source · check claims.
+
+> I'd like to talk about Hacker News, a website where people share links and discuss subjects such as technology and programming. I first came across it while looking for things to read about software, and I liked being able to discover different perspectives in one place.
+>
+> **The main focus is** technology, although discussions sometimes cover science and other subjects. One aspect I find useful is seeing people question how something works. For example, a discussion about a new tool might raise practical questions that the original announcement does not address.
+>
+> **The way I engage with it is** to open the original article before spending too long in the comments. If someone makes an interesting claim, I try to find the evidence behind it. A confident or popular comment is not necessarily accurate.
+>
+> **What I value most is** the opportunity to discover topics I might otherwise miss. It can also be distracting, so I try to choose one article to read properly rather than opening lots of tabs. I would recommend it to someone who enjoys exploring technical ideas critically.
+
 ## 6. A Close Friend or Someone You Respect
 
 **Use for:** Cards 07 and 09. **Plan:** Relationship → Quality → Evidence → Influence → Value.
@@ -140,6 +212,20 @@ During preparation, note **subject · background · two details · example · me
 
 **Card 09 version:** Emphasise sustained care and commitment to teaching. Explain what dedication looks like; length of service alone is not the whole reason for respect. Do not invent a personal incident and present it as a recorded memory.
 
+### Filled Example — A dependable friend
+
+**Fictional practice scenario:** This completed answer illustrates the template; its details are not verified personal history.
+
+**Preparation keywords:** school · listens · presentation · practical help · keep in touch.
+
+> The person I'd like to describe is a close friend I've known since school. We first got to know each other through working together in class, and we later discovered that we both enjoyed talking about places we wanted to visit. The quality I particularly appreciate is being dependable.
+>
+> **By that, I mean** my friend listens carefully and follows through when offering help. For example, when I was worried about a presentation, my friend listened while I practised and pointed out where the explanation became difficult to follow. The feedback was specific enough for me to use.
+>
+> **For me**, that matters because I feel comfortable admitting when I am unsure about something. It has also encouraged me to listen more patiently when someone else needs support. We still keep in touch, although we cannot meet as often as we used to.
+>
+> **What makes this person important to me is** the combination of shared interests and trust. We can enjoy an ordinary conversation, but I also know I can ask for an honest opinion when I need one.
+
 ## 7. A Language or Skill You Learned
 
 **Use for:** Card 08. **Plan:** Starting point → Methods → Difficulty → Practice → Present perspective.
@@ -153,6 +239,22 @@ During preparation, note **subject · background · two details · example · me
 > **Looking back**, the experience gave me [benefit or perspective]. I wouldn't claim to have mastered it, but it helped me understand [specific lesson]. That is relevant to the way I now approach [current learning goal].
 
 **Fill it from Card 08:** Russian at university; textbooks, tests, poems and Russian speakers; the trilled r; connecting sounds and structures with communication. Keep **what I did** and **what I would try now** separate.
+
+### Filled Example — Learning Russian
+
+**Fictional practice scenario:** This completed answer illustrates the template; its details are not verified personal history.
+
+**Preparation keywords:** university · textbooks · poems · trilled r · communication.
+
+> One thing I studied was Russian. I started at university with very little knowledge of the language, so even reading a short passage felt like a significant task. I was curious about how a different language could express familiar ideas.
+>
+> **At the beginning**, we worked on basic vocabulary and sentence patterns. We used textbooks and prepared for tests, and we also read poems. Reading aloud helped me notice the rhythm, although understanding a passage and saying it naturally were quite different challenges.
+>
+> One difficulty for me was the trilled r. I could hear that it sounded different from the sounds I normally used, but producing it consistently was harder.
+>
+> **What I came to realise was** that studying rules was only part of learning a language. I also needed to connect those rules with something I wanted to say. If I returned to Russian now, I would combine short listening exercises with simple conversations.
+>
+> **Looking back**, I wouldn't claim to have mastered it, but the experience helped me see language as communication. That perspective is useful when I practise English too.
 
 ## 8. A Memorable Trip, Good News or Unexpected Event
 
@@ -174,6 +276,20 @@ During preparation, note **subject · background · two details · example · me
 
 For good news, a natural opening is **Some good news I remember hearing was that…** For the competition, begin **An unexpected change of plan happened when…**
 
+### Filled Example — A friend's good news
+
+**Fictional practice scenario:** This completed answer illustrates the template; its details are not verified personal history.
+
+**Preparation keywords:** application · waiting · message · offer · relief.
+
+> Some good news I remember hearing was that a friend had received an offer for a course they really wanted to take. They had spent a long time preparing the application, and we had talked about how difficult the waiting felt.
+>
+> **At first**, I thought the message they sent me would just be another update about the application. Instead, they said an offer had arrived sooner than expected. I read the message twice because I wanted to be sure I had understood it correctly.
+>
+> **What stayed with me most was** the change in the way my friend spoke about the future. Before the offer, everything had been uncertain. Afterwards, we could talk about practical preparations and what they hoped to learn. I congratulated them and asked what they were most looking forward to.
+>
+> **Looking back**, the news mattered because I knew how much effort had gone into reaching that point. The course would still involve challenges, but receiving the offer made the next step feel possible. I felt happy for my friend and relieved that the waiting was over.
+
 ## 9. A Peaceful Place, Regular Shop or Educational Attraction
 
 **Use for:** Cards 14, 21 and 22. **Plan:** Location → First visit or routine → Distinctive features → What you do → Reason to return.
@@ -192,6 +308,22 @@ For good news, a natural opening is **Some good news I remember hearing was that
 
 **Card 22 version:** Identify the Chengdu Panda Base, then explain what visitors can learn about care, habitat and conservation. Distinguish what you remember seeing from information you learned later. Do not invent a guided tour or animal encounter.
 
+### Filled Example — A regular supermarket
+
+**Fictional practice scenario:** This completed answer illustrates the template; its details are not verified personal history.
+
+**Preparation keywords:** nearby · familiar layout · groceries · quick visit · convenience.
+
+> A place I'd like to describe is a supermarket not far from where I live. I first went there when I needed a few everyday items, and I have returned regularly because it is convenient to reach.
+>
+> **What stands out is** the familiar layout. There are separate areas for fresh produce and household goods, so I usually know where to look. When I go there, I buy basic groceries rather than browsing every aisle.
+>
+> For example, if I need ingredients for a simple dinner, I can check the vegetables, pick up the other items on my list and finish without spending too long deciding where to go next.
+>
+> **One reason I value it is** that it makes an ordinary task easier. Compared with travelling to a larger shop, going there takes less planning. It may not always have every brand I want, but it normally has what I need.
+>
+> **Overall**, I would describe it as a practical part of my routine. The main attraction is being able to get my shopping done efficiently and leave more time for the rest of the day.
+
 ## 10. An Awkward Experience or Mistake
 
 **Use for:** Card 17. **Plan:** Intention → Assumption → Awkward moment → Response → Better approach.
@@ -205,6 +337,20 @@ For good news, a natural opening is **Some good news I remember hearing was that
 > **Looking back, I could have** [better action]. That would have [likely benefit]. The experience didn't stop me from [positive intention], but it taught me to [specific change]. If I were in the same situation again, I would [clear next step].
 
 **Fill it from Card 17:** visiting a former teacher without warning; not being recognised at first; recalling school days and other students; sending a message with context before a future visit. Do not claim the teacher refused the visit or was angry.
+
+### Filled Example — An unannounced visit
+
+**Fictional practice scenario:** This completed answer illustrates the template; its details are not verified personal history.
+
+**Preparation keywords:** former teacher · surprise · not recognised · context · message first.
+
+> An embarrassing experience I remember was visiting a former teacher without getting in touch beforehand. My intention was to say hello and share some memories of school. I assumed that recognising each other would be straightforward.
+>
+> **The awkward moment came when** the teacher did not recognise me at first. I suddenly realised that a lot of time had passed and that they had taught many students. I felt uncomfortable because I had arrived expecting an immediate, familiar conversation.
+>
+> **To make the situation easier**, I explained that I had been a student and mentioned some memories from school. We then talked about school days and other students. The conversation became easier, although I still felt a little embarrassed about my original assumption.
+>
+> **Looking back, I could have** sent a message first, introduced myself clearly and asked whether a visit would be convenient. That would have given the teacher some context and time to prepare. The experience taught me that a friendly intention still needs consideration for the other person. If I visited again, I would arrange it in advance.
 
 ## Reuse the Material Without Losing the Question
 
